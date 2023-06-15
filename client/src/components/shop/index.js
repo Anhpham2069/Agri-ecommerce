@@ -11,6 +11,10 @@ import ProductDetails from "./productDetails";
 import ProductByCategory from "./home/ProductByCategory";
 import CheckoutPage from "./order/CheckoutPage";
 import ContactUs from "./ContactUs/ContactUs";
+import Page from "./page"
+import ArticlePage from "./article/articlePage";
+import ArticleList from "./article/articleList";
+import allProducts from "./page/Products";
 
 export {
   Home,
@@ -28,4 +32,8 @@ export {
   ProductByCategory,
   CheckoutPage,
   ContactUs,
+  Page,
+  allProducts,
+  ArticlePage,
+  ArticleList
 };

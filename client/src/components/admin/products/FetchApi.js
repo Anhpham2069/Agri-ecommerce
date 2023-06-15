@@ -9,6 +9,15 @@ export const getAllProduct = async () => {
     console.log(error);
   }
 };
+export const searchProducts = async (query) => {
+  try {
+    const res = await axios.get(`http://localhost:8000/api/product/search?q=${query}`);
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    return null
+  }
+};
 
 export const createPorductImage = async ({ pImage }) => {
   /* Most important part for uploading multiple image  */
@@ -28,6 +37,8 @@ export const createProduct = async ({
   pQuantity,
   pPrice,
   pOffer,
+  pCompany,
+  pDetails,
 }) => {
   /* Most important part for uploading multiple image  */
   let formData = new FormData();
@@ -42,6 +53,8 @@ export const createProduct = async ({
   formData.append("pQuantity", pQuantity);
   formData.append("pPrice", pPrice);
   formData.append("pOffer", pOffer);
+  formData.append("pCompany", pCompany);
+  formData.append("pDetails", pDetails);
 
   try {
     let res = await axios.post(`${apiURL}/api/product/add-product`, formData);
@@ -69,6 +82,8 @@ export const editProduct = async (product) => {
   formData.append("pQuantity", product.pQuantity);
   formData.append("pPrice", product.pPrice);
   formData.append("pOffer", product.pOffer);
+  formData.append("pCompany", product.pCompany);
+  formData.append("pDetails", product.pDetails);
   formData.append("pImages", product.pImages);
 
   try {

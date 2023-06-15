@@ -35,6 +35,14 @@ const productSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+    pCompany: {
+      type: String,
+      required: true,
+    },
+    pDetails: {
+      type: String,
+      required: true,
+    },
     pRatingsReviews: [
       {
         review: String,

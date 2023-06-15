@@ -1,20 +1,33 @@
-import React,{useState} from 'react'
+import React,{useContext} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import 
-{ faHeart,faAngleRight} 
+{ faAngleRight} 
 from '@fortawesome/free-solid-svg-icons'
 import "./style.css"
-import { fruits } from './data';
+import { HomeContext } from "../index";
+import { useHistory, } from "react-router-dom";
+import CartProducts from './components/cartProducts';
+import { Skeleton } from 'antd';
+import { NavLink } from 'react-router-dom';
+
 
 const Market = () => {
-    const [iconColor, setIconColor] = useState('grey');
+  const history = useHistory();
+  
+  const { data, } = useContext(HomeContext);
+  const { products } = data;
 
-    const handleClick = () => {
-    const newColor = iconColor === 'grey' ? 'red' : 'grey';
-    setIconColor(newColor);
-  };
+  if(data.loading){
+    return(
+      <Skeleton active/>
+    )
+  }
   return (
     <>
+    <NavLink to="/allProducts">
+       <div className='see-all-product'>xem tất cả sản phẩm</div>
+
+    </NavLink>
     <div className="market-container">
         <div className='market-title'>
             <p className='title'>Đi chợ online</p>
@@ -24,32 +37,25 @@ const Market = () => {
                 <a href='#shop'>Thực phẩm chế biến sẵn</a>
                 <a href='#shop'>gạo</a>
             </div>
-            <a className='see-all' href='#shop'>xem tất cả <FontAwesomeIcon icon={faAngleRight} size='xs' /></a>
+            <a className='see-all' 
+            onClick={(e) => history.push("/products/category/6458b1c301a5b61c4cc656bd")}
+          >
+            xem tất cả <FontAwesomeIcon icon={faAngleRight} size='xs' /></a>
         </div>
         <div className='container-product'>
-            <div className='market-products-container'>
-                {fruits.map((fruit, index) => (
-                    (index < 8) && (
-                    <div className="market-product" key={fruit.id}>
-                        <span className='favorite'> 
-                        <FontAwesomeIcon icon={faHeart} 
-                            style={{ color: iconColor }} 
-                            onClick={handleClick}
-                            id={fruit.id} />
-                        </span>
-                        <div className='item-product'>
-                            <img src={fruit.image} alt={fruit.name}/>      
-                            <h3 className="market-product-title">{fruit.name}</h3>
-                            <p className="market-product-description">{fruit.description}</p>
-                            <span className="market-product-price">Giá: {fruit.price} đồng</span>
-                        </div>
-                        <button className="add-to-cart-btn codepro-btn codepro-btn-2 hover-slide-right" 
-                            target="blank" 
-                            title="Code Pro">
-                        <span>thêm vào giỏ hàng</span></button>
-                    </div>
-                    )
-                    ))}
+            <div className='market-products-container mb-5'>
+            {products && products.length > 0 ? (
+                   products
+                  .filter(obj => obj.pCategory.cName === 'Chợ Online')
+                  .map((item,index)=>{
+                        return(
+                            <CartProducts key={index} data={item}/>
+                           
+                            
+                        )    })
+                        ):[]}
+                
+                
                 </div>
             </div>
         </div>
@@ -59,4 +65,4 @@ const Market = () => {
   )
 }
 
-export default Market
+export default React.memo(Market)

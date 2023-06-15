@@ -1,41 +1,35 @@
 import React, { useState,useContext } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 import { ArticleContext } from './index';
 import "./style.css"
 
+
+const apiURL = process.env.REACT_APP_API_URL;
 function AddArticleForm({ onSubmit }) {
-  const { addArticle } = useContext(ArticleContext);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [image, setImage] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newArticle = {
-      title,
-      content,
-    };
-
+    
     try {
-      const response = await fetch('/article/create-article', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newArticle),
-      });
+      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('content', content);
+      formData.append('image', image);
 
-      if (response.ok) {
-        const article = await response.json();
-        addArticle(article);
-        setTitle('');
-        setContent('');
-        console.log('Bài viết đã được thêm thành công');
-      } else {
-        console.error('Lỗi khi tạo bài viết');
-      }
+      await axios.post(`${apiURL}/api/posts`, formData);
+      alert('Thêm bài viết thành công');
     } catch (error) {
-      console.error(error);
+      console.error('Lỗi khi thêm bài viết:', error);
+      alert('Đã xảy ra lỗi khi thêm bài viết');
     }
+
+    // Reset form fields
+    setTitle('');
+    setContent('');
+    setImage(null);
   };
 
   return (
@@ -63,6 +57,13 @@ function AddArticleForm({ onSubmit }) {
           onChange={(e) => setContent(e.target.value)}
         ></textarea>
       </div>
+      <label htmlFor="image">Hình ảnh:</label>
+        <input
+          type="file"
+          id="image"
+          accept="image/*"
+          onChange={(e) => setImage(e.target.files[0])}
+        /><br /><br />
       <button type="submit" className="btn btn-primary">
         Thêm bài viết
       </button>

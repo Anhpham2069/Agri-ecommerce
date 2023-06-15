@@ -10,14 +10,14 @@ const TableHeader = () => {
     <Fragment>
       <thead>
         <tr>
-          <th className="px-4 py-2 border">Products</th>
-          <th className="px-4 py-2 border">Status</th>
-          <th className="px-4 py-2 border">Total</th>
-          <th className="px-4 py-2 border">Phone</th>
-          <th className="px-4 py-2 border">Address</th>
-          <th className="px-4 py-2 border">Transaction Id</th>
-          <th className="px-4 py-2 border">Checkout</th>
-          <th className="px-4 py-2 border">Processing</th>
+          <th className="px-4 py-2 border">Sản phẩm</th>
+          <th className="px-4 py-2 border">trạng thái</th>
+          <th className="px-4 py-2 border">Tổng</th>
+          <th className="px-4 py-2 border">Số điện thoại</th>
+          <th className="px-4 py-2 border">Địa chỉ</th>
+          <th className="px-4 py-2 border">Giao dịch Id</th>
+          <th className="px-4 py-2 border">Thanh toán</th>
+          <th className="px-4 py-2 border">Xử lý</th>
         </tr>
       </thead>
     </Fragment>
@@ -121,7 +121,7 @@ const OrdersComponent = () => {
       <div className="flex flex-col w-full my-4 md:my-0 md:w-9/12 md:px-8">
         <div className="border">
           <div className="py-4 px-4 text-lg font-semibold border-t-2 border-yellow-700">
-            Orders
+            Đơn hàng
           </div>
           <hr />
           <div className="overflow-auto bg-white shadow-lg p-4">
@@ -138,14 +138,14 @@ const OrdersComponent = () => {
                       colSpan="8"
                       className="text-xl text-center font-semibold py-8"
                     >
-                      No order found
+                      Không có đơn hàng nào hiện tại
                     </td>
                   </tr>
                 )}
               </tbody>
             </table>
             <div className="text-sm text-gray-600 mt-2">
-              Total {orders && orders.length} order found
+              Tổng {orders && orders.length} đơn hàng
             </div>
           </div>
         </div>

@@ -1,12 +1,12 @@
 import React from "react";
 
-const DropdownMenu = () => {
+const DropdownMenu = ({categories}) => {
   return (
     <>
     <div className="dropdown-content">
-      <a href="#shop">Link 1</a>
-      <a href="#shop">Link 2</a>
-      <a href="#shop">Link 3</a>
+      {categories && categories.map((item,index)=>(
+        <a href="#shop" key={index}>{item.cName}</a>
+      ))}
     </div>
     </>
   );

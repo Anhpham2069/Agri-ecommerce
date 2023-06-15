@@ -3,10 +3,14 @@ import Market from './market'
 import Fruit from './fruit'
 import SpecialtyComponent from './specialty'
 import News from './news'
+import Category from './Category'
+import FeaturedProduct from './Featured'
 
 const ContentComponent = () => {
   return (
     <div>
+        <Category/>
+        <FeaturedProduct />
        <Market />
        <Fruit />
        <SpecialtyComponent />
@@ -15,4 +19,4 @@ const ContentComponent = () => {
   )
 }
 
-export default ContentComponent
+export default React.memo(ContentComponent)

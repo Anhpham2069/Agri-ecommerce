@@ -40,9 +40,28 @@ class Product {
       console.log(err);
     }
   }
+  async searchProduct(req,res){
+    try {
+      const { q } = req.query;
+
+      const regex = new RegExp(q, 'i');
+  
+      const products = await productModel.find({
+        $or: [
+          { pName: regex },
+          { pDescription: regex }
+        ]
+      });
+  
+      res.json(products);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
 
   async postAddProduct(req, res) {
-    let { pName, pDescription, pPrice, pQuantity, pCategory, pOffer, pStatus } =
+    let { pName, pDescription, pPrice, pQuantity, pCategory, pOffer, pStatus,pCompany,pDetails} =
       req.body;
     let images = req.files;
     // Validation
@@ -53,7 +72,9 @@ class Product {
       !pQuantity |
       !pCategory |
       !pOffer |
-      !pStatus
+      !pStatus|
+      !pCompany |
+      !pDetails 
     ) {
       Product.deleteImages(images, "file");
       return res.json({ error: "All filled must be required" });
@@ -84,6 +105,8 @@ class Product {
           pCategory,
           pOffer,
           pStatus,
+          pDetails,
+          pCompany
         });
         let save = await newProduct.save();
         if (save) {
@@ -106,6 +129,8 @@ class Product {
       pOffer,
       pStatus,
       pImages,
+      pCompany,
+      pDetails,
     } = req.body;
     let editImages = req.files;
 
@@ -118,6 +143,8 @@ class Product {
       !pQuantity |
       !pCategory |
       !pOffer |
+      !pCompany |
+      !pDetails |
       !pStatus
     ) {
       return res.json({ error: "All filled must be required" });
@@ -140,6 +167,8 @@ class Product {
         pQuantity,
         pCategory,
         pOffer,
+        pCompany,
+        pDetails,
         pStatus,
       };
       if (editImages.length == 2) {

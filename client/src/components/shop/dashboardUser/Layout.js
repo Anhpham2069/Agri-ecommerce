@@ -22,7 +22,7 @@ const Layout = ({ children }) => {
         <div className="flex-grow">
           <Navber />
           <CartModal />
-          <div className="mx-4 mt-24 md:mx-12 md:mt-32 lg:mt-24 flex flex-col md:flex-row">
+          <div className="mx-4 mt-40 md:mx-12 md:mt-70 lg:mt-50 flex flex-col md:flex-row">
             <Sidebar />
             {/* All Children pass from here */}
             {children}

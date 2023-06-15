@@ -1,0 +1,50 @@
+.all-product-conatiner{
+    width: 80%; 
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+}
+.Featured-container{
+    width: 20%;
+    height: 80%;
+    margin-top: 0;
+    margin-left: 10px;
+}
+
+.filter-container{
+    width: 15%;
+    background-color: white;
+    padding: 20px;
+}
+.filter-title{
+    text-align: center;
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin-top: 10px;
+}
+.filter-item{
+    background-color: white;
+    margin-top: 10px;
+
+    height: 50px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+
+}
+.filter-item:hover{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.page-number{
+    position: absolute;
+    bottom: -20px;
+    right: 50%;
+}
+.page-number button{
+    margin-right: 10px;
+    font-size: 1.2rem;
+    font-weight: 600;
+}

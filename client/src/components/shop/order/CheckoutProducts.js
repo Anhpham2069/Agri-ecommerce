@@ -1,13 +1,13 @@
 import React, { Fragment, useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { LayoutContext } from "../layout";
-import { subTotal, quantity, totalCost } from "../partials/Mixins";
-
+import { subTotal, quantity,totalCost  } from "../partials/Mixins";
+import axios from "axios";
 import { cartListProduct } from "../partials/FetchApi";
-import { getBrainTreeToken, getPaymentProcess } from "./FetchApi";
+import { getBrainTreeToken, getPaymentProcess,createOrder } from "./FetchApi";
 import { fetchData, fetchbrainTree, pay } from "./Action";
-
 import DropIn from "braintree-web-drop-in-react";
+import "./style.css"
 
 const apiURL = process.env.REACT_APP_API_URL;
 
@@ -15,21 +15,45 @@ export const CheckoutComponent = (props) => {
   const history = useHistory();
   const { data, dispatch } = useContext(LayoutContext);
 
+  const [paymentUrl, setPaymentUrl] = useState('');
+
+  
   const [state, setState] = useState({
     address: "",
     phone: "",
     error: false,
     success: false,
     clientToken: null,
-    instance: {},
+    // instance: {},
   });
-
+console.log(state)
   useEffect(() => {
     fetchData(cartListProduct, dispatch);
     fetchbrainTree(getBrainTreeToken, setState);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleCreatePayment = async () => {
+    try {
+      const response = await axios.post('/create_payment_url', {
+        amount: 100,
+        address: state.address,
+        phone: state.phone,
+        // Các thông tin khác
+      });
+  
+      if (response.data.paymentUrl) {
+        setPaymentUrl(response.data.paymentUrl);
+        console.log(response.data.paymentUrl)
+      } else {
+        throw new Error('Failed to create payment');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 
   if (data.loading) {
     return (
@@ -48,7 +72,7 @@ export const CheckoutComponent = (props) => {
             d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
           ></path>
         </svg>
-        Please wait untill finish
+        xin vui lòng đợi trong dây lát
       </div>
     );
   }
@@ -113,7 +137,7 @@ export const CheckoutComponent = (props) => {
                       placeholder="+84"
                     />
                   </div>
-                  <DropIn
+                  {/* <DropIn
                     options={{
                       authorization: state.clientToken,
                       paypal: {
@@ -121,7 +145,7 @@ export const CheckoutComponent = (props) => {
                       },
                     }}
                     onInstance={(instance) => (state.instance = instance)}
-                  />
+                  /> */}
                   <div
                     onClick={(e) =>
                       pay(
@@ -129,7 +153,7 @@ export const CheckoutComponent = (props) => {
                         dispatch,
                         state,
                         setState,
-                        getPaymentProcess,
+                        createOrder,
                         totalCost,
                         history
                       )
@@ -139,6 +163,10 @@ export const CheckoutComponent = (props) => {
                   >
                     Pay now
                   </div>
+                  {/* <div>
+                      <button onClick={handleCreatePayment}>Create Payment</button>
+                      {paymentUrl && <a href={paymentUrl}>Proceed to Payment</a>}
+                    </div> */}
                 </div>
               </Fragment>
             ) : (
@@ -171,7 +199,7 @@ const CheckoutProducts = ({ products }) => {
 
   return (
     <Fragment>
-      <div className="grid grid-cols-2 md:grid-cols-1">
+      <div className="oder-product-container ">
         {products !== null && products.length > 0 ? (
           products.map((product, index) => {
             return (
@@ -182,21 +210,21 @@ const CheckoutProducts = ({ products }) => {
                 <div className="md:flex md:items-center md:space-x-4">
                   <img
                     onClick={(e) => history.push(`/products/${product._id}`)}
-                    className="cursor-pointer md:h-20 md:w-20 object-cover object-center"
+                    className="cursor-pointer md:h-10 md:w-10 object-cover object-center"
                     src={`${apiURL}/uploads/products/${product.pImages[0]}`}
                     alt="wishListproduct"
                   />
-                  <div className="text-lg md:ml-6 truncate">
+                  <div className="name text-lg md:ml-6 truncate">
                     {product.pName}
                   </div>
                   <div className="md:ml-6 font-semibold text-gray-600 text-sm">
-                    Giá :{product.pPrice}{" "} Vnđ
+                    Giá:{product.pPrice}{" "} <sup> &#8363;</sup>
                   </div>
                   <div className="md:ml-6 font-semibold text-gray-600 text-sm">
-                    Số lượng : {quantity(product._id)}
+                    Số lượng:{quantity(product._id)}
                   </div>
                   <div className="font-semibold text-gray-600 text-sm">
-                    Tổng tiền : {subTotal(product._id, product.pPrice)} Vnđ
+                    Tổng tiền:{subTotal(product._id, product.pPrice)} <sup> &#8363;</sup>
                   </div>
                 </div>
               </div>

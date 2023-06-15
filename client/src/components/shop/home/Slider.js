@@ -3,6 +3,7 @@ import OrderSuccessMessage from "./OrderSuccessMessage";
 import { HomeContext } from "./";
 import { sliderImages } from "../../admin/dashboardAdmin/Action";
 import { prevSlide, nextSlide } from "./Mixins";
+import Search from "./search";
 
 const apiURL = process.env.REACT_APP_API_URL;
 
@@ -21,13 +22,13 @@ const Slider = (props) => {
       nextSlide(data.sliderImages.length, slide, setSlide);
     }, 4000);
     return () => clearInterval(interval);
-  }, [ data.sliderImages.length]);
+  },[data.sliderImages.length,slide]);
 
   return (
     <Fragment>
       {/* Give main div 40% when on mobile screen */}
 
-      <div className="relative mt-40 h-25 bg-size-cover bg-gray-100">
+      <div className="slider-container relative h-25  bg-gray-100  cursor-pointer">
         {data.sliderImages.length > 0 ? (
           <img
             className="w-full"
@@ -74,18 +75,14 @@ const Slider = (props) => {
                 d="M9 5l7 7-7 7"
               />
             </svg>
-            <div className="absolute inset-0 flex flex-col items-center justify-center border-1 ">
-              
-              <a
-                href="#shop"
-                style={{ background: "#5CB85C",opacity:"100%",border:"1px solid"}}
-                className="cursor-pointer0 box-border text-2xl text-white px-4 py-2 rounded hover:text-red-500"
-              >
-                <p>
-                Xem Ngay
-                </p>
-              </a>
+            <div className="absolute inset-0 flex flex-col items-center justify-center border-1 ">         
+                  <button className="viewnow-btn font-bold">
+
+                      Xem Ngay
+                  </button>
+              <Search products={data}/>
             </div>
+           
           </>
         ) : null}
       </div>

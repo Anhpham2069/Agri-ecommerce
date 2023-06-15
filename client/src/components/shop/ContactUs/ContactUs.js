@@ -4,7 +4,7 @@ import React, { Fragment } from "react";
 import { Navber } from "../partials";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import "./style.css"
 const ContactUs = () => {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -81,11 +81,11 @@ const ContactUs = () => {
       <Navber></Navber>
       <Fragment>
         <div className="container mx-auto my-auto mt-40">
-          <div className="flex flex-col items-center justify-center">
-            <h1 className="text-3xl font-bold text-gray-800">Contact Us</h1>
+          <div className="flex flex-col items-center justify-center mb-5">
+            <h1 className="text-3xl font-bold text-gray-800">Liên hệ với chúng tôi</h1>
             <p className="text-gray-600">
-              We are here to help and answer any question you might have. We
-              look forward to hearing from you.
+            Chúng tôi ở đây để giúp đỡ và trả lời bất kỳ câu hỏi nào bạn có thể có. 
+            Chúng tôi mong chờ tin từ bạn.
             </p>
           </div>
           <div className="flex flex-col items-center justify-center">
@@ -139,11 +139,20 @@ const ContactUs = () => {
                     />
 
                     <div className="flex items-center justify-between mt-4">
-                      <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                        type="submit"
+                      <button 
+                       className="send-btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                       type="submit"
+                      
                       >
-                        Send
+                        <div class="svg-wrapper-1">
+                          <div class="svg-wrapper">
+                            <svg height="24" width="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M0 0h24v24H0z" fill="none"></path>
+                              <path d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z" fill="currentColor"></path>
+                            </svg>
+                          </div>
+                        </div>
+                        <span>Send</span>
                       </button>
                     </div>
                   </div>

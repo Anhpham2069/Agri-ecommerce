@@ -5,7 +5,7 @@ import { getAllCategory } from "../../admin/categories/FetchApi";
 import { getAllProduct, productByPrice } from "../../admin/products/FetchApi";
 import "./style.css";
 
-const apiURL = process.env.REACT_APP_API_URL;
+// const apiURL = process.env.REACT_APP_API_URL;
 
 const CategoryList = () => {
   const history = useHistory();
@@ -41,10 +41,6 @@ const CategoryList = () => {
                   }
                   className="col-span-1 m-2 flex flex-col items-center justify-center space-y-2 cursor-pointer"
                 >
-                  <img
-                    src={`${apiURL}/uploads/categories/${item.cImage}`}
-                    alt="pic"
-                  />
                   <div className="font-medium">{item.cName}</div>
                 </div>
               </Fragment>
@@ -104,12 +100,12 @@ const FilterList = () => {
     <div className={`${data.filterListDropdown ? "" : "hidden"} my-4`}>
       <hr />
       <div className="w-full flex flex-col">
-        <div className="font-medium py-2">Filter by price</div>
+        <div className="font-medium py-2">Lọc theo giá</div>
         <div className="flex justify-between items-center">
           <div className="flex flex-col space-y-2  w-2/3 lg:w-2/4">
             <label htmlFor="points" className="text-sm">
-              Price from 0 to {" "}
-              <span className="font-semibold text-yellow-700">{range}₹</span>{" "}
+              Giá từ 0 đến {" "}
+              <span className="font-semibold text-yellow-700">{range}VNĐ</span>{" "}
             </label>
             <input
               value={range}

@@ -1,0 +1,9 @@
+.sidebar-container{
+    width: 15%;
+    background-color: rgb(255, 255, 255);
+    color: rgb(71, 68, 68);
+    font-family:'Times New Roman', Times, serif;
+}
+.sidebar-container div span{
+    margin-right: 20px;
+}

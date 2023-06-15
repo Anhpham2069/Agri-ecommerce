@@ -2,6 +2,7 @@ import React, { Fragment, useContext, useEffect } from "react";
 import { getAllCategory, deleteCategory } from "./FetchApi";
 import { CategoryContext } from "./index";
 import moment from "moment";
+import "./style.css"
 
 const apiURL = process.env.REACT_APP_API_URL;
 
@@ -73,17 +74,17 @@ const AllCategory = (props) => {
 
   return (
     <Fragment>
-      <div className="col-span-1 overflow-auto bg-white shadow-lg p-4">
+      <div className="category-table-title col-span-1 overflow-auto bg-white shadow-lg p-4">
         <table className="table-auto border w-full my-2">
           <thead>
             <tr>
-              <th className="px-4 py-2 border">Category</th>
-              <th className="px-4 py-2 border">Description</th>
-              <th className="px-4 py-2 border">Image</th>
-              <th className="px-4 py-2 border">Status</th>
-              <th className="px-4 py-2 border">Created at</th>
-              <th className="px-4 py-2 border">Updated at</th>
-              <th className="px-4 py-2 border">Actions</th>
+              <th className="px-4 py-2 border">Tên </th>
+              <th className="px-4 py-2 border">Chi tiết</th>
+              <th className="px-4 py-2 border">Ảnh</th>
+              <th className="px-4 py-2 border">Trạng thái</th>
+              <th className="px-4 py-2 border">Ngày tạo</th>
+              <th className="px-4 py-2 border">Ngày cập nhật </th>
+              <th className="px-4 py-2 border">Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -123,8 +124,8 @@ const AllCategory = (props) => {
 /* Single Category Component */
 const CategoryTable = ({ category, deleteCat, editCat }) => {
   return (
-    <Fragment>
-      <tr>
+  
+      <tr className="category-table-item">
         <td className="p-2 text-left">
           {category.cName.length > 20
             ? category.cName.slice(0, 20) + "..."
@@ -204,7 +205,7 @@ const CategoryTable = ({ category, deleteCat, editCat }) => {
           </span>
         </td>
       </tr>
-    </Fragment>
+
   );
 };
 

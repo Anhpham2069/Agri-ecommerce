@@ -12,6 +12,8 @@ export const productState = {
     pQuantity: "",
     pPrice: "",
     pOffer: "",
+    pCompany: "",
+    pDetails: "",
   },
 };
 
@@ -19,6 +21,12 @@ export const productReducer = (state, action) => {
   switch (action.type) {
     /* Get all product */
     case "fetchProductsAndChangeState":
+      return {
+        ...state,
+        products: action.payload,
+      };
+    /* Get all product */
+    case "searchProduct":
       return {
         ...state,
         products: action.payload,
@@ -44,6 +52,8 @@ export const productReducer = (state, action) => {
           pQuantity: action.product.pQuantity,
           pPrice: action.product.pPrice,
           pOffer: action.product.pOffer,
+          pCompany: action.product.pCompany,
+          pDetails: action.product.pDetails,
         },
       };
     case "editProductModalClose":
@@ -60,6 +70,8 @@ export const productReducer = (state, action) => {
           pQuantity: "",
           pPrice: "",
           pOffer: "",
+          pCompany: "",
+          pDetails: "",
         },
       };
     default:

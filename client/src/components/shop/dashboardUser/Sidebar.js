@@ -46,7 +46,7 @@ const Sidebar = (props) => {
                 : ""
             }  px-4 py-4 hover:bg-gray-200 cursor-pointer`}
           >
-            My Orders
+            Đơn hàng
           </div>
           <hr />
           <div
@@ -57,14 +57,14 @@ const Sidebar = (props) => {
                 : ""
             }  px-4 py-4 hover:bg-gray-200 cursor-pointer`}
           >
-            My Accounts
+            Tài khoản
           </div>
           <hr />
           <div
             onClick={(e) => history.push("/wish-list")}
             className={` px-4 py-4 hover:bg-gray-200 cursor-pointer`}
           >
-            My Wishlist
+            Yêu thích
           </div>
           <hr />
           <div
@@ -75,7 +75,7 @@ const Sidebar = (props) => {
                 : ""
             }  px-4 py-4 hover:bg-gray-200 cursor-pointer`}
           >
-            Setting
+            Cài đặt
           </div>
           <hr />
           <div
@@ -86,7 +86,7 @@ const Sidebar = (props) => {
                 : ""
             }  px-4 py-4 hover:bg-gray-200 cursor-pointer`}
           >
-            Logout
+            Đăng xuất
           </div>
         </div>
       </div>

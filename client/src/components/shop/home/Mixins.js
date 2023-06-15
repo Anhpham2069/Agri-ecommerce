@@ -50,3 +50,5 @@ export const prevSlide = (totalImg, slide, setSlide) => {
     setSlide(0);
   }
 };
+
+

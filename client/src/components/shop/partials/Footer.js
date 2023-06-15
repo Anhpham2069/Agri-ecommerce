@@ -46,8 +46,9 @@ const Footer = (props) => {
           {/* <li><FontAwesomeIcon icon={faYouTube} />Youtube</li> */}
         </div>
         </div>
-       
-        {moment().format("YYYY")} © Copyright. All Rights Reserved.
+       <div className="text-center">
+          {moment().format("YYYY")} © Copyright. All Rights Reserved.
+       </div>
       </footer>
     </Fragment>
   );

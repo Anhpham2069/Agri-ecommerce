@@ -1,4 +1,4 @@
-import React,{Fragment,useContext,useEffect} from 'react';
+import React,{Fragment,useContext,useEffect,useCallback} from 'react';
 import { deleteUser, getAllUser } from './fetchApi';
 import moment from 'moment';
 import { UserContext } from './index';
@@ -10,11 +10,9 @@ const AllUser = (props) => {
     const { users,loading } = data
   
 
-    useEffect(()=>{
-        fetchData();
-    },[])
+   
 
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
       dispatch({ type: "loading", payload: true });
       let responseData = await getAllUser();
       setTimeout(() => {
@@ -26,8 +24,11 @@ const AllUser = (props) => {
           dispatch({ type: "loading", payload: false });
         }
       }, 1000);
-    };
+    },[dispatch])
 
+    useEffect(() => {
+      fetchData();
+    }, [fetchData]);
     
   const deleteUserReq = async (cId) => {
     let deleteC = await deleteUser(cId);
@@ -126,11 +127,12 @@ const UserTable = ({ user, deleteUser}) => {
           {user.phoneNumber}
         </td>
         <td className="p-2 text-center">
-          <img
+          {/* <img
             className="w-12 h-12 object-cover object-center"
             src={`${apiURL}/uploads/users/${user.cImage}`}
             alt=""
-          />
+          /> */}
+          <p>0</p>
         </td>
         {/* <td className="p-2 text-center">
           {user.cStatus === "Active" ? (

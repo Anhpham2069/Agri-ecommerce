@@ -24,7 +24,7 @@ const orderRouter = require("./routes/orders");
 const usersRouter = require("./routes/users");
 const customizeRouter = require("./routes/customize");
 const contactusRouter = require("./routes/contactus");
-const articleRouter = require("./routes/article");
+const potsRouter = require("./routes/post");
 // Import Auth middleware for check user login or not~
 const { loginCheck } = require("./middleware/auth");
 const path = require("path");
@@ -48,11 +48,12 @@ app.use("/api", authRouter);
 app.use("/api/user", usersRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/product", productRouter);
+app.use("/api/product/search", productRouter);
 app.use("/api", brainTreeRouter);
 app.use("/api/order", orderRouter);
 app.use("/api/customize", customizeRouter);
 app.use("/api/contact-us", contactusRouter);
-app.use("/api/article", articleRouter);
+app.use("/api/post", potsRouter);
 
 // Production
 if (process.env.NODE_ENV === "production") {

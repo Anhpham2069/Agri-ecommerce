@@ -1,0 +1,12 @@
+.oder-product-container{
+    margin-top: 70px;
+
+}
+.oder-product-container div div div{
+    color: rgb(223, 116, 16);
+}
+.oder-product-container div div .name{
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: black;
+}

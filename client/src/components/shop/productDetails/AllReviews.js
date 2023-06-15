@@ -141,7 +141,7 @@ const AllReviews = (props) => {
             );
           })
         ) : (
-          <div>No Review found</div>
+          <div>Không có đánh giá</div>
         )}
       </div>
     </Fragment>

@@ -60,12 +60,12 @@ const Signup = (props) => {
 
   return (
     <Fragment>
-      <div className="text-center text-2xl mb-6">Register</div>
+      <div className="text-center text-2xl mb-8">Đăng kí</div>
       <form className="space-y-4">
         {data.success ? alert(data.success, "green") : ""}
         <div className="flex flex-col">
           <label htmlFor="name">
-            Name<span className="text-sm text-gray-600 ml-1">*</span>
+            Tên<span className="text-sm text-gray-600 ml-1">*</span>
           </label>
           <input
             onChange={(e) =>
@@ -87,7 +87,7 @@ const Signup = (props) => {
         </div>
         <div className="flex flex-col">
           <label htmlFor="email">
-            Email address<span className="text-sm text-gray-600 ml-1">*</span>
+            Địa chỉ email<span className="text-sm text-gray-600 ml-1">*</span>
           </label>
           <input
             onChange={(e) =>
@@ -109,7 +109,7 @@ const Signup = (props) => {
         </div>
         <div className="flex flex-col">
           <label htmlFor="password">
-            Password<span className="text-sm text-gray-600 ml-1">*</span>
+            Mật khẩu<span className="text-sm text-gray-600 ml-1">*</span>
           </label>
           <input
             onChange={(e) =>
@@ -131,7 +131,7 @@ const Signup = (props) => {
         </div>
         <div className="flex flex-col">
           <label htmlFor="cPassword">
-            Confirm password
+            Nhập lại mật khẩu
             <span className="text-sm text-gray-600 ml-1">*</span>
           </label>
           <input
@@ -160,19 +160,19 @@ const Signup = (props) => {
               className="px-4 py-2 focus:outline-none border mr-1"
             />
             <label htmlFor="rememberMe">
-              Remember me<span className="text-sm text-gray-600">*</span>
+              Ghi nhớ<span className="text-sm text-gray-600">*</span>
             </label>
           </div>
           <a className="block text-gray-600" href="/">
-            Lost your password?
+            Quên mật khẩu?
           </a>
         </div>
         <div
           onClick={(e) => formSubmit()}
-          style={{ background: "#303031" }}
+          style={{ background: "#66e833" }}
           className="px-4 py-2 text-white text-center cursor-pointer font-medium"
         >
-          Create an account
+          Tạo tài khoản
         </div>
       </form>
     </Fragment>

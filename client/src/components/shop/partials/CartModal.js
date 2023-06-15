@@ -123,7 +123,7 @@ const CartModal = () => {
                               <span className="text-sm text-gray-400">
                                 tổng tiền :
                               </span>{" "}{subTotal(item._id, item.pPrice)} 
-                              VNĐ
+                              <sup> &#8363;</sup>
                             </div>{" "}
                             {/* SUbtotal Count */}
                           </div>
@@ -176,7 +176,7 @@ const CartModal = () => {
                       cartModalOpen();
                     }}
                   >
-                    Thanh toán {data.cartTotalCost} VNĐ
+                    Thanh toán {data.cartTotalCost.toLocaleString()} <sup> &#8363;</sup>
                   </div>
                 ) : (
                   <div

@@ -183,8 +183,8 @@ const ProductDetailsSection = (props) => {
             <div className="flex flex-col leading-8">
               <div className="text-2xl tracking-wider">{sProduct.pName}</div>
               <div className="flex justify-between items-center">
-                <span className="text-xl tracking-wider text-yellow-700">
-                  {sProduct.pPrice} VNĐ
+                <span className="text-xl tracking-wider text-red-700">
+                  {(sProduct.pPrice).toLocaleString()} <sup> &#8363;</sup>
                 </span>
                 <span>
                   <svg
@@ -227,23 +227,37 @@ const ProductDetailsSection = (props) => {
               {/* review starts */}
               <div className="flex items-center space-x-2">
                 <div className="flex items-center space-x-1">
-                  <svg
-                    className="w-4 h-4 fill-current text-yellow-700"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
-                    />
-                  </svg>
-                  <span className="text-sm font-medium text-gray-700">
-                    {/* {sProduct.pRatingsReviews.rating} */}
-                    4.5
+                  <span className="text-sm flex font-medium text-gray-700">
+                    
+                  {[...Array(Number(sProduct.pRatingsReviews.map((item)=>(item.rating))))].map((_,key) => {
+                                      return (
+                                        <span key={key}>
+                                          <svg
+                                            className="w-4 h-4 fill-current text-yellow-700"
+                                            fill="currentColor"
+                                            viewBox="0 0 20 20"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                          </svg>
+                                        </span>
+                                      );
+                                    })}
+                                     {[...Array(5 - Number(sProduct.pRatingsReviews.map((item)=>(item.rating))))].map((_,key) =>
+                                      {
+                                    return (
+                                      <span key={key}>
+                                        <svg
+                                          className="w-4 h-4 fill-current text-gray-300"
+                                          fill="currentColor"
+                                          viewBox="0 0 20 20"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                        </svg>
+                                      </span>
+                                    );
+                                  })}
                   </span>
                   <span className="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400"></span>
                 </div>
@@ -259,40 +273,26 @@ const ProductDetailsSection = (props) => {
                   </span>
                 </div>
                 <a className="text-lg text-gray-700" href="/">
-                  {/* {sProduct.pCompany} */} XNK-NgocAnh.
+                  {sProduct.pCompany}.
                 </a>
                 {/* <span className="text-lg text-yellow-700">Best Seller</span> */}
               </div>
               <div className="flex items-center space-x-2">
                 <div className="text-lg tracking-wider text-gray-700 mt-2">
-                  <span>Xuất xứ: Đài loan</span>
+                  <span>Chi tiết: {sProduct.pDetails}</span>
                 </div>
               </div>
             </div>
             <hr className="my-2" />
-            <div className="my-4 md:my-6">
-              <div className="flex items-center space-x-2">
-                <div className="flex items-center space-x-1">
-                  <span>Chuyển tới</span>
-                  <input
-                    className="border-2 p-2"
-                    type="text"
-                    placeholder="Enter Pincode"
-                  />
-                  <button className="bg-green-500 text-white px-2 py-1 rounded-md">
-                    Kiểm tra
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className="my-4 md:my-6 grid grid-cols-5">
+            
+            <div className="my-4 md:my-6 flex w-80">
               {+quantitiy === +sProduct.pQuantity ? (
                 <span className="text-xs text-red-500">số lượng trong kho</span>
               ) : (
                 ""
               )}
               <div
-                className={`flex justify-between items-center px-4 py-2 border ${
+                className={`flex justify-between items-center px-9 py-2 border ${
                   +quantitiy === +sProduct.pQuantity && "border-red-500"
                 }`}
               >
@@ -393,6 +393,7 @@ const ProductDetailsSection = (props) => {
                         </span>
                       </div>
                     )}
+                    
                   </Fragment>
                 ) : (
                   <div className="flex items-center space-x-2">
@@ -429,6 +430,7 @@ const ProductDetailsSection = (props) => {
                 )}
                 {/* Quantity Button End */}
               </div>
+                
               {/* Incart and out of stock button */}
               {sProduct.pQuantity !== 0 ? (
                 <Fragment>
@@ -484,6 +486,21 @@ const ProductDetailsSection = (props) => {
               )}
               {/* Incart and out of stock button End */}
             </div>
+            <div className="my-4 md:my-6">
+                  <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-1">
+                      <span>Chuyển tới</span>
+                      <input
+                        className="border-2 p-2"
+                        type="text"
+                        placeholder="Enter Pincode"
+                      />
+                      <button className="bg-green-500 text-white px-2 py-1 rounded-md">
+                        Kiểm tra
+                      </button>
+                    </div>
+                  </div>
+                </div>
             {/* Make Pay On Delivery or Online Payment, 48 Hours returnable, AgriCom Delivered, Shipping Through Courier */}
             <hr className="my-2" />
             <div className="flex space-y-2">

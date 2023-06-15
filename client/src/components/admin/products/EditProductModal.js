@@ -24,6 +24,8 @@ const EditProductModal = (props) => {
     pQuantity: "",
     pPrice: "",
     pOffer: "",
+    pCompany: "",
+    pDetails: "",
     error: false,
     success: false,
   });
@@ -50,6 +52,8 @@ const EditProductModal = (props) => {
       pQuantity: data.editProductModal.pQuantity,
       pPrice: data.editProductModal.pPrice,
       pOffer: data.editProductModal.pOffer,
+      pCompany: data.editProductModal.pCompany,
+      pDetails: data.editProductModal.pDetails,
     });
   }, [data.editProductModal]);
 
@@ -114,10 +118,10 @@ const EditProductModal = (props) => {
           data.editProductModal.modal ? "" : "hidden"
         } fixed inset-0 flex items-center z-30 justify-center overflow-auto`}
       >
-        <div className="mt-32 md:mt-0 relative bg-white w-11/12 md:w-3/6 shadow-lg flex flex-col items-center space-y-4 px-4 py-4 md:px-8">
+        <div className="mt-32 md:mt-30 relative bg-white w-11/12 md:w-3/6 shadow-lg flex flex-col items-center space-y-4 px-4 py-4 md:px-8 text-small">
           <div className="flex items-center justify-between w-full pt-4">
             <span className="text-left font-semibold text-2xl tracking-wider">
-              Edit Product
+              Chỉnh sửa sản phẩm
             </span>
             {/* Close Modal */}
             <span
@@ -148,7 +152,7 @@ const EditProductModal = (props) => {
           <form className="w-full" onSubmit={(e) => submitForm(e)}>
             <div className="flex space-x-1 py-4">
               <div className="w-1/2 flex flex-col space-y-1 space-x-1">
-                <label htmlFor="name">Product Name *</label>
+                <label htmlFor="name">Tên sản phẩm *</label>
                 <input
                   value={editformData.pName}
                   onChange={(e) =>
@@ -164,7 +168,7 @@ const EditProductModal = (props) => {
                 />
               </div>
               <div className="w-1/2 flex flex-col space-y-1 space-x-1">
-                <label htmlFor="price">Product Price *</label>
+                <label htmlFor="price">Giá *</label>
                 <input
                   value={editformData.pPrice}
                   onChange={(e) =>
@@ -182,7 +186,7 @@ const EditProductModal = (props) => {
               </div>
             </div>
             <div className="flex flex-col space-y-2">
-              <label htmlFor="description">Product Description *</label>
+              <label htmlFor="description">Miêu tả chi tiết sản phẩm *</label>
               <textarea
                 value={editformData.pDescription}
                 onChange={(e) =>
@@ -202,7 +206,7 @@ const EditProductModal = (props) => {
             </div>
             {/* Most Important part for uploading multiple image */}
             <div className="flex flex-col mt-4">
-              <label htmlFor="image">Product Images *</label>
+              <label htmlFor="image">Ảnh sản phẩm *</label>
               {editformData.pImages ? (
                 <div className="flex space-x-1">
                   <img
@@ -219,7 +223,7 @@ const EditProductModal = (props) => {
               ) : (
                 ""
               )}
-              <span className="text-gray-600 text-xs">Must need 2 images</span>
+              <span className="text-gray-600 text-xs">cần 2 ảnh</span>
               <input
                 onChange={(e) =>
                   setEditformdata({
@@ -239,7 +243,7 @@ const EditProductModal = (props) => {
             {/* Most Important part for uploading multiple image */}
             <div className="flex space-x-1 py-4">
               <div className="w-1/2 flex flex-col space-y-1">
-                <label htmlFor="status">Product Status *</label>
+                <label htmlFor="status">Trạng thái sản phẩm *</label>
                 <select
                   value={editformData.pStatus}
                   onChange={(e) =>
@@ -263,7 +267,7 @@ const EditProductModal = (props) => {
                 </select>
               </div>
               <div className="w-1/2 flex flex-col space-y-1">
-                <label htmlFor="status">Product Category *</label>
+                <label htmlFor="status">Phân loại sản phẩm *</label>
                 <select
                   onChange={(e) =>
                     setEditformdata({
@@ -278,7 +282,7 @@ const EditProductModal = (props) => {
                   id="status"
                 >
                   <option disabled value="">
-                    Select a category
+                    lựa chọn
                   </option>
                   {categories && categories.length > 0
                     ? categories.map((elem) => {
@@ -312,7 +316,7 @@ const EditProductModal = (props) => {
             </div>
             <div className="flex space-x-1 py-4">
               <div className="w-1/2 flex flex-col space-y-1">
-                <label htmlFor="quantity">Product in Stock *</label>
+                <label htmlFor="quantity">số lượng *</label>
                 <input
                   value={editformData.pQuantity}
                   onChange={(e) =>
@@ -343,6 +347,43 @@ const EditProductModal = (props) => {
                   type="number"
                   className="px-4 py-2 border focus:outline-none"
                   id="offer"
+                />
+              </div>
+            </div>
+            <div className="flex space-x-1 py-4">
+              
+            <div className="w-1/2 flex flex-col space-y-1">
+                <label htmlFor="company">Company</label>
+                <input
+                  value={editformData.pCompany}
+                  onChange={(e) =>
+                    setEditformdata({
+                      ...editformData,
+                      error: false,
+                      success: false,
+                      pCompany: e.target.value,
+                    })
+                  }
+                  type="text"
+                  className="px-4 py-2 border focus:outline-none"
+                  id="company"
+                />
+              </div>
+            <div className="w-1/2 flex flex-col space-y-1">
+                <label htmlFor="details">phân loại chi tiết</label>
+                <input
+                  value={editformData.pDetails}
+                  onChange={(e) =>
+                    setEditformdata({
+                      ...editformData,
+                      error: false,
+                      success: false,
+                      pDetails: e.target.value,
+                    })
+                  }
+                  type="text"
+                  className="px-4 py-2 border focus:outline-none"
+                  
                 />
               </div>
             </div>

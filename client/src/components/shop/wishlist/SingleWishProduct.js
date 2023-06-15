@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { wishListProducts } from "./FetchApi";
+import "./style.css"
 const apiURL = process.env.REACT_APP_API_URL;
-
 
 const Product = () => {
   const history = useHistory();
@@ -51,9 +51,9 @@ const Product = () => {
             return (
               <div
                 key={index}
-                className="relative m-2 md:py-6 md:border-t md:border-b md:my-2 md:mx-0 col-span-1 md:flex md:items-center md:justify-between"
+                className="wish-product relative md:border-t md:border-b md:mx-0 col-span-1 md:flex "
               >
-                <div className="md:w-1/2 md:flex md:items-center">
+                <div className="img-product md:w-1/2 md:flex md:items-center">
                   <img
                     onClick={(e) => history.push(`/products/${product._id}`)}
                     className="cursor-pointer md:h-20 md:w-20 object-cover object-center"
@@ -66,26 +66,31 @@ const Product = () => {
                 </div>
                 <div className="md:w-1/2 md:flex md:items-center md:justify-around">
                   <div className="font-semibold text-gray-600">
-                    ₹{product.pPrice}
+                    {(product.pPrice).toLocaleString()} <sup> &#8363;</sup>
                   </div>
                   {product.pQuantity > 0 ? (
-                    <div className="text-green-500 my-1 md:my-0">In Stock</div>
+                    <div className="text-green-500 my-1 md:my-0">còn hàng</div>
                   ) : (
-                    <div className="text-red-500 my-1 md:my-0">Out Stock</div>
+                    <div className="text-red-500 my-1 md:my-0">hết hàng</div>
                   )}
 
                   <div
-                    style={{ background: "#303031" }}
+          
                     onClick={(e) => history.push(`/products/${product._id}`)}
-                    className="inline-block px-4 py-2 text-white text-xs md:text-base text-center cursor-pointer hover:opacity-75"
-                  >
-                    View
+                    className="inline-block px-4 py-2 text-black text-xs md:text-base text-center cursor-pointer hover:opacity-75"
+                  ><button className="view-btn">
+                    xem chi tiết
+
+                  </button>
                   </div>
                 </div>
-                <div className="absolute top-0 right-0 mx-2 my-2 md:relative">
+                <div 
+                  className="delete-prodcut-wish-btn" 
+                  onClick={(e) => removeFromWishList(product._id)}>
+                <div className="absolute top-0 right-0 mx-2 md:relative">
                   <svg
-                    onClick={(e) => removeFromWishList(product._id)}
-                    className="w-6 h-6 cursor-pointer"
+                    
+                    className="delete-icon w-6 h-6 cursor-pointer"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"
@@ -96,6 +101,7 @@ const Product = () => {
                       clipRule="evenodd"
                     />
                   </svg>
+                </div>
                 </div>
               </div>
             );

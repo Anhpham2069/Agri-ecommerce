@@ -19,18 +19,18 @@ const Menu = () => {
         <div
           onClick={(e) => dispatch({ type: "menu", payload: true })}
           className={`${
-            data.menu ? "border-b-2 border-yellow-700" : ""
+            data.menu ? " border-b-2 border-yellow-700" : ""
           } px-4 py-3 cursor-pointer`}
         >
-          Description
+          Chi tiết sản phẩm
         </div>
         <div
           onClick={(e) => dispatch({ type: "menu", payload: false })}
           className={`${
-            !data.menu ? "border-b-2 border-yellow-700" : ""
+            !data.menu ? " border-b-2 border-yellow-700" : ""
           } px-4 py-3 relative flex cursor-pointer`}
         >
-          <span>Reviews</span>
+          <span>Đánh giá</span>
           <span className="absolute text-xs top-0 right-0 mt-2 bg-yellow-700 text-white rounded px-1">
             {layoutData.singleProductDetail.pRatingsReviews.length}
           </span>
@@ -48,7 +48,7 @@ const RatingReview = () => {
         <ReviewForm />
       ) : (
         <div className="mb-12 md:mx-16 lg:mx-20 xl:mx-24 bg-red-200 px-4 py-2 rounded mb-4">
-          You need to login in for review
+          Bạn cần đăn nhập để đánh giá
         </div>
       )}
     </Fragment>
@@ -74,10 +74,10 @@ const ProductDetailsSectionTwo = (props) => {
 
   return (
     <Fragment>
-      <section className="m-4 place-content-center md:mx-12 md:my-8">
+      <section className="description m-4 place-content-center md:mx-12 md:my-8">
         <Menu />
         {data.menu ? (
-          <div className="mt-6">
+          <div className="description-details mt-6">
             {singleProduct.pDescription
               ? sliceDescription(singleProduct.pDescription).map(
                   (item, index) => {
