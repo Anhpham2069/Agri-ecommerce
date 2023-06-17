@@ -15,6 +15,7 @@ import Page from "./page"
 import ArticlePage from "./article/articlePage";
 import ArticleList from "./article/articleList";
 import allProducts from "./page/Products";
+import Newpage from "./page/newpage"
 
 export {
   Home,
@@ -35,5 +36,6 @@ export {
   Page,
   allProducts,
   ArticlePage,
-  ArticleList
+  ArticleList,
+  Newpage,
 };

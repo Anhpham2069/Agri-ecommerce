@@ -42,7 +42,7 @@ class Order {
       !allProduct ||
       !user ||
       !amount ||
-      // !transactionId ||
+      !transactionId ||
       !address ||
       !phone
     ) {
@@ -53,7 +53,7 @@ class Order {
           allProduct,
           user,
           amount,
-          // transactionId,
+          transactionId,
           address,
           phone,
         });

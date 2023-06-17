@@ -1,10 +1,13 @@
-import React, { Fragment, useContext, useEffect } from "react";
+import React, { Fragment, useContext, useEffect,useState } from "react";
 import { useHistory } from "react-router-dom";
 import { LayoutContext } from "../index";
 import { cartListProduct } from "./FetchApi";
 import { isAuthenticate } from "../auth/fetchApi";
 import { cartList } from "../productDetails/Mixins";
-import { subTotal, quantity, totalCost } from "./Mixins";
+import { subTotal, quantity, totalCost,minusQty,plusQty } from "./Mixins";
+import {faPlus,faMinus} from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "./style.css"
 
 
 const apiURL = process.env.REACT_APP_API_URL;
@@ -14,7 +17,17 @@ const CartModal = () => {
 
   const { data, dispatch } = useContext(LayoutContext);
   const products = data.cartProduct;
+//   const [qty, setQty] = useState(quantity(products._id));
+console.log(products)
+//   const handleMinusQty = () => {
+//     minusQty(products._id);
+//     setQty(qty - 1);
+//   };
 
+//   const handlePlusQty = () => {
+//     plusQty(products._id);
+//     setQty(qty + 1);
+//   };
   const cartModalOpen = () =>
     dispatch({ type: "cartModalToggle", payload: !data.cartModal });
 
@@ -69,14 +82,14 @@ const CartModal = () => {
         } fixed z-40 inset-0 flex items-start justify-end`}
       >
         <div
-          style={{ background: "#303031" }}
+          style={{ background: "white" }}
           className="w-full md:w-5/12 lg:w-4/12 h-full flex flex-col justify-between"
         >
           <div className="overflow-y-auto">
             <div className="border-b border-gray-700 flex justify-between">
-              <div className="p-4 text-white text-lg font-semibold">Giỏ hàng</div>
+              <div className="p-4 text-black text-lg font-semibold">Giỏ hàng</div>
               {/* Cart Modal Close Button */}
-              <div className="p-4 text-white">
+              <div className="p-4 text-black">
                 <svg
                   onClick={(e) => cartModalOpen()}
                   className="w-6 h-6 cursor-pointer"
@@ -99,7 +112,7 @@ const CartModal = () => {
                   return (
                     <Fragment key={index}>
                       {/* Cart Product Start */}
-                      <div className="text-white flex space-x-2 my-4 items-center">
+                      <div className="text-black flex space-x-2 my-4 items-center">
                         <img
                           className="w-16 h-16 object-cover object-center"
                           src={`${apiURL}/uploads/products/${item.pImages[0]}`}
@@ -109,18 +122,26 @@ const CartModal = () => {
                           <div className="my-2">{item.pName}</div>
                           <div className="flex items-center justify-between">
                             <div className="flex items-center justify-between space-x-2">
-                              <div className="text-sm text-gray-400">
+                              <div className="text-sm text-gray-800">
                                 Số Lượng :
                               </div>
                               <div className="flex items-end">
-                                <span className="text-sm text-gray-200">
-                                  {quantity(item._id)}
+                                <span className="plus-qty"
+                                  onClick={()=>minusQty(item._id)}
+                                > 
+                                  <FontAwesomeIcon icon={faMinus} size="xs"/>
+                                </span>
+                                <span className="number-qty text-sm text-gray-700">
+                                &#160;{quantity(item._id)}&#160;
+                                </span>
+                                <span className="plus-qty"> 
+                                    <FontAwesomeIcon icon={faPlus} size="xs"/>
                                 </span>
                               </div>
                             </div>
                             <div>
                               {" "}
-                              <span className="text-sm text-gray-400">
+                              <span className="text-sm text-gray-800">
                                 tổng tiền :
                               </span>{" "}{subTotal(item._id, item.pPrice)} 
                               <sup> &#8363;</sup>
@@ -130,7 +151,7 @@ const CartModal = () => {
                           {/* Cart Product Remove Button */}
                           <div
                             onClick={(e) => removeCartProduct(item._id)}
-                            className="absolute top-0 right-0 text-white"
+                            className="absolute top-0 right-0 text-black"
                           >
                             <svg
                               className="w-5 h-5 cursor-pointer"
@@ -153,7 +174,7 @@ const CartModal = () => {
                 })}
 
               {products === null && (
-                <div className="m-4 flex-col text-white text-xl text-center">
+                <div className="m-4 flex-col text-black text-xl text-center">
                   No product in cart
                 </div>
               )}
@@ -162,7 +183,7 @@ const CartModal = () => {
           <div className="m-4 space-y-4">
             <div
               onClick={(e) => cartModalOpen()}
-              className="cursor-pointer px-4 py-2 border border-gray-400 text-white text-center cursor-pointer"
+              className="cursor-pointer px-4 py-2 border border-gray-400 text-black text-center cursor-pointer"
             >
               Tiếp tục mua sắm
             </div>
@@ -180,7 +201,7 @@ const CartModal = () => {
                   </div>
                 ) : (
                   <div
-                    className="px-4 py-2 bg-black text-white text-center cursor-pointer"
+                    className="px-4 py-2 bg-black text-black text-center cursor-pointer"
                     onClick={(e) => {
                       history.push("/");
                       cartModalOpen();
@@ -199,7 +220,7 @@ const CartModal = () => {
                 )}
               </Fragment>
             ) : (
-              <div className="px-4 py-2 bg-black text-white text-center cursor-not-allowed">
+              <div className="px-4 py-2 bg-black text-black text-center cursor-not-allowed">
                 Checkout
               </div>
             )}

@@ -487,7 +487,7 @@ const ProductDetailsSection = (props) => {
               {/* Incart and out of stock button End */}
             </div>
             <div className="my-4 md:my-6">
-                  <div className="flex items-center space-x-2">
+                  {/* <div className="flex items-center space-x-2">
                     <div className="flex items-center space-x-1">
                       <span>Chuyển tới</span>
                       <input
@@ -499,7 +499,7 @@ const ProductDetailsSection = (props) => {
                         Kiểm tra
                       </button>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
             {/* Make Pay On Delivery or Online Payment, 48 Hours returnable, AgriCom Delivered, Shipping Through Courier */}
             <hr className="my-2" />

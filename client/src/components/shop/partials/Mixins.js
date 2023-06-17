@@ -6,7 +6,7 @@ export const subTotal = (id, price) => {
       subTotalCost = item.quantitiy * price;
     }
   });
-  return subTotalCost;
+  return subTotalCost.toLocaleString();
 };
 
 export const quantity = (id) => {
@@ -18,6 +18,30 @@ export const quantity = (id) => {
     }
   });
   return product;
+};
+
+export const minusQty = (id) => {
+  let carts = JSON.parse(localStorage.getItem("cart"));
+  for (let i = 0; i < carts.length; i++) {
+    if (carts[i].id === id) {
+      if (carts[i].quantity > 1) {
+        carts[i].quantity -= 1;
+        localStorage.setItem("cart", JSON.stringify(carts));
+      }
+      break;
+    }
+  }
+};
+
+export const plusQty = (id) => {
+  let carts = JSON.parse(localStorage.getItem("cart"));
+  for (let i = 0; i < carts.length; i++) {
+    if (carts[i].id === id) {
+      carts[i].quantity += 1;
+      localStorage.setItem("cart", JSON.stringify(carts));
+      break;
+    }
+  }
 };
 
 export const totalCost = () => {

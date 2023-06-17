@@ -25,6 +25,8 @@ const usersRouter = require("./routes/users");
 const customizeRouter = require("./routes/customize");
 const contactusRouter = require("./routes/contactus");
 const potsRouter = require("./routes/post");
+const oderPay = require("./routes/oderpay");
+// const vnpayRouter = require("./controller/vnpay");
 // Import Auth middleware for check user login or not~
 const { loginCheck } = require("./middleware/auth");
 const path = require("path");
@@ -54,6 +56,8 @@ app.use("/api/order", orderRouter);
 app.use("/api/customize", customizeRouter);
 app.use("/api/contact-us", contactusRouter);
 app.use("/api/post", potsRouter);
+app.use("/api/oderpay", oderPay);
+// app.use("/api/vnpay", vnpayRouter);
 
 // Production
 if (process.env.NODE_ENV === "production") {

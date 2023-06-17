@@ -1,3 +1,14 @@
+.oder-wraper{
+    width: 95%;
+    margin: auto;
+    margin-top: 150px;
+}
+.checkout-container{
+    display: flex;
+}
+.checkoutproducts-wraper{
+    width: 50%;
+}
 .oder-product-container{
     margin-top: 70px;
 
@@ -9,4 +20,38 @@
     font-size: 0.8rem;
     font-weight: 600;
     color: black;
+}
+.oder-product{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-bottom: 1px solid rgb(247, 247, 247);
+    margin-bottom: 5px;
+}
+.oder-product-img{
+    width: 20%;
+    height: 100%;
+}
+.oder-product-details{
+ flex: 1;
+ margin-left: 20px;
+}
+.oder-product-name{
+}
+.oder-product-price{
+   
+}
+.oder-product-qty{
+}
+.oder-product-total{
+    margin-right: 5px;
+}
+
+.total-cost{
+    text-align: right;
+    color: brown;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    font-weight: 600;
 }

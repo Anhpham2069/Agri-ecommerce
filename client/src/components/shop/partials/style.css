@@ -208,3 +208,19 @@
 .Btn:active {
   transform: translate(2px ,2px);
 }
+
+
+/* cart */
+
+.plus-qty{
+  color: white;
+  background-color: rgb(114, 111, 111);
+  cursor: pointer;
+}
+.plus-qty svg{
+  margin:  0 5px;
+}
+.number-qty{
+  font-size: 1rem;
+  font-weight: 600;
+}

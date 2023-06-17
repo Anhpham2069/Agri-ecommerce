@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect } from "react";
+import React, { Fragment, useContext, useEffect,useState } from "react";
 import moment from "moment";
 
 import { OrderContext } from "./index";
@@ -10,6 +10,26 @@ const AllCategory = (props) => {
   const { data, dispatch } = useContext(OrderContext);
   const { orders, loading } = data;
 
+  
+//   const [products, setProducts] = useState([])
+
+//   const fetchData = () => {
+//     fetch("http://localhost:8000/api/order/get-all-orders")
+//       .then(response => {
+//         return response.json()
+//       })
+//       .then(data => {
+//         setProducts(data)
+//       })
+//   }
+//   console.log(products)
+
+// useEffect(() => {
+//   fetchData()
+//   // eslint-disable-next-line react-hooks/exhaustive-deps
+// }, []);
+
+  console.log(data)
   useEffect(() => {
     fetchData(dispatch);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -136,7 +156,7 @@ const CategoryTable = ({ order, editOrder }) => {
             </span>
           )}
         </td>
-        <td className="hover:bg-gray-200 p-2 text-center">₹{order.amount}</td>
+        <td className="hover:bg-gray-200 p-2 text-center">{order.amount.toLocaleString()}<sup> &#8363;</sup></td>
         <td className="hover:bg-gray-200 p-2 text-center">
           {order.transactionId}
         </td>
