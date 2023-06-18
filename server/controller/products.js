@@ -117,6 +117,45 @@ class Product {
       }
     }
   }
+  
+  async updateProductQuantity(req, res) {
+    const { productId, quantity } = req.body;
+
+  // Validation
+  if (!productId || !quantity || productId.length !== quantity.length) {
+    return res.json({ error: "productId and quantity must be arrays of the same length" });
+  }
+
+  try {
+    for (let i = 0; i < productId.length; i++) {
+      const id = productId[i];
+      const qty = quantity[i];
+
+      // Find the product by productId
+      const product = await productModel.findById(id);
+
+      if (!product) {
+        console.log(`Product with id ${id} not found`);
+        continue; // Skip to the next iteration
+      }
+
+      // Update the quantity
+      product.pQuantity = qty;
+
+      // Save the updated product
+      const updatedProduct = await product.save();
+
+      if (updatedProduct) {
+        console.log(`Product with id ${id} quantity updated to ${qty}`);
+      }
+    }
+
+    return res.json({ success: "Product quantities updated successfully" });
+  } catch (err) {
+    console.log(err);
+    return res.json({ error: "An error occurred while updating the product quantities" });
+  }
+  }
 
   async postEditProduct(req, res) {
     let {

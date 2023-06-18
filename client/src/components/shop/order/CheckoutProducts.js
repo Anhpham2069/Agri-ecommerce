@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { LayoutContext } from "../layout";
-import { subTotal, quantity,totalCost } from "../partials/Mixins";
+import { subTotal, quantity,totalCost,clearCart } from "../partials/Mixins";
 import axios from "axios"
 import { cartListProduct } from "../partials/FetchApi";
 import { fetchData } from "./Action";
@@ -27,7 +27,7 @@ export const CheckoutComponent = (props) => {
   });
 
 
-console.log(data)
+
   useEffect(() => {
     fetchData(cartListProduct, dispatch);
 
@@ -35,30 +35,78 @@ console.log(data)
   }, []);
 
   const costValue = totalCost();
-  console.log(costValue)
+  const qtyyy = () => {
+    let product = 0;
+    let carts = JSON.parse(localStorage.getItem("cart"));
+    console.log(carts)
+    carts.forEach((item) => {
+        product = item.quantitiy;
+    });
+    return product;
+  };
   
+  console.log(qtyyy())
   const handleSubmit = async (event) => {
     event.preventDefault();
     const order = {
       allProduct: data.cartProduct.map(item => ({ id: item._id, quantitiy: item.pQuantity })),
       user: JSON.parse(localStorage.getItem("jwt")).user._id,
-      amount:  costValue,
+      total:  costValue,
       transactionId : Math.floor(Math.random() * 10),
       address,
       phone,
+      amount: qtyyy(),
     };
-    console.log(order)
+    const qty = {
+      productId: data.cartProduct.map(item => item._id ),
+      quantity:  data.cartProduct.map(item => (item.pQuantity-qtyyy() )),
+    }
+    console.log(qty)
     try {
-      const response = await axios.post('http://localhost:8000/api/oderpay/createOrder', order);
+      const response = await axios.post('http://localhost:8000/api/order/create-order', order);
       // Handle success
+      const responseQty = await axios.post('http://localhost:8000/api/product/update-qty-product',qty )
       console.log('Order created', response.data);
-      console.log(response);
+      console.log(responseQty);
       message.success('Đặt hàng thành công!');
+      // clearCart()
       setTimeout(() => {
         history.push('/'); // Thay thế '/success-page' bằng URL của trang thành công thực tế
       }, 1000);
+
+    } catch (error) {
+      console.error('An error occurred while creating the order:', error);
+    }
+  };
+
+  const handleSubmitVNPay = async (event) => {
+    event.preventDefault();
     
-      // Here you might want to redirect the user to a success page or clear the cart
+    const order = {
+      allProduct: data.cartProduct.map(item => ({ id: item._id, quantitiy: item.pQuantity })),
+      user: JSON.parse(localStorage.getItem("jwt")).user._id,
+      total:  costValue,
+      transactionId : Math.floor(Math.random() * 10),
+      address,
+      phone,
+      amount: qtyyy(),
+    };
+    const qty = {
+      productId: data.cartProduct.map(item => item._id ),
+      quantity:  data.cartProduct.map(item => (item.pQuantity-qtyyy() )),
+
+    }
+
+    try {
+      const response = await axios.post(`${apiURL}/api/order/create-order`, order);
+      // Handle success
+      const amount = costValue;
+      // Create payment URL with orderId
+      const paymentUrlResponse = await axios.post(`${apiURL}/api/vnpay/pay`, { amount });
+      const paymentUrl = paymentUrlResponse.data.url;
+      window.location.href = paymentUrl;
+      const responseQty = await axios.post('http://localhost:8000/api/product/update-qty-product',qty )
+      // Redirect user to payment page
     } catch (error) {
       console.error('An error occurred while creating the order:', error);
     }
@@ -66,23 +114,10 @@ console.log(data)
 
 
 
+
   if (data.loading) {
     return (
       <div className="flex cols items-center justify-center h-screen">
-        {/* <svg
-          className="w-12 h-12 animate-spin text-gray-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-          ></path>
-        </svg> */}
          <Skeleton
       avatar
       paragraph={{
@@ -150,7 +185,7 @@ console.log(data)
                       type="number"
                       id="phone"
                       className="border px-4 py-2"
-                      placeholder="+84"
+                      placeholder="+84 "
                     />
                   </div>
              
@@ -158,10 +193,19 @@ console.log(data)
                     onClick={(e) =>         
                       handleSubmit(e)
                     }
-                    className="w-full px-4 py-2 text-center text-white font-semibold cursor-pointer"
+                    className="oder-btn-cod w-full px-4 py-4 text-center text-white font-semibold cursor-pointer"
                     style={{ background: "#303031" }}
                   >
                     Thanh toán khi nhận hàng
+                  </div>
+                  <div
+                    onClick={(e) =>         
+                      handleSubmitVNPay(e)
+                    }
+                    className="oder-btn-online w-full px-4 py-4 text-center text-white font-semibold cursor-pointer"
+                    style={{ background: "#303031" }}
+                  >
+                    Thanh toán online
                   </div>
                 </div>
               </Fragment>
@@ -230,7 +274,7 @@ const CheckoutProducts = ({ products }) => {
           <div>No product found for checkout</div>
         )}
       </div>
-      <div className="total-cost">tổng tiền: {totalCost().toLocaleString()} <sup> &#8363;</sup></div>
+      <div className="total-cost">Thành tiền: {totalCost().toLocaleString()} <sup> &#8363;</sup></div>
     </Fragment>
   );
 };

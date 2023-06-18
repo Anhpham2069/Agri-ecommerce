@@ -2,7 +2,8 @@ import React, { Fragment, useEffect, useContext } from "react";
 import moment from "moment";
 import { fetchOrderByUser } from "./Action";
 import Layout, { DashboardUserContext } from "./Layout";
-
+import { Table, Button, Space } from 'antd';
+import "./style.css"
 const apiURL = process.env.REACT_APP_API_URL;
 
 const TableHeader = () => {
@@ -10,7 +11,7 @@ const TableHeader = () => {
     <Fragment>
       <thead>
         <tr>
-          <th className="px-4 py-2 border">Sản phẩm</th>
+          <th className="px-10 py-2 border">Sản phẩm</th>
           <th className="px-4 py-2 border">trạng thái</th>
           <th className="px-4 py-2 border">Tổng</th>
           <th className="px-4 py-2 border">Số điện thoại</th>
@@ -18,6 +19,7 @@ const TableHeader = () => {
           <th className="px-4 py-2 border">Giao dịch Id</th>
           <th className="px-4 py-2 border">Thanh toán</th>
           <th className="px-4 py-2 border">Xử lý</th>
+          <th className="px-4 py-2 border">Hành động</th>
         </tr>
       </thead>
     </Fragment>
@@ -27,8 +29,8 @@ const TableHeader = () => {
 const TableBody = ({ order }) => {
   return (
     <Fragment>
-      <tr className="border-b">
-        <td className="w-48 hover:bg-gray-200 p-2 flex flex-col space-y-1">
+      <tr className="oder-item-container border-b">
+        <td className="oder-item hover:bg-gray-200 p-2 flex space-y-1">
           {order.allProduct.map((product, i) => {
             return (
               <span className="block flex items-center space-x-2" key={i}>
@@ -38,10 +40,10 @@ const TableBody = ({ order }) => {
                   alt="productImage"
                 />
                 <span>{product.id.pName}</span>
-                <span>{product.quantitiy}x</span>
               </span>
             );
           })}
+          <span><p>x</p>{order.amount}</span>
         </td>
         <td className="hover:bg-gray-200 p-2 text-center cursor-default">
           {order.status === "Not processed" && (
@@ -70,7 +72,7 @@ const TableBody = ({ order }) => {
             </span>
           )}
         </td>
-        <td className="hover:bg-gray-200 p-2 text-center">{order.amount.toLocaleString()}<sup> &#8363;</sup></td>
+        <td className="hover:bg-gray-200 p-2 text-center">{order.total.toLocaleString()}<sup> &#8363;</sup></td>
         <td className="hover:bg-gray-200 p-2 text-center">{order.phone}</td>
         <td className="hover:bg-gray-200 p-2 text-center">{order.address}</td>
         <td className="hover:bg-gray-200 p-2 text-center">
@@ -82,6 +84,11 @@ const TableBody = ({ order }) => {
         <td className="hover:bg-gray-200 p-2 text-center">
           {moment(order.updatedAt).format("lll")}
         </td>
+        <td className="hover:bg-gray-200 p-2 text-center">
+        <Button type="primary" danger ghost>
+          Hủy đơn
+        </Button>
+        </td>
       </tr>
     </Fragment>
   );
@@ -91,11 +98,65 @@ const OrdersComponent = () => {
   const { data, dispatch } = useContext(DashboardUserContext);
   const { OrderByUser: orders } = data;
 
+  console.log(orders)
   useEffect(() => {
     fetchOrderByUser(dispatch);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+ 
+  // const columns = [
+  //   {
+  //     title: 'Sản phẩm',
+  //     dataIndex: "a",
+  //     key: 'product',
+  //   },
+  //   {
+  //     title: 'Trạng thái',
+  //     dataIndex: 'status',
+  //     key: 'status',
+  //   },
+  //   {
+  //     title: 'Tổng',
+  //     dataIndex: 'total',
+  //     key: 'total',
+  //   },
+  //   {
+  //     title: 'Số điện thoại',
+  //     dataIndex: 'phone',
+  //     key: 'phone',
+  //   },
+  //   {
+  //     title: 'Địa chỉ',
+  //     dataIndex: 'address',
+  //     key: 'address',
+  //   },
+  //   {
+  //     title: 'Giao dịch Id',
+  //     dataIndex: 'transactionId',
+  //     key: 'transactionId',
+  //   },
+  //   {
+  //     title: 'Thanh toán',
+  //     dataIndex: 'createdAt',
+  //     key: 'payment',
+  //   },
+  //   {
+  //     title: 'Xử lý',
+  //     dataIndex: 'updatedAt',
+  //     key: 'processing',
+  //   },
+  //   {
+  //     title: 'Hành động',
+  //     dataIndex: 'action',
+  //     key: 'action',
+  //     render: (_, record) => (
+  //       <Space>
+  //         <Button type="primary" danger ghost>Hủy đơn</Button>
+  //       </Space>
+  //     ),
+  //   },
+  // ];
   if (data.loading) {
     return (
       <div className="w-full md:w-9/12 flex items-center justify-center py-24">
@@ -144,6 +205,7 @@ const OrdersComponent = () => {
                 )}
               </tbody>
             </table>
+            {/* <Table dataSource={orders} columns={columns} /> */}
             <div className="text-sm text-gray-600 mt-2">
               Tổng {orders && orders.length} đơn hàng
             </div>

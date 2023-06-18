@@ -124,7 +124,7 @@
   color: #788a7f;
 }
 .footer-top{
-  height: 60px;
+  height: 10px;
   width: 100%;
   background-color: #0A923C;
 }
@@ -213,8 +213,8 @@
 /* cart */
 
 .plus-qty{
-  color: white;
-  background-color: rgb(114, 111, 111);
+  color: black;
+  border: 1px solid black;
   cursor: pointer;
 }
 .plus-qty svg{

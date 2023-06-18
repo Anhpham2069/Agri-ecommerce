@@ -1,9 +1,13 @@
 import React, { Fragment, useContext, useEffect,useState } from "react";
 import moment from "moment";
-
+import {faPrint} from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Loading from "../loading/LoadingComponent"
 import { OrderContext } from "./index";
 import { fetchData, editOrderReq, deleteOrderReq } from "./Actions";
-
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import PDFOrder from './PDFOrder';
+import "./style.css"
 const apiURL = process.env.REACT_APP_API_URL;
 
 const AllCategory = (props) => {
@@ -29,7 +33,7 @@ const AllCategory = (props) => {
 //   // eslint-disable-next-line react-hooks/exhaustive-deps
 // }, []);
 
-  console.log(data)
+ 
   useEffect(() => {
     fetchData(dispatch);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -38,40 +42,27 @@ const AllCategory = (props) => {
   if (loading) {
     return (
       <div className="flex items-center justify-center p-8">
-        <svg
-          className="w-12 h-12 animate-spin text-gray-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-          ></path>
-        </svg>
+        <Loading />
       </div>
     );
   }
   return (
     <Fragment>
-      <div className="col-span-1 overflow-auto bg-white shadow-lg p-4">
+      <div className="oder-title-wraper col-span-1 overflow-auto bg-white shadow-lg p-4">
         <table className="table-auto border w-full my-2">
           <thead>
             <tr>
-              <th className="px-4 py-2 border">Products</th>
-              <th className="px-4 py-2 border">Status</th>
-              <th className="px-4 py-2 border">Total</th>
-              <th className="px-4 py-2 border">Transaction Id</th>
-              <th className="px-4 py-2 border">Customer</th>
+              <th className="px-4 py-2 border">Sản Phẩm</th>
+              <th className="px-4 py-2 border">Trạng thái</th>
+              <th className="px-4 py-2 border">Thành tiền</th>
+              <th className="px-4 py-2 border">Mã giao dịch</th>
+              <th className="px-4 py-2 border">Khách hàng</th>
               <th className="px-4 py-2 border">Email</th>
-              <th className="px-4 py-2 border">Phone</th>
-              <th className="px-4 py-2 border">Address</th>
-              <th className="px-4 py-2 border">Created at</th>
-              <th className="px-4 py-2 border">Updated at</th>
-              <th className="px-4 py-2 border">Actions</th>
+              <th className="px-4 py-2 border">Số điện thoại</th>
+              <th className="px-4 py-2 border">Địa chỉ</th>
+              <th className="px-4 py-2 border">Ngày đặt hàng</th>
+              <th className="px-4 py-2 border">Cập nhật</th>
+              <th className="px-4 py-2 border">Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -110,11 +101,11 @@ const AllCategory = (props) => {
 /* Single Category Component */
 const CategoryTable = ({ order, editOrder }) => {
   const { dispatch } = useContext(OrderContext);
-
+console.log(order)
   return (
     <Fragment>
-      <tr className="border-b">
-        <td className="w-48 hover:bg-gray-200 p-2 flex flex-col space-y-1">
+      <tr className="oder-admin-wraper border-b">
+        <td className="w-48 hover:bg-gray-200 p-2 flex space-y-1">
           {order.allProduct.map((product, i) => {
             return (
               <span className="block flex items-center space-x-2" key={i}>
@@ -124,10 +115,10 @@ const CategoryTable = ({ order, editOrder }) => {
                   alt="productImage"
                 />
                 <span>{product.id.pName}</span>
-                <span>{product.quantitiy}x</span>
               </span>
             );
           })}
+          <span className="flex"> <p>x</p>&#160;{order.amount}</span>
         </td>
         <td className="hover:bg-gray-200 p-2 text-center cursor-default">
           {order.status === "Not processed" && (
@@ -156,7 +147,7 @@ const CategoryTable = ({ order, editOrder }) => {
             </span>
           )}
         </td>
-        <td className="hover:bg-gray-200 p-2 text-center">{order.amount.toLocaleString()}<sup> &#8363;</sup></td>
+        <td className="hover:bg-gray-200 p-2 text-center">{order.total.toLocaleString()}<sup> &#8363;</sup></td>
         <td className="hover:bg-gray-200 p-2 text-center">
           {order.transactionId}
         </td>
@@ -173,6 +164,13 @@ const CategoryTable = ({ order, editOrder }) => {
           {moment(order.updatedAt).format("lll")}
         </td>
         <td className="p-2 flex items-center justify-center">
+          <span className="cursor-pointer hover:bg-gray-200 rounded-lg p-2 mx-1">
+              <PDFDownloadLink document={<PDFOrder order={order} />} fileName="order.pdf">
+            {({ blob, url, loading, error }) =>
+              loading ? 'Đang tạo tệp PDF...' : <FontAwesomeIcon icon={faPrint} size="lg"/>
+            }
+          </PDFDownloadLink>
+          </span>
           <span
             onClick={(e) => editOrder(order._id, true, order.status)}
             className="cursor-pointer hover:bg-gray-200 rounded-lg p-2 mx-1"

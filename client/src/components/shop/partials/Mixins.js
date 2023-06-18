@@ -52,3 +52,6 @@ export const totalCost = () => {
   });
   return totalCost;
 };
+export const clearCart = () => {
+  localStorage.removeItem("cart");
+};

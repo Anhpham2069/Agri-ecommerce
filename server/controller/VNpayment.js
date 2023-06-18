@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const crypto = require('crypto');
-const axios = require('axios').default;
 
 router.post('/pay', (req, res) => {
     const ipAddr = req.headers['x-forwarded-for'] || req.connection.remoteAddress;

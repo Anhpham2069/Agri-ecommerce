@@ -1,0 +1,12 @@
+.oder-item{
+    width: 180px;
+    padding: auto;
+    margin-top: 30px;
+}
+.oder-item span{
+    display: flex;
+    align-items: center;
+} 
+.oder-item-container{
+    width: 1000px;
+}

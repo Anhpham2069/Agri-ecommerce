@@ -55,3 +55,15 @@
     text-transform: uppercase;
     font-weight: 600;
 }
+.oder-btn-online{
+    margin-top: 5px;
+    text-transform: uppercase;
+    background-color: gray;
+}
+.oder-btn-cod{
+    text-transform: uppercase;
+}
+.oder-btn-online:hover{
+    font-weight: 900;
+    background-color: black;
+}

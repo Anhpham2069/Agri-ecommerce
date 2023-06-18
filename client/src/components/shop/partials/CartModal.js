@@ -17,7 +17,8 @@ const CartModal = () => {
 
   const { data, dispatch } = useContext(LayoutContext);
   const products = data.cartProduct;
-//   const [qty, setQty] = useState(quantity(products._id));
+  // const [qty, setQty] = useState(JSON.parse(localStorage.getItem("cart").quantity))
+// console.log(qty)
 console.log(products)
 //   const handleMinusQty = () => {
 //     minusQty(products._id);
