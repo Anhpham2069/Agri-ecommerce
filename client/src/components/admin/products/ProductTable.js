@@ -2,6 +2,7 @@ import React, { Fragment, useContext, useEffect, useState } from "react";
 import { getAllProduct, deleteProduct } from "./FetchApi";
 import { Tooltip } from 'antd';
 import moment from "moment";
+import 'moment/locale/vi';
 import { ProductContext } from "./index";
 import Loading from "../loading/LoadingComponent"
 import "./style.css"
@@ -11,6 +12,7 @@ import
 { faMagnifyingGlass } 
 from '@fortawesome/free-solid-svg-icons'
 import { Table, Tag, Button, Modal, Space } from 'antd';
+import { message } from 'antd';
 import {
   DeleteTwoTone,EditTwoTone
 } from '@ant-design/icons';
@@ -18,7 +20,6 @@ import axios from "axios";
 
 const apiURL = process.env.REACT_APP_API_URL;
 const { confirm } = Modal;
-
 
 const AllProduct = (props) => {
   const { data, dispatch } = useContext(ProductContext);
@@ -190,6 +191,8 @@ const ProductTable = ({ product, deleteProduct, editProduct,index,category }) =>
       cancelText: 'Không',
       onOk() {
         deleteProduct(product._id)
+        message.success('Xóa sản phẩm thành công!');
+
       },
       onCancel() {
         console.log('Cancel');

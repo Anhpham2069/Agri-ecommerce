@@ -30,6 +30,9 @@ export const deleteOrderReq = async (oId, dispatch) => {
   }
 };
 
+
+
+
 /* Filter All Order */
 export const filterOrder = async (
   type,
@@ -47,31 +50,33 @@ export const filterOrder = async (
         payload: responseData.Orders,
       });
       setDropdown(!dropdown);
-    } else if (type === "Not processed") {
+    } else if (type === "Chưa được xử lý") {
       newData = responseData.Orders.filter(
-        (item) => item.status === "Not processed"
+        (item) => item.status === "Chưa được xử lý"
       );
       dispatch({ type: "fetchOrderAndChangeState", payload: newData });
       setDropdown(!dropdown);
-    } else if (type === "Processing") {
+    } else if (type === "Đã xử lý"
+    ) {
       newData = responseData.Orders.filter(
-        (item) => item.status === "Processing"
+        (item) => item.status === "Đã xử lý"
+
       );
       dispatch({ type: "fetchOrderAndChangeState", payload: newData });
       setDropdown(!dropdown);
-    } else if (type === "Shipped") {
-      newData = responseData.Orders.filter((item) => item.status === "Shipped");
+    } else if (type === "Đang giao") {
+      newData = responseData.Orders.filter((item) => item.status === "Đang giao"  );
       dispatch({ type: "fetchOrderAndChangeState", payload: newData });
       setDropdown(!dropdown);
-    } else if (type === "Delivered") {
+    } else if (type === "Đã giao") {
       newData = responseData.Orders.filter(
-        (item) => item.status === "Delivered"
+        (item) => item.status === "Đã giao"
       );
       dispatch({ type: "fetchOrderAndChangeState", payload: newData });
       setDropdown(!dropdown);
-    } else if (type === "Cancelled") {
+    } else if (type === "Hủy đơn hàng") {
       newData = responseData.Orders.filter(
-        (item) => item.status === "Cancelled"
+        (item) => item.status === "Hủy đơn hàng"
       );
       dispatch({ type: "fetchOrderAndChangeState", payload: newData });
       setDropdown(!dropdown);

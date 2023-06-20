@@ -2,6 +2,7 @@ import React, { Fragment, useContext, useEffect } from "react";
 import { getAllCategory, deleteCategory } from "./FetchApi";
 import { CategoryContext } from "./index";
 import moment from "moment";
+import 'moment/locale/vi';
 import "./style.css"
 
 const apiURL = process.env.REACT_APP_API_URL;

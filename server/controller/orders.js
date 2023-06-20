@@ -84,6 +84,24 @@ class Order {
       });
     }
   }
+  async postUpdateOrderUser(req, res) {
+    let { oId, status } = req.body;
+    if (!oId || !status) {
+      return res.json({ message: "All fields are required" });
+    } else {
+      let currentOrder = orderModel.findByIdAndUpdate(oId, {
+        status: "Hủy đơn hàng", // Cập nhật trạng thái thành "hủy đơn hàng"
+        updatedAt: Date.now(),
+      });
+      currentOrder.exec((err, result) => {
+        if (err) {
+          console.log(err);
+          return res.json({ error: "Failed to update order" });
+        }
+        return res.json({ success: "Order updated successfully" });
+      });
+    }
+  }
 
   async postDeleteOrder(req, res) {
     let { oId } = req.body;

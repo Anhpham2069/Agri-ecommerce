@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useContext } from "react";
 import moment from "moment";
+import 'moment/locale/vi';
 import { fetchOrderByUser } from "./Action";
 import Layout, { DashboardUserContext } from "./Layout";
 import { Table, Button, Space } from 'antd';

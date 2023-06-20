@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useContext } from "react";
 import { OrderContext } from "./index";
 import UpdateOrderModal from "./UpdateOrderModal";
-import SearchFilter from "./SearchFilter";
+// import SearchFilter from "./SearchFilter";
 import { filterOrder } from "./Actions";
 
 const OrderMenu = (props) => {
@@ -28,7 +28,7 @@ const OrderMenu = (props) => {
               >
                 <path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z" />
               </svg>
-              <span className="pr-2">Filter</span>
+              <span className="pr-2">Lọc</span>
             </div>
             <div
               style={{ background: "#303031" }}
@@ -42,12 +42,12 @@ const OrderMenu = (props) => {
                 }
                 className="px-4 py-2 hover:bg-black text-center cursor-pointer"
               >
-                All
+                Tất cả
               </span>
               <span
                 onClick={(e) =>
                   filterOrder(
-                    "Not processed",
+                    "Chưa được xử lý",
                     data,
                     dispatch,
                     dropdown,
@@ -56,12 +56,12 @@ const OrderMenu = (props) => {
                 }
                 className="px-4 py-2 hover:bg-black text-center cursor-pointer"
               >
-                Not processed
+                Chưa Xử lý 
               </span>
               <span
                 onClick={(e) =>
                   filterOrder(
-                    "Processing",
+                    "Đã xử lý",
                     data,
                     dispatch,
                     dropdown,
@@ -70,20 +70,20 @@ const OrderMenu = (props) => {
                 }
                 className="px-4 py-2 hover:bg-black text-center cursor-pointer"
               >
-                Processing
+                Đang xử lý
               </span>
               <span
                 onClick={(e) =>
-                  filterOrder("Shipped", data, dispatch, dropdown, setDropdown)
+                  filterOrder("Đã giao", data, dispatch, dropdown, setDropdown)
                 }
                 className="px-4 py-2 hover:bg-black text-center cursor-pointer"
               >
-                Shipped
+                Đã giao
               </span>
               <span
                 onClick={(e) =>
                   filterOrder(
-                    "Delivered",
+                    "Đang giao",
                     data,
                     dispatch,
                     dropdown,
@@ -92,12 +92,12 @@ const OrderMenu = (props) => {
                 }
                 className="px-4 py-2 hover:bg-black text-center cursor-pointer"
               >
-                Delivered
+                Đang giao
               </span>
               <span
                 onClick={(e) =>
                   filterOrder(
-                    "Cancelled",
+                    "Hủy đơn hàng",
                     data,
                     dispatch,
                     dropdown,
@@ -106,12 +106,12 @@ const OrderMenu = (props) => {
                 }
                 className="px-4 py-2 hover:bg-black text-center cursor-pointer"
               >
-                Cancelled
+                Đơn đã hủy
               </span>
             </div>
           </div>
           <div>
-            <SearchFilter />
+            {/* <SearchFilter /> */}
           </div>
         </div>
         {/*<AddCategoryModal/>*/}

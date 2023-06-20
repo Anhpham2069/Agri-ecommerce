@@ -1,6 +1,7 @@
 import React,{Fragment,useContext,useEffect,useCallback} from 'react';
 import { deleteUser, getAllUser } from './fetchApi';
 import moment from 'moment';
+import 'moment/locale/vi';
 import { UserContext } from './index';
 
 

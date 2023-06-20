@@ -58,7 +58,7 @@ const UpdateOrderModal = (props) => {
         <div className="relative bg-white w-11/12 md:w-3/6 shadow-lg flex flex-col items-center space-y-4  overflow-y-auto px-4 py-4 md:px-8">
           <div className="flex items-center justify-between w-full pt-4">
             <span className="text-left font-semibold text-2xl tracking-wider">
-              Update Order
+              Cập nhật đơn hàng
             </span>
             {/* Close Modal */}
             <span
@@ -83,7 +83,7 @@ const UpdateOrderModal = (props) => {
             </span>
           </div>
           <div className="flex flex-col space-y-1 w-full">
-            <label htmlFor="status">Order Status</label>
+            <label htmlFor="status">Trạng thái đơn hàng</label>
             <select
               value={status}
               name="status"
@@ -91,20 +91,21 @@ const UpdateOrderModal = (props) => {
               className="px-4 py-2 border focus:outline-none"
               id="status"
             >
-              <option name="status" value="Not processed">
-                Not processed
+                 
+              <option name="status" value="Chưa được xử lý">
+              Chưa được xử lý
               </option>
-              <option name="status" value="Processing">
-                Processing
+              <option name="status" value="Đã xử lý">
+              Đã xử lý
               </option>
-              <option name="status" value="Shipped">
-                Shipped
+              <option name="status" value="Đang giao">
+              Đang giao
               </option>
-              <option name="status" value="Delivered">
-                Delivered
+              <option name="status" value="Đã giao">
+              Đã giao
               </option>
-              <option name="status" value="Cancelled">
-                Cancelled
+              <option name="status" value="Hủy đơn hàng">
+              Hủy đơn hàng
               </option>
             </select>
           </div>
@@ -114,7 +115,7 @@ const UpdateOrderModal = (props) => {
               onClick={(e) => submitForm()}
               className="rounded-full bg-gray-800 text-gray-100 text-lg font-medium py-2"
             >
-              Update category
+              Cập nhật đơn hàng
             </button>
           </div>
         </div>

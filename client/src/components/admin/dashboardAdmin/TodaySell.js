@@ -31,7 +31,7 @@ const SellTable = () => {
     <Fragment>
       <div className="col-span-1 overflow-auto bg-white shadow-lg p-4">
         <div className="text-2xl font-semibold mb-6 text-center">
-          Đơn hàng hôm nay{" "}
+          Đơn hàng hôm nay: {" "}
           {data.totalOrders.Orders !== undefined ? ordersList().length : 0}
         </div>
         <table className="table-auto border w-full my-2">
@@ -84,15 +84,15 @@ const TodayOrderTable = ({ order }) => {
   return (
     <Fragment>
       <tr>
-        <td className="w-48 hover:bg-gray-200 p-2 flex flex-col space-y-1">
+        <td className="w-48 hover:bg-gray-200 p-2 flex flex space-y-1">
           {order.allProduct.map((item, index) => {
             return (
               <div key={index} className="flex space-x-2">
                 <span>{item.id.pName}</span>
-                <span>{item.quantitiy}x</span>
               </div>
             );
           })}
+          <span>&#160;{order.amount}x</span>
         </td>
         <td className="p-2 text-left">
           {order.allProduct.map((item, index) => {
@@ -107,27 +107,27 @@ const TodayOrderTable = ({ order }) => {
           })}
         </td>
         <td className="p-2 text-center">
-          {order.status === "Not processed" && (
+          {order.status === "Chưa được xử lý" && (
             <span className="block text-red-600 rounded-full text-center text-xs px-2 font-semibold">
               {order.status}
             </span>
           )}
-          {order.status === "Processing" && (
+          {order.status === "Đã xử lý" && (
             <span className="block text-yellow-600 rounded-full text-center text-xs px-2 font-semibold">
               {order.status}
             </span>
           )}
-          {order.status === "Shipped" && (
+          {order.status === "Đang giao" && (
             <span className="block text-blue-600 rounded-full text-center text-xs px-2 font-semibold">
               {order.status}
             </span>
           )}
-          {order.status === "Delivered" && (
+          {order.status === "Đã giao" && (
             <span className="block text-green-600 rounded-full text-center text-xs px-2 font-semibold">
               {order.status}
             </span>
           )}
-          {order.status === "Cancelled" && (
+          {order.status === "Hủy đơn hàng" && (
             <span className="block text-red-600 rounded-full text-center text-xs px-2 font-semibold">
               {order.status}
             </span>

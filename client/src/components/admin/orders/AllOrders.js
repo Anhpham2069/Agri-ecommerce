@@ -1,14 +1,23 @@
 import React, { Fragment, useContext, useEffect,useState } from "react";
 import moment from "moment";
+import 'moment/locale/vi';
 import {faPrint} from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ExclamationCircleFilled } from '@ant-design/icons';
+
 import Loading from "../loading/LoadingComponent"
 import { OrderContext } from "./index";
 import { fetchData, editOrderReq, deleteOrderReq } from "./Actions";
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import PDFOrder from './PDFOrder';
+import { message } from 'antd';
+import { Table, Tag, Button, Modal, Space } from 'antd';
+
 import "./style.css"
+
+
 const apiURL = process.env.REACT_APP_API_URL;
+const { confirm } = Modal;
 
 const AllCategory = (props) => {
   const { data, dispatch } = useContext(OrderContext);
@@ -102,6 +111,26 @@ const AllCategory = (props) => {
 const CategoryTable = ({ order, editOrder }) => {
   const { dispatch } = useContext(OrderContext);
 console.log(order)
+  const showDeleteConfirm = () => {
+    confirm({
+      title: 'Bạn chắc chắn muốn xóa sản phẩm này chứ',
+      icon: <ExclamationCircleFilled />,
+      // content: 'Some descriptions',
+      okText: 'Có',
+      okType: 'danger',
+      cancelText: 'Không',
+      onOk() {
+        deleteOrderReq(order._id, dispatch)
+        message.success('Xóa đơn hàng thành công!');
+        
+      },
+      onCancel() {
+        console.log('Cancel');
+        message.error('Xóa đơn hàng thất bại!');
+      },
+    });
+  };
+console.log(order)
   return (
     <Fragment>
       <tr className="oder-admin-wraper border-b">
@@ -120,28 +149,33 @@ console.log(order)
           })}
           <span className="flex"> <p>x</p>&#160;{order.amount}</span>
         </td>
+        
+        
+        
+        
+        
         <td className="hover:bg-gray-200 p-2 text-center cursor-default">
-          {order.status === "Not processed" && (
+          {order.status === "Chưa được xử lý" && (
             <span className="block text-red-600 rounded-full text-center text-xs px-2 font-semibold">
               {order.status}
             </span>
           )}
-          {order.status === "Processing" && (
+          {order.status === "Đã xử lý" && (
             <span className="block text-yellow-600 rounded-full text-center text-xs px-2 font-semibold">
               {order.status}
             </span>
           )}
-          {order.status === "Shipped" && (
+          {order.status === "Đang giao" && (
             <span className="block text-blue-600 rounded-full text-center text-xs px-2 font-semibold">
               {order.status}
             </span>
           )}
-          {order.status === "Delivered" && (
+          {order.status === "Đã giao" && (
             <span className="block text-green-600 rounded-full text-center text-xs px-2 font-semibold">
               {order.status}
             </span>
           )}
-          {order.status === "Cancelled" && (
+          {order.status === "Hủy đơn hàng" && (
             <span className="block text-red-600 rounded-full text-center text-xs px-2 font-semibold">
               {order.status}
             </span>
@@ -190,7 +224,7 @@ console.log(order)
             </svg>
           </span>
           <span
-            onClick={(e) => deleteOrderReq(order._id, dispatch)}
+            onClick={(e) => showDeleteConfirm()}
             className="cursor-pointer hover:bg-gray-200 rounded-lg p-2 mx-1"
           >
             <svg
