@@ -1,6 +1,12 @@
-import React ,{useState}from 'react'
-import { isWishReq, unWishReq, isWish } from "../../Mixins";
+import React ,{useState,useContext}from 'react'
+import { isWishReq, unWishReq, isWish,addToCart,cartList } from "../../Mixins";
 import { useHistory, } from "react-router-dom";
+import { LayoutContext } from '../../../layout';
+import { cartListProduct } from "../../../partials/FetchApi";
+import { message } from 'antd';
+
+import { totalCost } from '../../../partials/Mixins';
+import "../style.css"
 
 
 const apiURL = process.env.REACT_APP_API_URL;
@@ -9,53 +15,76 @@ const apiURL = process.env.REACT_APP_API_URL;
 const CartProducts = ({data}) => {
 
     const history = useHistory();
+    const [quantitiy,setQuantitiy] = useState(1)
+    const { _, dispatch: layoutDispatch } =
+    useContext(LayoutContext); // Layout Context
+    const [, setAlertq] = useState(false); // Alert when quantity greater than stock
 
+    // const totalCost = data.pPrice
 
     const [wList, setWlist] = useState(
       JSON.parse(localStorage.getItem("wishList"))
     );
     
+    const fetchData = async () => {
+
+        layoutDispatch({ type: "inCart", payload: cartList() }); // This function change cart in cart state
+      
+        fetchCartProduct();
+        message.success("Thêm vào giỏ hàng thành công") // Updating cart total
+      };
+    
+      const fetchCartProduct = async () => {
+        try {
+          let responseData = await cartListProduct();
+          if (responseData && responseData.Products) {
+            layoutDispatch({ type: "cartProduct", payload: responseData.Products }); // Layout context Cartproduct fetch and dispatch
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
 //   console.log(data)
   return (
     <div className="market-product" key={data._id} >
-        <div className="absolute top-0 right-0 mx-2 my-2 md:mx-4">
-        <svg
-                onClick={(e) => isWishReq(e, data._id, setWlist)}
-                className={`${
-                isWish(data._id, wList) && "hidden"
-                } w-5 h-5 md:w-6 md:h-6 cursor-pointer text-yellow-700`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                />
-            </svg>
+        <div className="absolute z-30 top-0 right-0 mx-2 my-2 md:mx-4">
             <svg
-                onClick={(e) => unWishReq(e, data._id, setWlist)}
-                className={`${
-                !isWish(data._id, wList) && "hidden"
-                } w-5 h-5 md:w-6 md:h-6 cursor-pointer text-yellow-700`}
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path
-                fillRule="evenodd"
-                d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                clipRule="evenodd"
-                />
-            </svg>
-        </div>
-        <div className='item-product'>
+                    onClick={(e) => isWishReq(e, data._id, setWlist)}
+                    className={`${
+                    isWish(data._id, wList) && "hidden"
+                    } w-5 h-5 md:w-6 md:h-6 cursor-pointer text-yellow-700`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                    />
+                </svg>
+                <svg
+                    onClick={(e) => unWishReq(e, data._id, setWlist)}
+                    className={`${
+                    !isWish(data._id, wList) && "hidden"
+                    } w-5 h-5 md:w-6 md:h-6 cursor-pointer text-yellow-700`}
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                    fillRule="evenodd"
+                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                    clipRule="evenodd"
+                    />
+                </svg>
+            </div>
         <div className='offer'>
             <p>-{data.pOffer}%</p>
         </div>
+        <div className='item-product'>
             <img 
             onClick={(e) => history.push(`/products/${data._id}`)}
             src={`${apiURL}/uploads/products/${data.pImages[0]}`}
@@ -102,12 +131,28 @@ const CartProducts = ({data}) => {
             </span>
             </div>     
         </div>
-        {/* <button className="add-to-cart-btn codepro-btn codepro-btn-2 hover-slide-right" 
-            target="blank" 
-            title="Code Pro">
-        <span>thêm vào giỏ hàng</span></button> */}
+        <div className='btn-container-add'>   
+            <button className="add-to-cart-btn codepro-btn codepro-btn-2 hover-slide-right" 
+                target="blank" 
+                title="Code Pro"
+                onClick={(e) =>
+                    addToCart(
+                      data._id,
+                      quantitiy,
+                      data.pPrice,
+                      layoutDispatch,
+                      setQuantitiy,
+                      setAlertq,
+                      fetchData,
+                      totalCost
+                    )
+                  }
+                >
+                <span>thêm vào giỏ hàng</span>
+            </button>
+        </div>
 </div>
   )
 }
 
-export default React.memo(CartProducts)
+export default CartProducts

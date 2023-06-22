@@ -29,6 +29,7 @@ const ProductDetailsSection = (props) => {
     useContext(LayoutContext); // Layout Context
 
   const sProduct = layoutData.singleProductDetail;
+  console.log(sProduct)
   const [pImages, setPimages] = useState(null);
   const [count, setCount] = useState(0); // Slide change state
 

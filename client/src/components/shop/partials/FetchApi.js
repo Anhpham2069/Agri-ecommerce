@@ -27,3 +27,12 @@ export const getAllProduct = async () => {
     console.log(error);
   }
 };
+
+export const getUserById = async (uId) => {
+  try {
+    let res = await axios.post(`${apiURL}/api/user/signle-user`, { uId });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

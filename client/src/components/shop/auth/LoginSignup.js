@@ -2,6 +2,7 @@ import React, { Fragment, useState, useContext } from "react";
 import Login from "./Login";
 import Signup from "./Signup";
 import { LayoutContext } from "../index";
+import "./style.css"
 
 const LoginSignup = (props) => {
   const { data, dispatch } = useContext(LayoutContext);
@@ -37,8 +38,9 @@ const LoginSignup = (props) => {
       <section
         className={` ${
           data.loginSignupModal ? "" : "hidden"
-        } fixed z-40 inset-0 my-8 md:my-20 flex items-start justify-center overflow-auto`}
+        }  fixed z-40 inset-0 my-8 md:my-20 flex items-start justify-center overflow-auto        `}
       >
+        <div className="login-container">
         <div className="w-11/12 md:w-3/5 lg:w-2/4 relative space-y-4 bg-white p-6 md:px-12 md:py-6">
           {login ? <Login /> : <Signup />}
           <div className="flex items-center space-x-2">
@@ -54,7 +56,11 @@ const LoginSignup = (props) => {
             {loginValue}
           </div>
           {/*  Modal Close Button */}
-          <div className="absolute top-0 right-0 mx-4">
+        </div>
+         
+        <div className="banner-login">
+
+        <div className="close-modal absolute right-0 mx-4">
             <svg
               onClick={(e) => {
                 loginSignupModalToggle();
@@ -72,6 +78,7 @@ const LoginSignup = (props) => {
               />
             </svg>
           </div>
+        </div>
         </div>
       </section>
     </Fragment>

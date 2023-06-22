@@ -88,7 +88,7 @@ const AdminSidebar = (props) => {
         </div>
         <hr className="border-b border-gray-200" />
         <div
-          onClick={(e) => history.push("/admin/dashboard/article")}
+          onClick={(e) => history.push("/admin/dashboard/post")}
           className={`${
             location.pathname === "/admin/dashboard/article"
               ? "border-r-4 border-gray-800 bg-gray-100"

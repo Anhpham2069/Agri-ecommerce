@@ -5,12 +5,13 @@ import {
   dashboardUserState,
   dashboardUserReducer,
 } from "./DashboardUserContext";
+import  NavberComponent  from "../partials/Navber";
 import { fetchData } from "./Action";
 
 export const DashboardUserContext = createContext();
 
 const Layout = ({ children }) => {
-  const [data, dispatch] = useReducer(dashboardUserReducer, dashboardUserState);
+  const [dataUser, dispatch] = useReducer(dashboardUserReducer, dashboardUserState);
 
   useEffect(() => {
     fetchData(dispatch);
@@ -18,7 +19,7 @@ const Layout = ({ children }) => {
 
   return (
     <Fragment>
-      <DashboardUserContext.Provider value={{ data, dispatch }}>
+      <DashboardUserContext.Provider value={{ dataUser, dispatch }}>
         <div className="flex-grow">
           <Navber />
           <CartModal />
@@ -26,6 +27,7 @@ const Layout = ({ children }) => {
             <Sidebar />
             {/* All Children pass from here */}
             {children}
+
           </div>
         </div>
         <Footer />

@@ -75,14 +75,14 @@
 .product-category-item:hover{
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
-.add-to-cart-btn{
-  /* display: none; */
+/* .add-to-cart-btn{
+  display: none;
   bottom: 0;
   cursor: pointer;
   width: 100%;
   margin-left: 0;
   margin-bottom: 0px;
-}
+} */
 
 .filter-product{
   width: 20%;

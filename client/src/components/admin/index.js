@@ -3,6 +3,6 @@ import Categories from "./categories";
 import Products from "./products";
 import Orders from "./orders";
 import Users from "./users";
-import Article from "./article";
+import Post from "./post";
 
-export { DashboardAdmin, Categories, Products, Orders,Users,Article };
+export { DashboardAdmin, Categories, Products, Orders,Users,Post };

@@ -8,6 +8,8 @@ export const layoutState = {
   inCart: null,
   cartTotalCost: null,
   orderSuccess: false,
+  userDetails: null,
+  quantity:null,
   loading: false,
 };
 
@@ -48,6 +50,11 @@ export const layoutReducer = (state, action) => {
         ...state,
         cartTotalCost: action.payload,
       };
+    case "updateProduct":
+      return {
+        ...state,
+        quantity: action.payload,
+      };
     case "loginSignupError":
       return {
         ...state,
@@ -58,6 +65,11 @@ export const layoutReducer = (state, action) => {
         ...state,
         orderSuccess: action.payload,
       };
+      case "userDetails":
+        return {
+          ...state,
+          userDetails: action.payload,
+        };
     case "loading":
       return {
         ...state,

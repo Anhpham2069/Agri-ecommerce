@@ -1,13 +1,20 @@
-import React, { Fragment, useEffect, useContext } from "react";
+import React, { Fragment, useEffect, useContext,useState } from "react";
 import moment from "moment";
 import 'moment/locale/vi';
 import { fetchOrderByUser } from "./Action";
 import Layout, { DashboardUserContext } from "./Layout";
-import { Table, Button, Space } from 'antd';
 import "./style.css"
+import { Table, Tag, Button, Modal, Space,message } from 'antd';
+import {ExclamationCircleFilled} from "@ant-design/icons";
+import { editCategory } from "./FetchApi";
+
 const apiURL = process.env.REACT_APP_API_URL;
 
+
+const { confirm } = Modal
 const TableHeader = () => {
+
+
   return (
     <Fragment>
       <thead>
@@ -28,6 +35,34 @@ const TableHeader = () => {
 };
 
 const TableBody = ({ order }) => {
+  const [oId, setOid] = useState("");
+  const [status, setStatus] = useState("Hủy đơn hàng");
+  console.log(oId)
+  console.log(order)
+
+  const showDeleteOderConfirm  =  () => {
+    confirm({
+      title: 'Bạn chắc chắn muốn hủy đơn hàng này chứ ',
+      icon: <ExclamationCircleFilled />,
+      // content: 'Some descriptions',
+      okText: 'Có',
+      okType: 'danger',
+      cancelText: 'Không',
+      onOk() {
+          let response =  editCategory(oId,status)
+          if(response.error) {
+            message.error('hủy đơn không thành công!')
+          }
+          else if(response.success){
+            message.success('hủy đơn thành công!')
+          }
+          message.success('hủy đơn thành công!');
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  };
   return (
     <Fragment>
       <tr className="oder-item-container border-b">
@@ -47,27 +82,27 @@ const TableBody = ({ order }) => {
           <span><p>x</p>{order.amount}</span>
         </td>
         <td className="hover:bg-gray-200 p-2 text-center cursor-default">
-          {order.status === "Not processed" && (
+          {order.status === "Chưa được xử lý" && (
             <span className="block text-red-600 rounded-full text-center text-xs px-2 font-semibold">
               {order.status}
             </span>
           )}
-          {order.status === "Processing" && (
+          {order.status === "Đã xử lý" && (
             <span className="block text-yellow-600 rounded-full text-center text-xs px-2 font-semibold">
               {order.status}
             </span>
           )}
-          {order.status === "Shipped" && (
+          {order.status === "Đang giao" && (
             <span className="block text-blue-600 rounded-full text-center text-xs px-2 font-semibold">
               {order.status}
             </span>
           )}
-          {order.status === "Delivered" && (
+          {order.status === "Đã giao" && (
             <span className="block text-green-600 rounded-full text-center text-xs px-2 font-semibold">
               {order.status}
             </span>
           )}
-          {order.status === "Cancelled" && (
+          {order.status === "Hủy đơn hàng" && (
             <span className="block text-red-600 rounded-full text-center text-xs px-2 font-semibold">
               {order.status}
             </span>
@@ -85,10 +120,15 @@ const TableBody = ({ order }) => {
         <td className="hover:bg-gray-200 p-2 text-center">
           {moment(order.updatedAt).format("lll")}
         </td>
-        <td className="hover:bg-gray-200 p-2 text-center">
-        <Button type="primary" danger ghost>
-          Hủy đơn
-        </Button>
+        <td className="hover:bg-gray-200 p-2 text-center" onClick={()=>setOid(order._id)}>
+          {order.status==="Hủy đơn hàng"?
+            <Button type="primary" primary ghost onClick={()=>message.warning("đơn đã hủy")}>
+              Đơn đã hủy
+            </Button>:
+          <Button type="primary" danger ghost onClick={()=>showDeleteOderConfirm() && setStatus("Hủy đơn hàng")}>
+              Hủy đơn
+          </Button>
+          }
         </td>
       </tr>
     </Fragment>
@@ -96,10 +136,10 @@ const TableBody = ({ order }) => {
 };
 
 const OrdersComponent = () => {
-  const { data, dispatch } = useContext(DashboardUserContext);
-  const { OrderByUser: orders } = data;
+  const { dataUser, dispatch } = useContext(DashboardUserContext);
+  const { OrderByUser: orders } = dataUser;
 
-  console.log(orders)
+  console.log(dataUser)
   useEffect(() => {
     fetchOrderByUser(dispatch);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -158,7 +198,7 @@ const OrdersComponent = () => {
   //     ),
   //   },
   // ];
-  if (data.loading) {
+  if (dataUser.loading) {
     return (
       <div className="w-full md:w-9/12 flex items-center justify-center py-24">
         <svg

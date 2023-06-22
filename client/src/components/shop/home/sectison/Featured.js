@@ -1,5 +1,6 @@
-import React,{useContext} from 'react'
+import React,{useContext,useState,useEffect} from 'react'
 import { HomeContext } from "../index";
+import { getAllProduct } from '../../../admin/products/FetchApi';
 import CartFeatured from "./components/CartFeatured"
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 
@@ -16,8 +17,34 @@ import 'swiper/modules/scrollbar/scrollbar.min.css'
 
 const FeaturedProduct = () => {
   
-  const { data } = useContext(HomeContext);
-  const { products } = data;
+  // const { data } = useContext(HomeContext);
+  // const { products } = data;
+  const [products,setProducts] = useState()
+
+
+console.log(products)
+
+  useEffect(() => {
+    fetchData();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const fetchData = async () => {
+    // dispatch({ type: "loading", payload: true });
+    try {
+      let responseData = await getAllProduct();
+      setProducts(responseData.Products)
+      // setTimeout(() => {
+      //   if (responseData && responseData.Products) {
+      //     dispatch({ type: "setProducts", payload: responseData.Products });
+      //     dispatch({ type: "loading", payload: false });
+      //   }
+      // }, 500);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   
   
   return (

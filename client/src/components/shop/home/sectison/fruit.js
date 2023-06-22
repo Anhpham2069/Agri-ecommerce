@@ -1,4 +1,4 @@
-import React,{useEffect,useContext} from 'react'
+import React,{useEffect,useContext, useState} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import 
@@ -17,11 +17,12 @@ import { Skeleton } from 'antd';
 const Fruit = () => {
     const history = useHistory();
 
-    const { data, dispatch } = useContext(HomeContext);
-    const { products } = data;
+    // const { data, dispatch } = useContext(HomeContext);
+    // const { products } = data;
+    const [products,setProducts] = useState()
 
 
-
+console.log(products)
 
   useEffect(() => {
     fetchData();
@@ -30,25 +31,26 @@ const Fruit = () => {
   }, []);
 
   const fetchData = async () => {
-    dispatch({ type: "loading", payload: true });
+    // dispatch({ type: "loading", payload: true });
     try {
       let responseData = await getAllProduct();
-      setTimeout(() => {
-        if (responseData && responseData.Products) {
-          dispatch({ type: "setProducts", payload: responseData.Products });
-          dispatch({ type: "loading", payload: false });
-        }
-      }, 500);
+      setProducts(responseData.Products)
+      // setTimeout(() => {
+      //   if (responseData && responseData.Products) {
+      //     dispatch({ type: "setProducts", payload: responseData.Products });
+      //     dispatch({ type: "loading", payload: false });
+      //   }
+      // }, 500);
     } catch (error) {
       console.log(error);
     }
   };
 
-  if(data.loading){
-    return(
-      <Skeleton active/>
-    )
-  }
+  // if(products.loading){
+  //   return(
+  //     <Skeleton active/>
+  //   )
+  // }
 
   return (
     <>
@@ -67,6 +69,7 @@ const Fruit = () => {
           >
             xem tất cả <FontAwesomeIcon icon={faAngleRight} size='xs' /></a>
         </div>
+        <div className='wraper-product'>
         <div className='container-product-fruit mb-5'>
            
                 {products && products.length > 0 ? (
@@ -84,6 +87,7 @@ const Fruit = () => {
                     <FontAwesomeIcon icon={faCircleChevronRight} size='xl'/>
                 </span> */}
            
+        </div>
         </div>
     </div>
 

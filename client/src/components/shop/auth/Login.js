@@ -53,7 +53,7 @@ const Login = (props) => {
       <form className="space-y-4">
         <div className="flex flex-col">
           <label htmlFor="name">
-            Địa chỉ email
+            Email
             <span className="text-sm text-gray-600 ml-1">*</span>
           </label>
           <input
@@ -96,7 +96,8 @@ const Login = (props) => {
               className="px-4 py-2 focus:outline-none border mr-1"
             />
             <label htmlFor="rememberMe">
-              Ghi nhớ<span className="text-sm text-gray-600">*</span>
+              Ghi nhớ
+              {/* <span className="text-sm text-gray-600">*</span> */}
             </label>
           </div>
           <a className="block text-gray-600" href="/">

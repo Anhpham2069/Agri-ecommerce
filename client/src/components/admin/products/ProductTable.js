@@ -29,13 +29,15 @@ const AllProduct = (props) => {
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState();
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [itemsPerPage] = useState(10);
-  // const lastIndex = currentPage * itemsPerPage;
-  // const firstIndex = lastIndex - itemsPerPage;
-  // const currentProducts = searchResults && searchResults.slice(firstIndex, lastIndex);
-  // const totalPages = Math.ceil(currentProducts.length / itemsPerPage);
-  // console.log(currentProducts)
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
+
+
+  const lastIndex = currentPage * itemsPerPage;
+  const firstIndex = lastIndex - itemsPerPage;
+  const currentProducts = searchResults && searchResults.slice(firstIndex, lastIndex);
+    const totalPages = Math.ceil(searchResults && searchResults.length / itemsPerPage);
+  console.log(searchResults)
   useEffect(() => {
     setSearchResults(products);
   }, [products])
@@ -60,7 +62,7 @@ const AllProduct = (props) => {
 
   useEffect(() => {
     fetchData();
-
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -76,6 +78,7 @@ const AllProduct = (props) => {
           payload: responseData.Products,
         });
         setLoading(false);
+
       }
     }, 1000);
  
@@ -105,9 +108,14 @@ const AllProduct = (props) => {
     setSearchResults(products.filter(a=>(a.pName.toLowerCase().includes(e.target.value) || a.pCategory.cName.toLowerCase().includes(e.target.value))))
   }
 
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   if (loading) {
     return (
-      <div className="flex items-center justify-center p-8">
+      <div className="flex items-center justify-center p-10 mt-40">
         <Loading />
       </div>
     );
@@ -143,19 +151,35 @@ const AllProduct = (props) => {
             </tr>
           </thead>
           <tbody>
-            {searchResults && searchResults.length > 0 ? (
-              searchResults.map((item, key) => {
+            {currentProducts && currentProducts.length > 0 ? (
+              currentProducts.map((item, key) => {
                 return (
-                  <ProductTable
-                    product={item}
-                    category={item.pCategory}
-                    editProduct={(pId, product, type) =>
-                      editProduct(pId, product, type)
-                    }
-                    deleteProduct={(pId) => deleteProductReq(pId)}
-                    key={key}
-                    index={key}
-                  />
+                  <>  
+                    <ProductTable
+                      product={item}
+                      category={item.pCategory}
+                      editProduct={(pId, product, type) =>
+                        editProduct(pId, product, type)
+                      }
+                      deleteProduct={(pId) => deleteProductReq(pId)}
+                      key={key}
+                      index={key}
+                    />
+                    {totalPages > 1 && (
+                            <div className='page-number'>
+                              {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+                                (pageNumber) => (
+                                  <button
+                                    key={pageNumber}
+                                    onClick={() => handlePageChange(pageNumber)}
+                                  >
+                                    {pageNumber}
+                                  </button>
+                                )
+                              )}
+                            </div>
+                          )}
+                  </>
                   );
               })
             ) : (

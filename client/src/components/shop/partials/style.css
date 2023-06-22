@@ -1,12 +1,29 @@
 .navbar{
-  background-color: #5CB85C;
-  font-family: 'Times New Roman', Times, serif;
+  background-color: white;
+  /* font-family: 'Times New Roman', Times, serif; */
+  color: #0A923C;
 }
+.user-navber{
+  background-color: #0A923C;
+  color: white;
+  border: 2px solid #0A923C;
+  display: flex;
+  border-radius: 5px;
+}
+.user-navber span{
+  color: white;
+  padding: 10px 10px 10px 5px;
+}
+.user-nb-name{
+  font-size: 0.9rem;
+  padding: 10px 10px 10px 5px;
 
+}
 
 .userDropdown {
   display: none;
   z-index: 22;
+  right: -30%;
 }
 
 .userDropdownBtn:hover .userDropdown {
@@ -41,7 +58,7 @@
   background-color: #5CB85C;
 }
 .list{
-  background-color: #5CB85C;
+  /* background-color: #5CB85C; */
   margin-left: -20px;
   padding: 15px;
   

@@ -4,7 +4,8 @@ import { logout } from "./Action";
 import { DashboardUserContext } from "./Layout";
 
 const Sidebar = (props) => {
-  const { data } = useContext(DashboardUserContext);
+  const { dataUser } = useContext(DashboardUserContext);
+  // console.log(data)
 
   const history = useHistory();
   const location = useLocation();
@@ -33,7 +34,7 @@ const Sidebar = (props) => {
           <div className="flex flex-col w-full">
             <span className="text-sm">Hello,</span>
             <span className="text-lg">
-              {data.userDetails ? data.userDetails.name : ""}
+              {dataUser.userDetails ? dataUser.userDetails.name : ""}
             </span>
           </div>
         </div>

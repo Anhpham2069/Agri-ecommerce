@@ -81,7 +81,6 @@ const currentProducts = filteredProducts.slice(firstIndex, lastIndex);
 // Tính toán tổng số trang
 const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
 
-
 const categories = ["Chợ online", "Hoa Quả Nhập Khẩu 1", "ĐặC Sản"];
   return (
     <>

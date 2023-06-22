@@ -1,26 +1,42 @@
 import React, { useState,useContext } from 'react';
 import axios from 'axios';
 import { ArticleContext } from './index';
+import {createPost} from "./fetchApi"
+import { message } from 'antd';
 import "./style.css"
+// import { InboxOutlined, UploadOutlined } from '@ant-design/icons';
+// import {
+//   Button,
+//   Checkbox,
+//   Col,
+//   Form,
+//   InputNumber,
+//   Radio,
+//   Rate,
+//   Row,
+//   Select,
+//   Slider,
+//   Space,
+//   Switch,
+//   Upload,
+// } from 'antd';
 
 
 const apiURL = process.env.REACT_APP_API_URL;
 function AddArticleForm({ onSubmit }) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [author, setAuthor] = useState('');
   const [image, setImage] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    try {
-      const formData = new FormData();
-      formData.append('title', title);
-      formData.append('content', content);
-      formData.append('image', image);
 
-      await axios.post(`${apiURL}/api/posts`, formData);
-      alert('Thêm bài viết thành công');
+    try {
+        let response = await createPost(title,content,author,image)
+        if(response){
+          message.success("them bai viet thanh cong")
+        }
     } catch (error) {
       console.error('Lỗi khi thêm bài viết:', error);
       alert('Đã xảy ra lỗi khi thêm bài viết');
@@ -29,6 +45,7 @@ function AddArticleForm({ onSubmit }) {
     // Reset form fields
     setTitle('');
     setContent('');
+    setAuthor('');
     setImage(null);
   };
 
@@ -57,6 +74,18 @@ function AddArticleForm({ onSubmit }) {
           onChange={(e) => setContent(e.target.value)}
         ></textarea>
       </div>
+      <div className="form-group">
+        <label htmlFor="title" className="form-label">
+          Tác giả
+        </label>
+        <input
+          type="text"
+          className="form-control"
+          id="title"
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
+        />
+      </div>
       <label htmlFor="image">Hình ảnh:</label>
         <input
           type="file"
@@ -64,6 +93,7 @@ function AddArticleForm({ onSubmit }) {
           accept="image/*"
           onChange={(e) => setImage(e.target.files[0])}
         /><br /><br />
+      
       <button type="submit" className="btn btn-primary">
         Thêm bài viết
       </button>
@@ -72,3 +102,15 @@ function AddArticleForm({ onSubmit }) {
 }
 
 export default AddArticleForm;
+
+{/* <Form.Item
+name="upload"
+label="Upload"
+valuePropName="fileList"
+// getValueFromEvent={normFile}
+extra="long"
+>
+<Upload name="logo" action="/upload.do" listType="picture">
+  <Button icon={<UploadOutlined />}>Click to upload</Button>
+</Upload>
+</Form.Item> */}

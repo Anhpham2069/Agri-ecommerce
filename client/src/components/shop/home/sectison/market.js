@@ -1,10 +1,11 @@
-import React,{useContext} from 'react'
+import React,{useContext,useState,useEffect} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import 
 { faAngleRight} 
 from '@fortawesome/free-solid-svg-icons'
 import "./style.css"
 import { HomeContext } from "../index";
+import { getAllProduct } from "../../../admin/products/FetchApi";
 import { useHistory, } from "react-router-dom";
 import CartProducts from './components/cartProducts';
 import { Skeleton } from 'antd';
@@ -14,10 +15,26 @@ import { NavLink } from 'react-router-dom';
 const Market = () => {
   const history = useHistory();
   
-  const { data, } = useContext(HomeContext);
-  const { products } = data;
+  // const { data, } = useContext(HomeContext);
+  // const { products } = data;
+  const [products,setProducts] = useState()
+  const [loading,setLoading] = useState(true)
+  useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  if(data.loading){
+
+  const fetchData = async () => {
+    try {
+      let responseData = await getAllProduct();
+      setProducts(responseData.Products)
+      setLoading(false)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  if(loading){
     return(
       <Skeleton active/>
     )
@@ -43,15 +60,13 @@ const Market = () => {
             xem tất cả <FontAwesomeIcon icon={faAngleRight} size='xs' /></a>
         </div>
         <div className='container-product'>
-            <div className='market-products-container mb-5'>
+            <div className='market-products-container'>
             {products && products.length > 0 ? (
                    products
                   .filter(obj => obj.pCategory.cName === 'Chợ Online')
                   .map((item,index)=>{
                         return(
                             <CartProducts key={index} data={item}/>
-                           
-                            
                         )    })
                         ):[]}
                 

@@ -15,7 +15,7 @@ import {
   ArticleList,
   Newpage
 } from "./shop";
-import { DashboardAdmin, Categories, Products, Orders, Users, Article } from "./admin";
+import { DashboardAdmin, Categories, Products, Orders, Users, Post } from "./admin";
 import { UserProfile, UserOrders, SettingUser } from "./shop/dashboardUser";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -74,8 +74,8 @@ const Routes = (props) => {
         />
         <AdminProtectedRoute
           exact={true}
-          path="/admin/dashboard/article"
-          component={Article}
+          path="/admin/dashboard/post"
+          component={Post}
         />
         {/* Admin Routes End */}
 

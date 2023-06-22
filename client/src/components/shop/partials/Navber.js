@@ -1,6 +1,7 @@
 import React, { Fragment, useContext,useEffect,useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {ShoppingCartOutlined,UserOutlined,} from "@ant-design/icons"
 import 
 { faGear,faPepperHot,faAppleWhole,faSeedling,faCartShopping,faHandshakeAngle,faListUl,faChevronDown,faRightFromBracket,} 
 from '@fortawesome/free-solid-svg-icons'
@@ -13,11 +14,14 @@ import { isAdmin } from "../auth/fetchApi";
 import DropdownMenu from "./dropdownMenu";
 import Search from "./search";
 import { NavLink } from "react-router-dom";
+import { DashboardUserContext } from "../dashboardUser/Layout";
+
 
 const Navber = (props) => {
+  // const { dataUser } = useContext(DashboardUserContext);
   const history = useHistory();
   const location = useLocation();
-
+  
   const [categories, setCategories] = useState(null);
   const [isHidden, setIsHidden] = useState(false);
   const [ products,setProducts] = useState(false);
@@ -68,8 +72,6 @@ const Navber = (props) => {
     }
   };
 
-  // console.log(products)
-
 
 
   const { data, dispatch } = useContext(LayoutContext);
@@ -99,11 +101,11 @@ const Navber = (props) => {
   return (
     <Fragment>
       {/* Navber Section */}
-      <nav className="navbar top-0 z-20 fixed w-full shadow-lg lg:shadow-none bg-white">
+      <nav className="navbar top-0 z-40 fixed w-full shadow-lg lg:shadow-none bg-white">
         <div className="m-4 md:mx-10 md:my-4 grid grid-cols-4 lg:grid-cols-3 ">
-        <div className="hidden lg:block col-span-1 flex text-white mt-1 ">
+        <div className="hidden lg:block col-span-1 flex  mt-1 ">
             <span
-              className="hover:bg-gray-200 text-xl font-bold px-4 py-3 rounded-lg font-light tracking-widest hover:text-gray-800 cursor-pointer"
+              className=" text-xl font-bold px-4 py-3 rounded-lg font-light tracking-widest hover:text-gray-800 cursor-pointer"
               onClick={(e) => history.push("/")}
             >
               Trang chủ
@@ -137,7 +139,7 @@ const Navber = (props) => {
           <div
             onClick={(e) => history.push("/")}
             style={{ letterSpacing: "0.70rem" }}
-            className="hidden lg:block flex items-left col-span-1 text-center text-white font-bold tracking-widest uppercase text-2xl cursor-pointer"
+            className="hidden lg:block flex items-left col-span-1 text-center  font-bold tracking-widest uppercase text-2xl cursor-pointer"
           >
             Nông Sản Xanh
           </div>
@@ -156,12 +158,13 @@ const Navber = (props) => {
                   location.pathname === "/wish-list"
                     ? "fill-current text-gray-700"
                     : ""
-                } w-8 h-8 text-white cursor-pointer hover:text-gray-800`}
+                } w-8 h-8  cursor-pointer hover:text-gray-800`}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
+                
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -169,6 +172,7 @@ const Navber = (props) => {
                   d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
                 />
               </svg>
+              {/* <HeartTwoTone /> */}
             </div>
             
             {localStorage.getItem("jwt") ? (
@@ -177,8 +181,8 @@ const Navber = (props) => {
                   className="userDropdownBtn  px-2 py-2 rounded-lg relative"
                   title="Logout"
                 >
-                  <svg
-                    className="cursor-pointer w-8 h-8 text-white hover:text-gray-800"
+                  {/* <svg
+                    className="cursor-pointer w-8 h-8  hover:text-gray-800"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -190,12 +194,19 @@ const Navber = (props) => {
                       strokeWidth={2}
                       d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                     />
-                  </svg>
+                  </svg> */}
+                  <div className="user-navber">
+                  <UserOutlined />
+                  <span className="user-nb-name text-lg">
+                      Anh
+                    {/* {dataUser.userDetails ? dataUser.userDetails.name : ""} */}
+                  </span>
+                  </div>
                   
-                  <div className="userDropdown absolute right-0 mt-1 bg-gray-200 rounded">
+                  <div className="userDropdown absolute mt-1 bg-white rounded">
                     {!isAdmin() ? (
                       <Fragment>
-                        <li className="flex flex-col text-gray-700 w-48 shadow-lg">
+                        <li className="flex flex-col text-black w-48 shadow-lg">
                           <span
                             onClick={(e) => history.push("/user/orders")}
                             className="flex space-x-2 py-2 px-8 hover:bg-gray-400 cursor-pointer"
@@ -216,7 +227,7 @@ const Navber = (props) => {
                                 />
                               </svg>
                             </span>
-                            <span>My Orders</span>
+                            <span>Đơn hàng</span>
                           </span>
                           <span
                             onClick={(e) => history.push("/user/profile")}
@@ -238,7 +249,7 @@ const Navber = (props) => {
                                 />
                               </svg>
                             </span>
-                            <span>My Account</span>
+                            <span>Tài khoản</span>
                           </span>
                           <span
                             onClick={(e) => history.push("/wish-list")}
@@ -260,7 +271,7 @@ const Navber = (props) => {
                                 />
                               </svg>
                             </span>
-                            <span>My Wishlist</span>
+                            <span>Yêu thích</span>
                           </span>
                           <span
                             onClick={(e) => history.push("/user/setting")}
@@ -288,7 +299,7 @@ const Navber = (props) => {
                                 />
                               </svg>
                             </span>
-                            <span>Setting</span>
+                            <span>Cài đặt</span>
                           </span>
                           <span
                             onClick={(e) => logout()}
@@ -298,7 +309,7 @@ const Navber = (props) => {
                             <FontAwesomeIcon icon={faRightFromBracket} />
 
                             </span>
-                            <span>Logout</span>
+                            <span>Đăng xuất</span>
                           </span>
                         </li>
                       </Fragment>
@@ -321,7 +332,7 @@ const Navber = (props) => {
                             
                             <FontAwesomeIcon icon={faRightFromBracket} />
 
-                            <span>Logout</span>
+                            <span>Đăng xuất</span>
                           </span>
                         </li>
                       </Fragment>
@@ -336,20 +347,12 @@ const Navber = (props) => {
                 className="cursor-pointer hover:bg-gray-200 px-2 py-2 rounded-lg"
                 title="Login"
               >
-                <svg
-                  className="w-8 h-8 text-gray-600 hover:text-gray-800"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
-                  />
-                </svg>
+            
+               <div className="user-navber">
+                  <span className="text-lg">
+                        Đăng nhập                   
+                  </span>
+                  </div>
               </div>
             )}
             {/* Cart Modal Button */}
@@ -358,8 +361,8 @@ const Navber = (props) => {
               className=" px-2 py-2 rounded-lg relative cursor-pointer"
               title="Cart"
             >
-              <svg
-                className="w-8 h-8 text-white hover:text-gray-800"
+              {/* <svg
+                className="w-8 h-8  hover:text-gray-800"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -371,8 +374,9 @@ const Navber = (props) => {
                   strokeWidth={2}
                   d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
                 />
-              </svg>
-              <span className="absolute top-0 ml-6 mt-1 bg-yellow-700 rounded px-1 text-white text-xs hover:text-gray-200 font-semibold">
+              </svg> */}
+              <ShoppingCartOutlined style={{fontSize: "1.9rem"}}/>
+              <span className="absolute top-0 mt-1  rounded px-1 text-red-400  text-xs hover:text-gray-200 font-semibold">
                 {data.cartProduct !== null ? data.cartProduct.length : 0}
               </span>
             </div>
@@ -418,14 +422,16 @@ const Navber = (props) => {
 
           <li className="menu p-4 px-8 hover:bg-green-700">
             <span>
-              <FontAwesomeIcon icon={faCartShopping} size="xs" />&nbsp;Đi chợ online&nbsp;
+              {/* <FontAwesomeIcon icon={faCartShopping} size="xs" />&nbsp; */}
+              Đi chợ online&nbsp;
             </span>
           </li>
           </NavLink>
           <NavLink to="/products/category/6458b19701a5b61c4cc656b3">
             <li className="menu p-4 px-4 hover:bg-green-700 dropdown">
                 <span className="dropdown-btn">
-                  <FontAwesomeIcon icon={faAppleWhole} size="xs" />&nbsp;Hoa quả &nbsp;
+                  {/* <FontAwesomeIcon icon={faAppleWhole} size="xs" />&nbsp; */}
+                  Hoa quả &nbsp;
                   {/* <FontAwesomeIcon icon={faChevronDown} size="xs"/> */}
                 </span> 
                 {/* <DropdownMenu /> */}
@@ -434,7 +440,8 @@ const Navber = (props) => {
           <NavLink to="/products/category/6458b19701a5b61c4cc656b3">
             <li className="menu p-4 px-4 hover:bg-green-700 dropdown">
               <span className="dropdown-btn">
-                  <FontAwesomeIcon icon={faPepperHot} size="xs" /> &nbsp;Rau củ &nbsp;
+                  {/* <FontAwesomeIcon icon={faPepperHot} size="xs" /> &nbsp; */}
+                  Rau củ &nbsp;
                   {/* <FontAwesomeIcon icon={faChevronDown} size="xs"/> */}
               </span>
               {/* <DropdownMenu /> */}
@@ -444,7 +451,7 @@ const Navber = (props) => {
 
           <li className="menu p-4 px-4 hover:bg-green-700 dropdown">
             <span className="dropdown-btn">
-              <FontAwesomeIcon icon={faSeedling} size="xs" />
+              {/* <FontAwesomeIcon icon={faSeedling} size="xs" /> */}
               &nbsp;Đặc sản &nbsp;
               {/* <FontAwesomeIcon icon={faChevronDown} size="xs"/> */}
             </span>
@@ -456,7 +463,8 @@ const Navber = (props) => {
               <span className="dropdown-btn" 
                 // onClick={(e) => history.push("")}
               >
-                <FontAwesomeIcon icon={faSeedling} size="xs" />&nbsp;Liên Hệ &nbsp;
+                {/* <FontAwesomeIcon icon={faSeedling} size="xs" />&nbsp; */}
+                Liên Hệ &nbsp;
               </span>
             {/* <DropdownMenu /> */}
             </li>

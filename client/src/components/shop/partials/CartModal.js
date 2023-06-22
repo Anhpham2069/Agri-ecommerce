@@ -5,6 +5,7 @@ import { cartListProduct } from "./FetchApi";
 import { isAuthenticate } from "../auth/fetchApi";
 import { cartList } from "../productDetails/Mixins";
 import { subTotal, quantity, totalCost,minusQty,plusQty } from "./Mixins";
+import {updateQuantity} from "../productDetails/Mixins"
 import {faPlus,faMinus} from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./style.css"
@@ -17,18 +18,10 @@ const CartModal = () => {
 
   const { data, dispatch } = useContext(LayoutContext);
   const products = data.cartProduct;
-  // const [qty, setQty] = useState(JSON.parse(localStorage.getItem("cart").quantity))
-// console.log(qty)
-console.log(products)
-//   const handleMinusQty = () => {
-//     minusQty(products._id);
-//     setQty(qty - 1);
-//   };
+  const [qty,setQty] = useState(1)
 
-//   const handlePlusQty = () => {
-//     plusQty(products._id);
-//     setQty(qty + 1);
-//   };
+console.log(products)
+
   const cartModalOpen = () =>
     dispatch({ type: "cartModalToggle", payload: !data.cartModal });
 
@@ -128,7 +121,7 @@ console.log(products)
                               </div>
                               <div className="flex items-end">
                                 <span className="plus-qty"
-                                  onClick={()=>minusQty(item._id)}
+                                  onClick={()=>setQty(qty-1)}
                                 > 
                                   <FontAwesomeIcon icon={faMinus} size="xs"/>
                                 </span>
