@@ -34,13 +34,22 @@ export const getAllPost = async () => {
 
 export const updatePost = async (postId, data) => {
   try {
-    const response = await axios.put(`/api/post/update-post/${postId}`, data);
+    const response = await axios.put(`${apiURL}/api/post/update-post/${postId}`, data);
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.error);
   }
 }
 
+
+export const deletePost = async (postId) =>{
+  try{
+    const response = await axios.delete(`${apiURL}/api/post/delete-post/${postId}`)
+    return response.data
+  }catch (error){
+    console.log(error)
+  }
+}
 
 // Sử dụng hàm createPost
 // const title = 'Tiêu đề bài viết';

@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react';
-import Article from './articlePage';
+import Article from './postPage';
 import { Footer, Navber } from "../partials";
 
 const apiURL = process.env.REACT_APP_API_URL;

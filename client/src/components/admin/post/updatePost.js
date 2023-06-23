@@ -26,14 +26,14 @@ const apiURL = process.env.REACT_APP_API_URL;
 
 
 
-function UpdatePostModal({ postId,posts }) {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [author, setAuthor] = useState('');
-  const [image, setImage] = useState(null);
+function UpdatePostModal({ postId,postTitle,postContent,postAuthor,postImg }) {
+  const [title, setTitle] = useState(postTitle);
+  const [content, setContent] = useState(postContent);
+  const [author, setAuthor] = useState(postAuthor);
+  const [image, setImage] = useState(postImg);
 
 
-    console.log(posts)
+    // console.log(posts)
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
@@ -55,7 +55,6 @@ function UpdatePostModal({ postId,posts }) {
     setTitle('');
     setContent('');
     setAuthor('');
-    setImage(null);
   };
 
   return (

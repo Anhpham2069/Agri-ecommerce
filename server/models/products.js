@@ -54,6 +54,10 @@ const productSchema = new mongoose.Schema(
         },
       },
     ],
+    pExpirationDate: {
+      type: Date,
+      default: null,
+    },
     pStatus: {
       type: String,
       required: true,

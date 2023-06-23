@@ -10,7 +10,8 @@ import {
   ProductByCategory,
   CheckoutPage,
   ContactUs,
-  ArticlePage,
+  PostPage,
+  PostDetails,
   allProducts,
   ArticleList,
   Newpage
@@ -34,6 +35,7 @@ const Routes = (props) => {
         <Route exact path="/contact-us" component={ContactUs} />
         <Route exact path="/wish-list" component={WishList} />
         <Route exact path="/products/:id" component={ProductDetails} />
+        <Route exact path="/post/:id" component={PostPage} />
         <Route
           exact
           path="/products/category/:catId"

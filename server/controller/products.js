@@ -61,7 +61,7 @@ class Product {
   }
 
   async postAddProduct(req, res) {
-    let { pName, pDescription, pPrice, pQuantity, pCategory, pOffer, pStatus,pCompany,pDetails} =
+    let { pName, pDescription, pPrice, pQuantity, pCategory, pOffer, pStatus,pCompany,pDetails,pExpirationDate} =
       req.body;
     let images = req.files;
     // Validation
@@ -74,6 +74,7 @@ class Product {
       !pOffer |
       !pStatus|
       !pCompany |
+      !pExpirationDate |
       !pDetails 
     ) {
       Product.deleteImages(images, "file");
@@ -106,10 +107,26 @@ class Product {
           pOffer,
           pStatus,
           pDetails,
+          pExpirationDate,
           pCompany
         });
         let save = await newProduct.save();
         if (save) {
+          if (pExpirationDate) {
+            const expirationDate = new Date(pExpirationDate);
+            const currentDate = new Date();
+    
+            if (expirationDate > currentDate) {
+              const timeUntilExpiration = expirationDate.getTime() - currentDate.getTime();
+              setTimeout(() => {
+                productModel.findByIdAndUpdate(save._id, { pStatus: 'disabled' }, (err) => {
+                  if (err) {
+                    console.log('Error disabling product:', err);
+                  }
+                });
+              }, timeUntilExpiration);
+            }
+          }
           return res.json({ success: "Product created successfully" });
         }
       } catch (err) {
@@ -169,6 +186,7 @@ class Product {
       pStatus,
       pImages,
       pCompany,
+      pExpirationDate,
       pDetails,
     } = req.body;
     let editImages = req.files;
@@ -184,6 +202,7 @@ class Product {
       !pOffer |
       !pCompany |
       !pDetails |
+      ! pExpirationDate |
       !pStatus
     ) {
       return res.json({ error: "All filled must be required" });
@@ -208,6 +227,7 @@ class Product {
         pOffer,
         pCompany,
         pDetails,
+        pExpirationDate,
         pStatus,
       };
       if (editImages.length == 2) {

@@ -1,4 +1,6 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
+import { useHistory } from "react-router-dom"
+import { getAllPost } from './fetchApi'
 import "./style.css"
 
 import ANH from "../../../../images/productsData/news/Nguon-qua-cam-sanh-chat-luong-tai-Foodmap-1200x675.jpg"
@@ -8,10 +10,29 @@ import ANH4 from "../../../../images/productsData/news/chatluong.jpg"
 import ANH5 from "../../../../images/productsData/news/thachthuc.jpg"
 
 
-
+const apiURL = process.env.REACT_APP_API_URL;
 
 const News = () => {
-  return (
+    const history = useHistory()
+
+    const [posts,setPosts] = useState()
+
+    console.log(posts)
+    useEffect(()=>{
+        fetchData()
+    },[])
+
+    const fetchData = async () =>{
+        const res = await getAllPost()
+        if(res){
+            setPosts(res)
+        }
+        else{
+            console.log("loi")
+        }
+    }
+  
+return (
     <>
     <div className="news-container">
         <div className='news-title'>
@@ -23,33 +44,17 @@ const News = () => {
             </div>
         </div>
         <div className='list-post-container'>
-            <div className='post-detail-main'>
-                <div>
-                <img src={ANH} alt='anh'/>
-                    <b className='post-title'>Nông sản và vai trò quan trọng trong đời sống và phát triển kinh tế</b>
-                    <p className='post-content'> Nông sản đóng vai trò cực kỳ quan trọng trong đời sống và phát triển kinh tế của một quốc gia</p>
-                </div>
-                <div>
-                    <img src={ANH4} alt='anh'/>
-                    <b className='post-title'>Cải thiện chất lượng nông sản: Giải pháp để tăng cường xuất khẩu</b>
-                    <p className='post-content'>Cải thiện chất lượng nông sản là một yếu tố quan trọng để tăng cường khả năng cạnh tranh và mở ra cơ hội xuất khẩu rộng lớn cho nông sản Việt Nam.</p>
-                </div>
-            </div>
-
-            <div className='list-post'>
-                <div className='post-detail'>
-                    <img className=''src={ANH2} alt='anh'/>
-                    <b className='post-title'>"Các xu hướng mới trong sản xuất và tiêu thụ nông sản"</b>
-                </div>
-                <div className='post-detail'>
-                    <img className=''src={ANH3} alt='anh'/>
-                    <b className='post-title'>"Cách bảo quản và chế biến nông sản để tăng giá trị gia tăng"</b>
-                </div>
-                <div className='post-detail'>
-                    <img className=''src={ANH5} alt='anh'/>
-                    <b className='post-title'>"Những thách thức và cơ hội trong sản xuất và tiêu thụ nông sản hiện nay"</b>
-                </div>
-            </div>
+            {posts?.map((item,index)=>{
+                return(
+                    <div className='list-post' key={item._id}
+                    onClick={(e) => history.push(`/post/${item._id}`)}
+                    >
+                        <img  src={`${apiURL}/uploads/post/${item.image}`}/>
+                        <div className='post-title'>{item.title}</div>
+                        <div className='post-content'>{item.content.slice(0,80)}...</div>
+                    </div>
+                )
+            })}
         </div>
       
     </div>

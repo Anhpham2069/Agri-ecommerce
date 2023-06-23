@@ -27,9 +27,10 @@ class Post{
   
       // Lấy đường dẫn tới tệp ảnh đã tải lên
       const imagePath = req.file.path;
-  
+      const imageName = req.file.originalname;
+      // const createdAt = new Date();
       // Tạo bài viết mới với thông tin và đường dẫn ảnh
-      const newPost = await postModel.create({ title, content,author, image: imagePath });
+      const newPost = await postModel.create({ title, content,author, image: imageName, });
   
       res.status(201).json(newPost);
     } catch (error) {
@@ -62,7 +63,18 @@ class Post{
       res.status(500).json({ error: error.message });
     }
   };
+
+  async getSinglePost(req, res) {
+    try {
+      const postId = req.params.id;
+      const post = await postModel.findById(postId);
+      res.json(post);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  }
 }
+
 
 
 const potsController = new Post();

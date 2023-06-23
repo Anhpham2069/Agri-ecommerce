@@ -17,4 +17,13 @@ export const getAllPost = async () => {
     } catch (error) {
       console.log(error);
     }
-  };
+};
+
+export const getSinglePost = async (postId) =>{
+    try{
+        let res = await axios.get(`${apiURL}/api/post/${postId}`)
+        return res.data
+    }catch(error){
+        console.log(error);
+    }
+}

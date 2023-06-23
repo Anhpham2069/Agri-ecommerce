@@ -5,6 +5,7 @@ export const layoutState = {
   cartModal: false,
   cartProduct: null,
   singleProductDetail: null,
+  singlePostDetail: null,
   inCart: null,
   cartTotalCost: null,
   orderSuccess: false,
@@ -39,6 +40,11 @@ export const layoutReducer = (state, action) => {
       return {
         ...state,
         singleProductDetail: action.payload,
+      };
+    case "singlePostDetail":
+      return {
+        ...state,
+        singlePostDetail: action.payload,
       };
     case "inCart":
       return {
