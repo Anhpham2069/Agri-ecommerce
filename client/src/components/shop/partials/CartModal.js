@@ -19,8 +19,22 @@ const CartModal = () => {
   const { data, dispatch } = useContext(LayoutContext);
   const products = data.cartProduct;
   const [qty,setQty] = useState(1)
+  const [, setAlertq] = useState(false)
 
-console.log(products)
+
+  // Hàm tăng số lượng
+  const increaseQuantity = () => {
+    setQty(qty + 1);
+  };
+
+  // Hàm giảm số lượng
+  const decreaseQuantity = () => {
+    if (qty > 0) {
+      setQty(qty - 1);
+    }
+  };
+  const q = quantity(products)  
+console.log(qty)
 
   const cartModalOpen = () =>
     dispatch({ type: "cartModalToggle", payload: !data.cartModal });
@@ -119,19 +133,22 @@ console.log(products)
                               <div className="text-sm text-gray-800">
                                 Số Lượng :
                               </div>
-                              <div className="flex items-end">
-                                <span className="plus-qty"
-                                  onClick={()=>setQty(qty-1)}
-                                > 
-                                  <FontAwesomeIcon icon={faMinus} size="xs"/>
-                                </span>
-                                <span className="number-qty text-sm text-gray-700">
-                                &#160;{quantity(item._id)}&#160;
-                                </span>
-                                <span className="plus-qty"> 
-                                    <FontAwesomeIcon icon={faPlus} size="xs"/>
-                                </span>
-                              </div>
+                                <div className="flex items-end">
+                                  <span className="plus-qty"
+                                      onClick={decreaseQuantity}
+                                  > 
+                                    <FontAwesomeIcon icon={faMinus} size="xs"/>
+                                  </span>
+                                  <span className="number-qty text-sm text-gray-700">
+                                  &#160;{quantity(item._id)}&#160;
+                                  {qty}
+                                  </span>
+                                  <span className="plus-qty"
+                                  
+                                  onClick={increaseQuantity}> 
+                                      <FontAwesomeIcon icon={faPlus} size="xs"/>
+                                  </span>
+                                </div>
                             </div>
                             <div>
                               {" "}

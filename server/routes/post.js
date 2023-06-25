@@ -23,7 +23,8 @@ router.get('/:id', postController.getSinglePost);
 // Tạo bài viết mới
 router.post('/create-post', upload.single('image'),postController.createPost);
 // Sửa đổi bài viết
-router.put('/update-post/:id', postController.updatePost);
+router.post('/update-post/:id', upload.single('image'), postController.updatePost);
+// router.put('/update-post/:id', postController.updatePost);
 // Xóa bài viết
 router.delete('/delete-post/:id', postController.deletePost);
 

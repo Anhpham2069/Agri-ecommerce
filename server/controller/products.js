@@ -61,7 +61,7 @@ class Product {
   }
 
   async postAddProduct(req, res) {
-    let { pName, pDescription, pPrice, pQuantity, pCategory, pOffer, pStatus,pCompany,pDetails,pExpirationDate} =
+    let { pName, pDescription, pPrice, pQuantity, pCategory, pOffer, pStatus,pCompany,pDetails,pExpirationDate,pHashtag} =
       req.body;
     let images = req.files;
     // Validation
@@ -75,6 +75,7 @@ class Product {
       !pStatus|
       !pCompany |
       !pExpirationDate |
+      !pHashtag |
       !pDetails 
     ) {
       Product.deleteImages(images, "file");
@@ -108,7 +109,8 @@ class Product {
           pStatus,
           pDetails,
           pExpirationDate,
-          pCompany
+          pCompany,
+          pHashtag,
         });
         let save = await newProduct.save();
         if (save) {
@@ -188,6 +190,7 @@ class Product {
       pCompany,
       pExpirationDate,
       pDetails,
+      pHashtag,
     } = req.body;
     let editImages = req.files;
 
@@ -203,6 +206,7 @@ class Product {
       !pCompany |
       !pDetails |
       ! pExpirationDate |
+      ! pHashtag |
       !pStatus
     ) {
       return res.json({ error: "All filled must be required" });
@@ -229,6 +233,7 @@ class Product {
         pDetails,
         pExpirationDate,
         pStatus,
+        pHashtag,
       };
       if (editImages.length == 2) {
         let allEditImages = [];

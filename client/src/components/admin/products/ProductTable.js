@@ -6,7 +6,7 @@ import 'moment/locale/vi';
 import { ProductContext } from "./index";
 import Loading from "../loading/LoadingComponent"
 import "./style.css"
-import { ExclamationCircleFilled } from '@ant-design/icons';
+import { ExclamationCircleFilled,FireOutlined } from '@ant-design/icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import 
 { faMagnifyingGlass } 
@@ -241,11 +241,19 @@ const ProductTable = ({ product, deleteProduct, editProduct,index,category }) =>
           {index+1}
         </td>
         <Tooltip title={product.pName} color="green" placement="right">
-          <td className="p-2 text-left">
+        {product.pHashtag==="Giải cứu" ? 
+          <td className="p-2 text-red-500 text-left">
             {product.pName.length > 15
               ? product.pName.substring(0, 15) + "..."
-              : product.pName}
-          </td>
+              : product.pName} <FireOutlined />
+          </td>:
+       
+          <td className="p-2 text-left">
+          {product.pName.length > 15
+            ? product.pName.substring(0, 15) + "..."
+            : product.pName}
+        </td>
+        }
         </Tooltip>
         <td className="p-2 text-left">
           {product.pCompany}
@@ -274,7 +282,8 @@ const ProductTable = ({ product, deleteProduct, editProduct,index,category }) =>
           )}
         </td>
         <td className="p-2 text-center">{product.pQuantity}</td>
-        <td className="p-2 text-center">{product.pCategory.cName}</td>
+       
+         <td className="p-2 text-center">{product.pCategory.cName}</td>
         <td className="p-2 text-center">{product.pOffer}</td>
         <td className="p-2 text-center">
           {moment(product.createdAt).format("lll")}

@@ -43,6 +43,10 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    pHashtag: {
+      type: String,
+      required: true,
+    },
     pRatingsReviews: [
       {
         review: String,

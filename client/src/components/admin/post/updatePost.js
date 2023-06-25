@@ -32,17 +32,18 @@ function UpdatePostModal({ postId,postTitle,postContent,postAuthor,postImg }) {
   const [author, setAuthor] = useState(postAuthor);
   const [image, setImage] = useState(postImg);
 
+  console.log(image)
 
     // console.log(posts)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = {
-        title: title,
-        content: content,
-        author: author,
-    }
+    const formData = new FormData();
+      formData.append('title', title);
+      formData.append('content', content);
+      formData.append('author', author);
+      formData.append('image', image);
     try {
-        let response = await updatePost(postId,data)
+        let response = await updatePost(postId,formData)
         if(response){
           message.success("Sửa bài viết thành công")
         }

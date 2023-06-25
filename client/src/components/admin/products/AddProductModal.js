@@ -2,6 +2,8 @@ import React, { Fragment, useContext, useState, useEffect } from "react";
 import { ProductContext } from "./index";
 import { createProduct, getAllProduct } from "./FetchApi";
 import { getAllCategory } from "../categories/FetchApi";
+import { message } from "antd";
+import { DatePicker, Space } from 'antd';
 // import ReactQuill from 'react-quill';
 // import 'react-quill/dist/quill.snow.css';
 // import { useEditor, EditorContent } from '@tiptap/react'
@@ -36,9 +38,13 @@ const AddProductDetail = ({ categories }) => {
     pCompany:"",
     pDetails:"",
     pQuantity: "",
+    pHashtag: "",
+    pExpirationDate:null,
     success: false,
     error: false,
   });
+
+  console.log(fData)
 
   const fetchData = async () => {
     let responseData = await getAllProduct();
@@ -79,6 +85,8 @@ const AddProductDetail = ({ categories }) => {
           pOffer: 0,
           pCompany:"",
           pDetails:"",
+          pHashtag:"",
+          pExpirationDate:null,
           success: responseData.success,
           error: false,
         });
@@ -95,6 +103,8 @@ const AddProductDetail = ({ categories }) => {
             pOffer: 0,
             pCompany:"",
             pDetails:"",
+            pHashtag:"",
+            pExpirationDate:  null,
             success: false,
             error: false,
           });
@@ -127,8 +137,8 @@ const AddProductDetail = ({ categories }) => {
           data.addProductModal ? "" : "hidden"
         } fixed inset-0 flex items-center z-30 justify-center overflow-auto`}
       >
-        <div className="mt-30 md:mt-20 relative bg-white w-11/12 md:w-3/6 shadow-lg flex flex-col items-center space-y-4 px-4 py-4 md:px-8">
-          <div className="flex items-center justify-between w-full pt-4">
+        <div className="mt-32 md:mt-20 relative bg-white w-11/12 md:w-3/6 shadow-lg flex flex-col items-center space-y-4 px-4 py-1 md:px-8">
+          <div className="flex items-center justify-between w-full pt-32">
             <span className="text-left font-semibold text-2xl tracking-wider">
               Thêm sản phẩm
             </span>
@@ -156,8 +166,8 @@ const AddProductDetail = ({ categories }) => {
               </svg>
             </span>
           </div>
-          {fData.error ? alert(fData.error, "red") : ""}
-          {fData.success ? alert(fData.success, "green") : ""}
+          {fData.error ? message.error("Thêm mới sản phẩm khôngg thành công"):""}
+          {fData.success ? message.success("Thêm mới sản phẩm thành công") : ""}
           <form className="w-full" onSubmit={(e) => submitForm(e)}>
             <div className="flex space-x-1 py-4">
               <div className="w-1/2 flex flex-col space-y-1 space-x-1">
@@ -293,6 +303,8 @@ const AddProductDetail = ({ categories }) => {
                     : ""}
                 </select>
               </div>
+              
+         
             </div>
             <div className="flex space-x-1 py-4">
               <div className="w-1/2 flex flex-col space-y-1">
@@ -367,13 +379,51 @@ const AddProductDetail = ({ categories }) => {
                 />
               </div>
             </div>
+            <div className="flex space-x-1 py-4">
+              <div className="w-1/2 flex flex-col space-y-1">
+                  <label htmlFor="status">Hạn sử dụng *</label>
+                 <input type="date" id="start" name="trip-start"
+                    value={fData.pExpirationDate}
+                    onChange={(e) =>
+                      setFdata({
+                        ...fData,
+                        error: false,
+                        success: false,
+                        pExpirationDate: e.target.value,
+                      })}
+                    
+                    >
+                      
+              </input>
+                </div>
+                  <div className="w-1/2 flex flex-col space-y-1">
+                    <label htmlFor="offer">#Hashtag</label>
+                      <select
+                        value={fData.pHashtag}
+                        onChange={(e) =>
+                          setFdata({
+                            ...fData,
+                            error: false,
+                            success: false,
+                            pHashtag: e.target.value,
+                          })
+                        }
+                        type="text"
+                        className="px-4 py-2 border focus:outline-none"
+                        id="offer"
+                      >
+                        <option>Bình thường</option>
+                        <option>Giải cứu</option>
+                      </select>
+                </div>
+            </div>
             <div className="flex flex-col space-y-1 w-full pb-4 md:pb-6 mt-4">
               <button
                 style={{ background: "#303031" }}
                 type="submit"
-                className="rounded-full bg-gray-800 text-gray-100 text-lg font-medium py-2"
+                className=" bg-black text-gray-100 text-lg font-medium py-2"
               >
-                Create product
+                Tạo Mới
               </button>
             </div>
           </form>

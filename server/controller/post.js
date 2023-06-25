@@ -41,13 +41,25 @@ class Post{
   async updatePost(req, res){
     try {
       const postId = req.params.id;
-      const { title, content, image } = req.body;
-      const updatedPost = await postModel.findByIdAndUpdate(
-        postId,
-        { title, content, image },
-        { new: true }
-      );
-      res.json(updatedPost);
+      const { title, content,author } = req.body;
+  
+      // Xử lý tải lên hình ảnh
+      upload.single('image')(req, res, async (err) => {
+        if (err) {
+          return res.status(400).json({ error: err.message });
+        }
+  
+        const image = req.file ? req.file.filename : undefined;
+  
+        // Cập nhật bài viết với các trường title, content, và image (nếu có)
+        const updatedPost = await postModel.findByIdAndUpdate(
+          postId,
+          { title, content,author, image },
+          { new: true }
+        );
+  
+        res.json(updatedPost);
+      });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

@@ -5,6 +5,7 @@ import { subTotal, quantity,totalCost,clearCart } from "../partials/Mixins";
 import axios from "axios"
 import { cartListProduct } from "../partials/FetchApi";
 import { fetchData } from "./Action";
+import { vnpayOrder } from "./FetchApi"; 
 import { Alert, Space } from 'antd';
 import { message } from 'antd';
 import { Skeleton } from 'antd';
@@ -17,6 +18,7 @@ export const CheckoutComponent = (props) => {
   const { data, dispatch } = useContext(LayoutContext);
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
+  const [paymentUrl, setPaymentUrl] = useState(null);
   // const [isLoading,setIsLoading]  = useState(false)
 
 
@@ -30,7 +32,6 @@ export const CheckoutComponent = (props) => {
 
   useEffect(() => {
     fetchData(cartListProduct, dispatch);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -44,7 +45,6 @@ export const CheckoutComponent = (props) => {
     });
     return product;
   };
-  
   console.log(qtyyy())
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -78,6 +78,37 @@ export const CheckoutComponent = (props) => {
       console.error('An error occurred while creating the order:', error);
     }
   };
+  const createPaymentUrl = async () => {
+    try {
+      const response = await axios.post(`${apiURL}/api/vnpay/create_payment_url`, {
+        amount: costValue,
+        bankCode: '',
+        language: '',
+      });
+      const vnpUrl = response.data.data;
+      // Xử lý vnpUrl
+      // Ví dụ: chuyển hướng đến URL vnpUrl
+      window.location.href = vnpUrl;
+    } catch (error) {
+      console.error('Lỗi khi gọi API create_payment_url:', error);
+    }
+  };
+  const vnpayReturn = async () => {
+    try {
+      const response = await axios.get(`${apiURL}/api/vnpay/vnpay_return`);
+      const code = response.data.code;
+      console.log(response)
+      // Xử lý code trả về từ API vnpay_return
+      // Ví dụ: hiển thị thông báo thành công hoặc thất bại
+      if (code === '00') {
+        alert('Thanh toán thành công');
+      } else {
+        alert('Thanh toán thất bại');
+      }
+    } catch (error) {
+      console.error('Lỗi khi gọi API vnpay_return:', error);
+    }
+  };
 
   const handleSubmitVNPay = async (event) => {
     event.preventDefault();
@@ -96,20 +127,35 @@ export const CheckoutComponent = (props) => {
       quantity:  data.cartProduct.map(item => (item.pQuantity-qtyyy() )),
 
     }
-
-    try {
-      const response = await axios.post(`${apiURL}/api/order/create-order`, order);
-      // Handle success
-      const amount = costValue;
-      // Create payment URL with orderId
-      const paymentUrlResponse = await axios.post(`${apiURL}/api/vnpay/pay`, { amount });
-      const paymentUrl = paymentUrlResponse.data.url;
-      window.location.href = paymentUrl;
-      const responseQty = await axios.post('http://localhost:8000/api/product/update-qty-product',qty )
-      // Redirect user to payment page
-    } catch (error) {
-      console.error('An error occurred while creating the order:', error);
-    }
+    
+    const dataOder = {
+      amount: costValue,
+      bankCode:"",
+      language:"",
+    };
+    
+    // const paymentUrlResponse = await axios.post(`${apiURL}/api/vnpay/create_payment_url`, dataOder);
+    // try {
+    //   // const response = await axios.post(`${apiURL}/api/order/create-order`, order);
+    //   // Handle success
+    //   // Create payment URL with orderId
+    
+    //   // let response = await axios.get("http://localhost:8000/api/vnpayment/create_payment_url");
+    //   // if(response){
+    //   //   const url = response.data;
+    //   //   window.open(url, '_blank');
+    //   // }
+    //   console.log(paymentUrlResponse)
+    //   const paymentUrl = paymentUrlResponse.data;
+    //   console.log(paymentUrl.data)
+    //   window.location.href = paymentUrl.data;
+    //   // const responseQty = await axios.post('http://localhost:8000/api/product/update-qty-product',qty )
+    //   // Redirect user to payment page
+    // } catch (error) {
+    //   console.error('An error occurred while creating the order:', error);
+    // }
+    await createPaymentUrl()
+    await vnpayReturn()
   };
 
 

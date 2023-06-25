@@ -55,3 +55,26 @@ export const totalCost = () => {
 export const clearCart = () => {
   localStorage.removeItem("cart");
 };
+
+export const updateQuantity = (
+  type,
+  totalQuantitiy,
+  quantitiy,
+  setQuantitiy,
+  setAlertq
+) => {
+  if (type === "increase") {
+    if (quantitiy === totalQuantitiy) {
+      setAlertq(true);
+    } else {
+      setQuantitiy(quantitiy + 1);
+    }
+  } else if (type === "decrease") {
+    if (quantitiy === 1) {
+      setQuantitiy(1);
+      setAlertq(false);
+    } else {
+      setQuantitiy(quantitiy - 1);
+    }
+  }
+};

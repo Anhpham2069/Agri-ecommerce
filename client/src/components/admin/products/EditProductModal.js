@@ -2,6 +2,9 @@ import React, { Fragment, useContext, useState, useEffect } from "react";
 import { ProductContext } from "./index";
 import { editProduct, getAllProduct } from "./FetchApi";
 import { getAllCategory } from "../categories/FetchApi";
+import { message } from "antd";
+
+
 const apiURL = process.env.REACT_APP_API_URL;
 
 const EditProductModal = (props) => {
@@ -26,6 +29,8 @@ const EditProductModal = (props) => {
     pOffer: "",
     pCompany: "",
     pDetails: "",
+    pHashtag: "",
+    pExpirationDate: null,
     error: false,
     success: false,
   });
@@ -54,6 +59,8 @@ const EditProductModal = (props) => {
       pOffer: data.editProductModal.pOffer,
       pCompany: data.editProductModal.pCompany,
       pDetails: data.editProductModal.pDetails,
+      pExpirationDate: data.editProductModal.pExpirationDate,
+      pHashtag: data.editProductModal.pHashtag,
     });
   }, [data.editProductModal]);
 
@@ -79,6 +86,7 @@ const EditProductModal = (props) => {
       if (responseData.success) {
         fetchData();
         setEditformdata({ ...editformData, success: responseData.success });
+        message.success("sửa sản phẩm thành công")
         setTimeout(() => {
           return setEditformdata({
             ...editformData,
@@ -87,6 +95,7 @@ const EditProductModal = (props) => {
         }, 2000);
       } else if (responseData.error) {
         setEditformdata({ ...editformData, error: responseData.error });
+        message.error("sửa sản phẩm khôngg thành công")
         setTimeout(() => {
           return setEditformdata({
             ...editformData,
@@ -118,8 +127,8 @@ const EditProductModal = (props) => {
           data.editProductModal.modal ? "" : "hidden"
         } fixed inset-0 flex items-center z-30 justify-center overflow-auto`}
       >
-        <div className="mt-32 md:mt-30 relative bg-white w-11/12 md:w-3/6 shadow-lg flex flex-col items-center space-y-4 px-4 py-4 md:px-8 text-small">
-          <div className="flex items-center justify-between w-full pt-4">
+        <div className="mt-32 md:mt-50 relative bg-white w-11/12 md:w-4/6 shadow-lg flex flex-col items-center space-y-2 px-4 py-1 md:px-8 text-small">
+          <div className="flex items-center justify-between w-full pt-20">
             <span className="text-left font-semibold text-2xl tracking-wider">
               Chỉnh sửa sản phẩm
             </span>
@@ -147,8 +156,8 @@ const EditProductModal = (props) => {
               </svg>
             </span>
           </div>
-          {editformData.error ? alert(editformData.error, "red") : ""}
-          {editformData.success ? alert(editformData.success, "green") : ""}
+          {/* {editformData.error ? message.error("sửa sản phẩm khôngg thành công") : ""}
+          {editformData.success ? message.success("sửa sản phẩm thành công") : ""} */}
           <form className="w-full" onSubmit={(e) => submitForm(e)}>
             <div className="flex space-x-1 py-4">
               <div className="w-1/2 flex flex-col space-y-1 space-x-1">
@@ -386,6 +395,42 @@ const EditProductModal = (props) => {
                   
                 />
               </div>
+            </div>
+            <div className="flex space-x-1 py-4">
+              <div className="w-1/2 flex flex-col space-y-1">
+                  <label htmlFor="status">Hạn sử dụng *</label>
+                    <input type="date" id="start" name="trip-start"
+                        value={editformData.pExpirationDate}
+                        onChange={(e) =>
+                          setEditformdata({
+                            ...editformData,
+                            error: false,
+                            success: false,
+                            pExpirationDate: e.target.value,
+                          })}
+                        >
+                  </input>
+                </div>
+                <div className="w-1/2 flex flex-col space-y-1">
+                    <label htmlFor="offer">#Hashtag</label>
+                      <select
+                        value={editformData.pHashtag}
+                        onChange={(e) =>
+                          setEditformdata({
+                            ...editformData,
+                            error: false,
+                            success: false,
+                            pHashtag: e.target.value,
+                          })
+                        }
+                        type="text"
+                        className="px-4 py-2 border focus:outline-none"
+                        id="offer"
+                      >
+                        <option>Bình thường</option>
+                        <option>Giải cứu</option>
+                      </select>
+                </div>
             </div>
             <div className="flex flex-col space-y-1 w-full pb-4 md:pb-6 mt-4">
               <button

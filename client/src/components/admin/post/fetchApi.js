@@ -34,7 +34,7 @@ export const getAllPost = async () => {
 
 export const updatePost = async (postId, data) => {
   try {
-    const response = await axios.put(`${apiURL}/api/post/update-post/${postId}`, data);
+    const response = await axios.post(`${apiURL}/api/post/update-post/${postId}`, data);
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.error);
