@@ -1,24 +1,25 @@
-.login-wraper{
-    z-index: 40;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    inset: 0;
-    margin: 25%;
-    padding-left: 20%;
-}
+
 
 .login-container{
     width: 70%;
     position: absolute;
     display: flex;
+    margin-left: 260px;
 }
 
 .banner-login{
     position: relative;
     width: 30%;
-    background-color: aqua;   
+    background-color: white;   
+}
+.banner-login img{
+    height: 90%;
+    width: 90%;
+    margin: auto;
+    margin-top: 25px;
 }
 .close-modal{
+    background-color: aliceblue;
+    border-radius: 50%;
     top: 10px;
 }

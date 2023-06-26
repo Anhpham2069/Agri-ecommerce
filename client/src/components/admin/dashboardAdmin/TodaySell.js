@@ -10,6 +10,7 @@ const SellTable = () => {
   const history = useHistory();
   const { data, dispatch } = useContext(DashboardContext);
 
+  console.log(data)
   useEffect(() => {
     todayAllOrders(dispatch);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -109,6 +110,11 @@ const TodayOrderTable = ({ order }) => {
         <td className="p-2 text-center">
           {order.status === "Chưa được xử lý" && (
             <span className="block text-red-600 rounded-full text-center text-xs px-2 font-semibold">
+              {order.status}
+            </span>
+          )}
+          {order.status === "Đã thanh toán" && (
+            <span className="block text-green-600 rounded-full text-center text-xs px-2 font-semibold">
               {order.status}
             </span>
           )}

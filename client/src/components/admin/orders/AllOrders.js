@@ -3,7 +3,7 @@ import moment from "moment";
 import 'moment/locale/vi';
 import {faPrint} from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { ExclamationCircleFilled } from '@ant-design/icons';
+import { ExclamationCircleFilled,SearchOutlined } from '@ant-design/icons';
 
 import Loading from "../loading/LoadingComponent"
 import { OrderContext } from "./index";
@@ -23,7 +23,32 @@ const AllCategory = (props) => {
   const { data, dispatch } = useContext(OrderContext);
   const { orders, loading } = data;
 
+  const [searchResults, setSearchResults] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
+
+  useEffect(() => {
+    setSearchResults(orders);
+  }, [orders])
+
+  const lastIndex = currentPage * itemsPerPage;
+  const firstIndex = lastIndex - itemsPerPage;
+  const currentProducts = searchResults && searchResults.slice(firstIndex, lastIndex);
+    const totalPages = Math.ceil(searchResults && searchResults.length / itemsPerPage);
+
+    const handlePageChange = (pageNumber) => {
+      setCurrentPage(pageNumber);
+    };
   
+
+  console.log(currentProducts)
+  // console.log(orders.allProduct&&orders.allProduct.map(item=>item))
+  const Filter = (e) =>{
+    setSearchResults(orders.filter(a=>(a.transactionId.toLowerCase().includes(e.target.value)
+     || a.status.toLowerCase().includes(e.target.value)
+     || a.createdAt.toLowerCase().includes(e.target.value)
+   )))
+  }
 //   const [products, setProducts] = useState([])
 
 //   const fetchData = () => {
@@ -58,6 +83,14 @@ const AllCategory = (props) => {
   return (
     <Fragment>
       <div className="oder-title-wraper col-span-1 overflow-auto bg-white shadow-lg p-4">
+      <div className="seacrh-product">
+            <input type="text"className="input-search-product" placeholder="Tìm kiếm...."
+              onChange={(e)=>Filter(e)}
+            />
+            <span className="search-icon-product">
+                <SearchOutlined style={{fontSize:"1.4rem"}}/>
+              </span>
+        </div>
         <table className="table-auto border w-full my-2">
           <thead>
             <tr>
@@ -74,10 +107,11 @@ const AllCategory = (props) => {
               <th className="px-4 py-2 border">Hành động</th>
             </tr>
           </thead>
-          <tbody>
-            {orders && orders.length > 0 ? (
-              orders.map((item, i) => {
+          <tbody className="item-product-container">
+            {currentProducts && currentProducts.length > 0 ? (
+              currentProducts.map((item, i) => {
                 return (
+                  <>
                   <CategoryTable
                     key={i}
                     order={item}
@@ -85,6 +119,21 @@ const AllCategory = (props) => {
                       editOrderReq(oId, type, status, dispatch)
                     }
                   />
+                          {totalPages > 1 && (
+                            <div className='page-number'>
+                              {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+                                (pageNumber) => (
+                                  <button
+                                    key={pageNumber}
+                                    onClick={() => handlePageChange(pageNumber)}
+                                  >
+                                    {pageNumber}
+                                  </button>
+                                )
+                              )}
+                            </div>
+                          )}
+                  </>
                 );
               })
             ) : (
@@ -134,6 +183,7 @@ console.log(order)
   return (
     <Fragment>
       <tr className="oder-admin-wraper border-b">
+      
         <td className="w-48 hover:bg-gray-200 p-2 flex space-y-1">
           {order.allProduct.map((product, i) => {
             return (
@@ -148,15 +198,15 @@ console.log(order)
             );
           })}
           <span className="flex"> <p>x</p>&#160;{order.amount}</span>
-        </td>
-        
-        
-        
-        
-        
+        </td>     
         <td className="hover:bg-gray-200 p-2 text-center cursor-default">
           {order.status === "Chưa được xử lý" && (
             <span className="block text-red-600 rounded-full text-center text-xs px-2 font-semibold">
+              {order.status}
+            </span>
+          )}
+          {order.status === "Đã thanh toán" && (
+            <span className="block text-green-600 rounded-full text-center text-xs px-2 font-semibold">
               {order.status}
             </span>
           )}
@@ -181,7 +231,11 @@ console.log(order)
             </span>
           )}
         </td>
+        {order.status === "Đã thanh toán" ? 
+        <td className="hover:bg-gray-200 p-2 text-center">0<sup> &#8363;</sup></td> 
+        : 
         <td className="hover:bg-gray-200 p-2 text-center">{order.total.toLocaleString()}<sup> &#8363;</sup></td>
+        }
         <td className="hover:bg-gray-200 p-2 text-center">
           {order.transactionId}
         </td>
@@ -199,7 +253,7 @@ console.log(order)
         </td>
         <td className="p-2 flex items-center justify-center">
           <span className="cursor-pointer hover:bg-gray-200 rounded-lg p-2 mx-1">
-              <PDFDownloadLink document={<PDFOrder order={order} />} fileName="order.pdf">
+              <PDFDownloadLink document={<PDFOrder order={order} />} fileName={order.user.name + order.phone}>
             {({ blob, url, loading, error }) =>
               loading ? 'Đang tạo tệp PDF...' : <FontAwesomeIcon icon={faPrint} size="lg"/>
             }

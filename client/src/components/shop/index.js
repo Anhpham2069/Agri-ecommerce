@@ -17,6 +17,9 @@ import ArticleList from "./post/postList";
 import PostDetails from "./post/postDetails";
 import allProducts from "./page/Products";
 import Newpage from "./page/newpage"
+import rescueProduct from "./page/rescueProduct";
+import RescuePage from "./page";
+import CheckoutSuccessPage from "./order/checkoutSuccessPage";
 
 export {
   Home,
@@ -40,4 +43,7 @@ export {
   PostPage,
   ArticleList,
   Newpage,
+  rescueProduct,
+  RescuePage,
+  CheckoutSuccessPage,
 };

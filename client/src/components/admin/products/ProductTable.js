@@ -150,7 +150,7 @@ const AllProduct = (props) => {
               <th className="title-table-detail">Hành động</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="item-product-container">
             {currentProducts && currentProducts.length > 0 ? (
               currentProducts.map((item, key) => {
                 return (
@@ -225,7 +225,7 @@ const ProductTable = ({ product, deleteProduct, editProduct,index,category }) =>
   };
   const info = () => {
     Modal.info({
-      title: 'This is a notification message',
+      title: 'Chi tiiết',
       content: (
         <div>
           <p>{product.pDescription}</p>

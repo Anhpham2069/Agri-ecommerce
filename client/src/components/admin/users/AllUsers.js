@@ -56,7 +56,7 @@ const AllUser = (props) => {
           <thead>
             <tr>
               <th className="px-4 py-2 border">Tên</th>
-              <th className="px-4 py-2 border">Ảnh đại diện</th>
+      
               <th className="px-4 py-2 border">Email</th>
               <th className="px-4 py-2 border">Số Điện thoại</th>
               <th className="px-4 py-2 border">Đơn Hàng</th>
@@ -81,14 +81,14 @@ const AllUser = (props) => {
                   colSpan="10"
                   className="text-xl text-center font-semibold py-8"
                 >
-                  No product found
+                  không có người dùng nào
                 </td>
               </tr>
             )}
           </tbody>
         </table>
         <div className="text-sm text-gray-600 mt-2">
-          Total {users && users.length} product found
+          có {users && users.length} người dùng được tìm thấy
         </div>
       </div>
         
@@ -105,9 +105,6 @@ const UserTable = ({ user, deleteUser}) => {
       <tr>
         <td className="p-2 text-left">
           <b>{user.name}</b>
-        </td>
-        <td className="p-2 text-left">
-          {user.userImage}
         </td>
         <td className="p-2 text-left">
           {user.email}

@@ -10,6 +10,8 @@
     border-bottom: 1px solid rgb(201, 201, 201);
     font-size: 0.8rem;
     text-align: start;
+    font-family:'Courier New', Courier, monospace;
+    font-weight: 400;
   }
 .title-table{
   
@@ -48,6 +50,14 @@
     top: 30%;
     position: absolute;
   }
+  .item-product-container{
+    position: relative;
+  }
+  .page-number{
+    bottom: -40px;
+    right: 43%;
+    font-size: 1rem;
 
+  }
 
 

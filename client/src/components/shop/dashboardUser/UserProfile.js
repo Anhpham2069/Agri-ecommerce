@@ -4,9 +4,9 @@ import { DashboardUserContext } from "./Layout";
 import { updatePersonalInformationAction } from "./Action";
 
 const ProfileComponent = () => {
-  const { data, dispatch } = useContext(DashboardUserContext);
-  const userDetails = data.userDetails !== null ? data.userDetails : "";
+  const { dataUser, dispatch } = useContext(DashboardUserContext);
 
+  const userDetails = dataUser.userDetails !== null ? dataUser.userDetails : "";
   const [fData, setFdata] = useState({
     id: "",
     name: "",
@@ -31,7 +31,7 @@ const ProfileComponent = () => {
     updatePersonalInformationAction(dispatch, fData);
   };
 
-  if (data.loading) {
+  if (dataUser.loading) {
     return (
       <div className="w-full md:w-9/12 flex items-center justify-center ">
         <svg

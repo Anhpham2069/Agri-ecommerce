@@ -14,7 +14,10 @@ import {
   PostDetails,
   allProducts,
   ArticleList,
-  Newpage
+  Newpage,
+  rescueProduct,
+  RescuePage,
+  CheckoutSuccessPage,
 } from "./shop";
 import { DashboardAdmin, Categories, Products, Orders, Users, Post } from "./admin";
 import { UserProfile, UserOrders, SettingUser } from "./shop/dashboardUser";
@@ -34,6 +37,8 @@ const Routes = (props) => {
         <Route exact path="/allProducts" component={allProducts} />
         <Route exact path="/contact-us" component={ContactUs} />
         <Route exact path="/wish-list" component={WishList} />
+        <Route exact path="/rescuePage" component={RescuePage} />
+        <Route exact path="/checkoutSuccessPage" component={CheckoutSuccessPage} />
         <Route exact path="/products/:id" component={ProductDetails} />
         <Route exact path="/post/:id" component={PostPage} />
         <Route

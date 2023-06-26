@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { Fragment } from 'react';
+import Layout from '../layout';
+import "./style.css"
+import RescueProduct  from './rescueProduct';
 
-const index = () => {
+const RescuePage = () => {
   return (
-    <div>index</div>
-  )
-}
+    <Fragment>
+       <Layout children={<RescueProduct />} />
+    </Fragment>
+  );
+};
 
-export default index
+export default RescuePage;

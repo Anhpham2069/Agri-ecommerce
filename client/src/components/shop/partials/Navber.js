@@ -470,11 +470,13 @@ const Navber = (props) => {
             </li>
 
           </NavLink>
-          <li className="menu p-3 px-4 hover:bg-green-800 text-orange-500 dropdown">
-            <span className="dropdown-btn">       
-              <FontAwesomeIcon icon={faHandshakeAngle} size="xs" />&nbsp;Giải cứu nông sản &nbsp;
-            </span>
-          </li>
+          <NavLink to="/rescuePage">
+            <li className="menu p-4 px-4 hover:bg-green-800 text-orange-500 dropdown">
+              <span className="dropdown-btn">       
+                <FontAwesomeIcon icon={faHandshakeAngle} size="xs" />&nbsp;Giải cứu nông sản &nbsp;
+              </span>
+            </li>
+          </NavLink>
         </ul>
       </div>
       </nav>

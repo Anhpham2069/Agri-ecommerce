@@ -4,7 +4,7 @@ import { handleChangePassword } from "./Action";
 import { DashboardUserContext } from "./Layout";
 
 const SettingComponent = () => {
-  const { data, dispatch } = useContext(DashboardUserContext);
+  const { dataUser, dispatch } = useContext(DashboardUserContext);
 
   const [fData, setFdata] = useState({
     oldPassword: "",
@@ -22,7 +22,7 @@ const SettingComponent = () => {
     }, 1500);
   }
 
-  if (data.loading) {
+  if (dataUser.loading) {
     return (
       <div className="w-full md:w-9/12 flex items-center justify-center ">
         <svg

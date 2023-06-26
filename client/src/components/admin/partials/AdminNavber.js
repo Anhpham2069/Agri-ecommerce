@@ -13,12 +13,12 @@ const AdminNavber = (props) => {
 
   return (
     <Fragment>
-      <nav className="sticky z-10 flex items-center shadow-md justify-between px-4 py-4 md:px-8 top-0 w-full  bg-green-500">
+      <nav className="sticky z-10 flex items-center shadow-md justify-between px-4 py-4 md:px-8 top-0 w-full  bg-white">
         {/*  Large Screen Show  */}
         <div className="hidden lg:block lg:flex lg:items-center lg:space-x-4 mr-32">
           <span>
             <svg
-              className="w-8 h-8 cursor-pointer text-white"
+              className="w-8 h-8 cursor-pointer text-black"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -38,7 +38,7 @@ const AdminNavber = (props) => {
           <span
             onClick={(e) => history.push("/admin/dashboard")}
             style={{ letterSpacing: "0.70rem" }}
-            className="flex items-left text-center font-bold uppercase text-white text-2xl cursor-pointer px-2 text-center"
+            className="flex items-left text-center font-bold uppercase text-black text-2xl cursor-pointer px-2 text-center"
           >
             Nông sản Xanh
           </span>
@@ -47,7 +47,7 @@ const AdminNavber = (props) => {
         <div className="lg:hidden flex items-center">
           <svg
             id="hamburgerBtn"
-            className="lg:hidden w-8 h-8 cursor-pointer text-white"
+            className="lg:hidden w-8 h-8 cursor-pointer text-black"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -71,36 +71,10 @@ const AdminNavber = (props) => {
         {/* Both Screen show */}
         <div className="flex items-center">
           <div className="hover:bg-gray-200 rounded-lg p-2" title="Search">
-            <svg
-              className="cursor-pointer w-8 h-8 text-white hover:text-gray-800"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-              />
-            </svg>
+            
           </div>
           <div className="hover:bg-gray-200 rounded-lg p-2" title="Search">
-            <svg
-              className="cursor-pointer w-8 h-8 text-white hover:text-gray-800"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
+            
           </div>
           {/* Logout Button Dropdown */}
           <div
@@ -108,7 +82,7 @@ const AdminNavber = (props) => {
             title="Logout"
           >
             <svg
-              className="cursor-pointer w-8 h-8 text-white hover:text-gray-800"
+              className="cursor-pointer w-8 h-8 text-black hover:text-gray-800"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

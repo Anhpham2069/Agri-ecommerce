@@ -205,6 +205,12 @@
   margin: auto;
 
 }
+.ant-popover-content{
+  border: 1px solid rgb(161, 161, 161);
+}
+.ant-popover-inner-content{
+  background-color: #ebf3ed;
+}
 
 .img-map img{
   width: 200px;
@@ -619,4 +625,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* cart-antd */
+.cart-product-container:hover{
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
 }

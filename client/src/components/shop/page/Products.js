@@ -1,11 +1,19 @@
-import React,{useEffect,useState} from 'react';
+import React,{useEffect,useState,useContext} from 'react';
 import CartProducts from '../home/sectison/components/cartProducts';
 import { Footer, Navber } from "../partials";
+import { LayoutContext } from '../layout';
+import { cartListProduct } from '../partials/FetchApi';
+import { cartList,addToCart } from '../home/Mixins';
+import { totalCost } from '../partials/Mixins';
+import { useHistory, useParams } from "react-router-dom";
+import { Card, Col, Row,message } from 'antd';
+import {ShoppingCartOutlined} from "@ant-design/icons"
 
 import "./style.css"
 
 const apiURL = process.env.REACT_APP_API_URL;
 const ArticleList = () => {
+  const history = useHistory()
 
   const [selectedPriceRange, setSelectedPriceRange] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -13,6 +21,11 @@ const ArticleList = () => {
   const [products, setProducts] = useState([])
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
+  
+  const [quantitiy,setQuantitiy] = useState(1)
+  const { _, dispatch: layoutDispatch } =
+  useContext(LayoutContext); // Layout Context
+  const [, setAlertq] = useState(false); // Alert when quantity greater than stock
 
   const fetchData = () => {
     fetch("http://localhost:8000/api/product/search")
@@ -117,12 +130,37 @@ const categories = ["Chợ online", "Hoa Quả Nhập Khẩu 1", "ĐặC Sản"]
             <div className='filter-item'>đặc sản</div> */}
           </div>
                 <div className='all-product-conatiner'>
+                  <Row gutter={[40, 32]}>
                     {currentProducts && currentProducts.map((item, index) => (
-                        <CartProducts
-                          key={item._id}
-                          data={item}
-        
-                        />
+                      <Col span={8} key={item._id}>
+                          <Card onClick={(e) => history.push(`/products/${item._id}`)} >
+                            <img className='rescue-img' src={`${apiURL}/uploads/products/${item.pImages[0]}`}/>
+                            <p>{item.pName}</p>
+                            <p>{item.pQuantity}</p>
+                            <span className="market-product-price">
+                                {(item.pPrice-(item.pPrice*(item.pOffer/100))).toLocaleString()}<sup> &#8363;</sup> &nbsp;
+                                <del>{ Math.ceil(item.pPrice).toLocaleString()}<sup> &#8363;</sup> </del>
+                            </span>
+                            <span className='btn-addCart'
+                                onClick={(e) =>
+                                    addToCart(
+                                        item._id,
+                                        quantitiy,
+                                        item.pPrice,
+                                        layoutDispatch,
+                                        setQuantitiy,
+                                        setAlertq,
+                                        fetchData,
+                                        totalCost
+                                    )
+                                }
+                            >
+                                <ShoppingCartOutlined />
+                            </span>
+             
+                        
+                    </Card>
+                      </Col>
                     ))}
                         {totalPages > 1 && (
                             <div className='page-number'>
@@ -138,6 +176,7 @@ const categories = ["Chợ online", "Hoa Quả Nhập Khẩu 1", "ĐặC Sản"]
                               )}
                             </div>
                           )}
+                  </Row>
                 </div>
                 <div className='Featured-container Featured-container'>
                 <span className='title-article-Featured'>SẢN PHẨM NỔI BẬT</span>

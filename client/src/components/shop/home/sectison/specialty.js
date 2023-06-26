@@ -10,8 +10,10 @@ import Modal from "./specialyModal"
 import { HomeContext } from "../index";
 import { useHistory } from "react-router-dom";
 import CartProducts from './components/cartProducts';
-import { Skeleton } from 'antd';
 import { getAllProduct } from "../../../admin/products/FetchApi";
+import { Button, Popover, Space,Row,Col,Skeleton  } from 'antd';
+import CartProducts2 from './components/cartProduct2';
+
 
 // const apiURL = process.env.REACT_APP_API_URL;
 
@@ -78,6 +80,12 @@ const SpecialtyComponent = () => {
       //     <Skeleton active/>
       //   )
       // }
+      const content = (
+        <div>
+          <p>Content</p>
+          <p>Content</p>
+        </div>
+      );
     return (
     <>
     <div className="market-container">
@@ -106,22 +114,30 @@ const SpecialtyComponent = () => {
                     onMouseOver={() => handleMouseOver(div.id)}
                     onMouseLeave={() => handleMouseLeave(div.id)}
                     >
+                      <Popover content={div.content} title={div.name} trigger="hover" placement="right">
+                            <Button>{div.name}</Button>
+                      </Popover>
                     <div className="area">
-                        <p>{div.name}</p>
+                        <p></p>
                     </div>
-                        {div.showModal && <Modal divName={div.name} DivContent={div.content} />}
                     </div>
                 ))}
                 </div>
             </div>
             <div className='specialy-products-container mb-5'>
+              <Row  gutter={[40, 32]}>
             {products && products.length > 0 ? (
                    products
                   .filter(obj => obj.pCategory.cName === 'ĐặC Sản')
+                  .slice(0, 8) 
                   .map((item,index)=>{
                         return(
-                          <CartProducts key={index} data={item}/>
+                          <Col span={6}>
+                          <CartProducts2 key={item._id} data={item}/>
+                       </Col>
+                          // <CartProducts key={index} data={item}/>
                         )})):[]}
+              </Row>
             </div>
         </div>
     </div>

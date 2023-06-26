@@ -67,3 +67,20 @@
     font-weight: 900;
     background-color: black;
 }
+.checkoutSuccess-contaienr{
+    margin-top: 150px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    background-color: white;
+}
+.checkoutSuccess-contaienr p{
+    background-color: rgb(205, 248, 216);
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: 600;
+    color: green;
+}

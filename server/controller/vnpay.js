@@ -11,7 +11,7 @@ const moment = require('moment');
 const tmnCode = 'Y5AMLPS3';
 let secretKey = 'OANIEFEOBOWSAVEWFIHVIZPFFTOPLJRB';
 let vnpUrl = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
-const returnUrl = 'http://localhost:3000/checkout';
+const returnUrl = 'http://localhost:3000/checkoutSuccessPage';
 
 function sortObject(o) {
     var sorted = {}, key, a = [];
@@ -144,7 +144,7 @@ router.get('/vnpay_return', function (req, res, next) {
 
     delete vnp_Params['vnp_SecureHash'];
     delete vnp_Params['vnp_SecureHashType'];
-    delete vnp_Params
+
 
     vnp_Params = sortObject(vnp_Params);
 

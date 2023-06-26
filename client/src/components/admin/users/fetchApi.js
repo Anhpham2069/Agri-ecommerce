@@ -21,3 +21,12 @@ export const deleteUser = async (oId) => {
     console.log(error);
   }
 };
+
+export const getOrderByUser = async (uId) => {
+  try {
+    let res = await axios.post(`${apiURL}/api/order/order-by-user`, { uId });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

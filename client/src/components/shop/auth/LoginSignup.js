@@ -3,6 +3,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 import { LayoutContext } from "../index";
 import "./style.css"
+import BG from"../../../images/product-page/fruit_market_fruits.jpg"
 
 const LoginSignup = (props) => {
   const { data, dispatch } = useContext(LayoutContext);
@@ -38,7 +39,7 @@ const LoginSignup = (props) => {
       <section
         className={` ${
           data.loginSignupModal ? "" : "hidden"
-        }  fixed z-40 inset-0 my-8 md:my-20 flex items-start justify-center overflow-auto        `}
+        }  fixed z-40 inset-0 my-8 md:my-20 flex items-start justify-center overflow-auto`}
       >
         <div className="login-container">
         <div className="w-11/12 md:w-3/5 lg:w-2/4 relative space-y-4 bg-white p-6 md:px-12 md:py-6">
@@ -57,9 +58,9 @@ const LoginSignup = (props) => {
           </div>
           {/*  Modal Close Button */}
         </div>
-         
+          <></>
         <div className="banner-login">
-
+          <img src={BG} alt="anh"/>
         <div className="close-modal absolute right-0 mx-4">
             <svg
               onClick={(e) => {

@@ -10,7 +10,8 @@ import { getAllProduct } from "../../../admin/products/FetchApi";
 import { HomeContext } from "../index";
 import { useHistory,  } from "react-router-dom";
 import CartProducts from './components/cartProducts';
-import { Skeleton } from 'antd';
+import CartProducts2 from './components/cartProduct2';
+import { Skeleton,Row,Col } from 'antd';
 
 
 
@@ -71,18 +72,24 @@ console.log(products)
         </div>
         <div className='wraper-product'>
         <div className='container-product-fruit mb-5'>
-           
+           <Row gutter={[40, 32]} className='px-5'>
+
                 {products && products.length > 0 ? (
                    products
                   .filter(obj => obj.pCategory.cName === 'Hoa Quả Nhập Khẩu 1')
+                  .slice(0, 8) 
                   .map((item)=>{
                         return(
-                          <CartProducts key={item._id} data={item}/>
+                        <Col span={6}>
+                          <CartProducts2 key={item._id} data={item}/>
+                        </Col>
+                          // <CartProducts key={item._id} data={item}/>
                         )
                     })
                 )
                 :[     
                 ]}
+           </Row>
                 {/* <span className='next-product'>
                     <FontAwesomeIcon icon={faCircleChevronRight} size='xl'/>
                 </span> */}

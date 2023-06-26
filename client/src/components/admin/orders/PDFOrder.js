@@ -1,6 +1,7 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 
+
 const styles = StyleSheet.create({
   container: {
     padding: 20,
@@ -21,20 +22,24 @@ const PDFOrder = ({ order }) => {
     
     <Document>
     <Page style={styles.container}>
-      <Text style={styles.title}>Thông tin đơn hàng</Text>
-      <Text style={styles.text}>Mã đơn hàng: {order.transactionId}</Text>
-      <Text style={styles.text}>Ngày đặt hàng: {order.createdAt}</Text>
-      <Text style={styles.text}>Khách hàng: {order.user.name}</Text>
-      <Text style={styles.text}>Số điện thoại: {order.phone}</Text>
-      <Text style={styles.text}>Địa chỉ: {order.address}</Text>
-      <Text style={styles.title}>Sản phẩm: {order.allProduct?.map((product, index) => (
+      <Text style={styles.title}>Info oder</Text>
+      <Text style={styles.text}>Oder ID:&#160;&#160;&#160; {order.transactionId}</Text>
+      <Text style={styles.text}>Oder date: &#160;&#160;&#160;{order.createdAt}</Text>
+      <Text style={styles.text}>Customer:&#160;&#160;&#160; {order.user.name}</Text>
+      <Text style={styles.text}>Phone: &#160;&#160;&#160;&#160;&#160;{order.phone}</Text>
+      <Text style={styles.text}>Addrees: &#160;&#160;&#160;{order.address}</Text>
+      <Text style={styles.title}>Product: &#160;&#160;&#160;&#160;{order.allProduct?.map((product, index) => (
         <Text key={index} style={styles.text}>
-          {product.pName}
+          {product.id.pName}
         </Text>
       ))}</Text>
+    {order.status === "Đã thanh toán"? 
     
+    <Text style={styles.text}>Total cost: &#160;&#160;&#160;&#160;&#160;&#160;&#160;0 VND</Text>
+    :
+    <Text style={styles.text}>Total cost: &#160;&#160;&#160;&#160;&#160;&#160;&#160;{order.total.toLocaleString()}VND</Text>
+    }
   
-      <Text style={styles.text}>Tổng giá trị đơn hàng: {order.amount}</Text>
     </Page>
     </Document>
     )

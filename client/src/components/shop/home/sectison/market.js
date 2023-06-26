@@ -8,7 +8,8 @@ import { HomeContext } from "../index";
 import { getAllProduct } from "../../../admin/products/FetchApi";
 import { useHistory, } from "react-router-dom";
 import CartProducts from './components/cartProducts';
-import { Skeleton } from 'antd';
+import CartProducts2 from './components/cartProduct2';
+import { Skeleton,Row,Col } from 'antd';
 import { NavLink } from 'react-router-dom';
 
 
@@ -61,15 +62,22 @@ const Market = () => {
         </div>
         <div className='container-product'>
             <div className='market-products-container'>
+              <Row gutter={[40, 32]} className='px-5'>
+
             {products && products.length > 0 ? (
                    products
                   .filter(obj => obj.pCategory.cName === 'Chợ Online')
+                  .slice(0, 8) 
                   .map((item,index)=>{
                         return(
-                            <CartProducts key={index} data={item}/>
+                          <Col span={6}>
+                            <CartProducts2 key={item._id} data={item}/>
+                         </Col>
+                            // <CartProducts key={index} data={item}/>
                         )    })
                         ):[]}
                 
+              </Row>
                 
                 </div>
             </div>

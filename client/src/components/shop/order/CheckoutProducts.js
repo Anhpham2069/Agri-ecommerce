@@ -5,7 +5,7 @@ import { subTotal, quantity,totalCost,clearCart } from "../partials/Mixins";
 import axios from "axios"
 import { cartListProduct } from "../partials/FetchApi";
 import { fetchData } from "./Action";
-import { vnpayOrder } from "./FetchApi"; 
+import { vnpayOrder,editCategory } from "./FetchApi"; 
 import { Alert, Space } from 'antd';
 import { message } from 'antd';
 import { Skeleton } from 'antd';
@@ -19,6 +19,7 @@ export const CheckoutComponent = (props) => {
   const [address, setAddress] = useState('');
   const [phone, setPhone] = useState('');
   const [paymentUrl, setPaymentUrl] = useState(null);
+  const [status,setStatus] = "Đã thanh toán"
   // const [isLoading,setIsLoading]  = useState(false)
 
 
@@ -52,10 +53,11 @@ export const CheckoutComponent = (props) => {
       allProduct: data.cartProduct.map(item => ({ id: item._id, quantitiy: item.pQuantity })),
       user: JSON.parse(localStorage.getItem("jwt")).user._id,
       total:  costValue,
-      transactionId : Math.floor(Math.random() * 10),
+      transactionId : Math.floor(Math.random() * 1000),
       address,
       phone,
       amount: qtyyy(),
+      status: "Chưa được xử lý"
     };
     const qty = {
       productId: data.cartProduct.map(item => item._id ),
@@ -117,10 +119,11 @@ export const CheckoutComponent = (props) => {
       allProduct: data.cartProduct.map(item => ({ id: item._id, quantitiy: item.pQuantity })),
       user: JSON.parse(localStorage.getItem("jwt")).user._id,
       total:  costValue,
-      transactionId : Math.floor(Math.random() * 10),
+      transactionId : Math.floor(Math.random() * 1000),
       address,
       phone,
       amount: qtyyy(),
+      status: "Đã thanh toán"
     };
     const qty = {
       productId: data.cartProduct.map(item => item._id ),
@@ -128,12 +131,7 @@ export const CheckoutComponent = (props) => {
 
     }
     
-    const dataOder = {
-      amount: costValue,
-      bankCode:"",
-      language:"",
-    };
-    
+  
     // const paymentUrlResponse = await axios.post(`${apiURL}/api/vnpay/create_payment_url`, dataOder);
     // try {
     //   // const response = await axios.post(`${apiURL}/api/order/create-order`, order);
@@ -154,7 +152,20 @@ export const CheckoutComponent = (props) => {
     // } catch (error) {
     //   console.error('An error occurred while creating the order:', error);
     // }
-    await createPaymentUrl()
+    const response = await axios.post(`${apiURL}/api/order/create-order`,order);
+    if(response){
+      await createPaymentUrl()
+      const responseQty = await axios.post('http://localhost:8000/api/product/update-qty-product',qty )
+    }
+    else{
+      console.log("thanh toan thất bại")
+    }
+
+    
+ 
+   
+ 
+ 
     await vnpayReturn()
   };
 

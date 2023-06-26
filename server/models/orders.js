@@ -39,6 +39,7 @@ const orderSchema = new mongoose.Schema(
       default: "Chưa được xử lý",
       enum: [
         "Chưa được xử lý",
+        "Đã thanh toán",
         "Đã xử lý",
         "Đang giao",
         "Đã giao",

@@ -1,7 +1,7 @@
 .all-product-conatiner{
-    width: 80%; 
+    width: 90%; 
     display: flex;
-    flex-wrap: wrap;
+
     position: relative;
 }
 .Featured-container{
@@ -12,9 +12,10 @@
 }
 
 .filter-container{
-    width: 15%;
+    width: 20%;
     background-color: white;
     padding: 20px;
+    margin-right: 20px;
 }
 .filter-title{
     text-align: center;
@@ -47,4 +48,36 @@
     margin-right: 10px;
     font-size: 1.2rem;
     font-weight: 600;
+}
+.rescue-container{
+    width: 80%;
+    margin: auto;
+    margin-top: 200px;
+}
+.title-rescue{
+    font-size: 1rem;
+    font-weight: 600;
+    color: brown;
+    font-family: 'Courier New', Courier, monospace;
+}
+.rescue-img{
+    height: 100px;
+}
+.ant-card {
+    position: relative;
+    cursor: pointer;
+}
+.btn-addCart{
+    position: absolute;
+    top: 0;
+    right: 5%;
+    font-size: 1.2rem;
+    transition: 0.5s;
+    cursor: pointer;
+    z-index: 30;
+    color: gray;
+}
+.btn-addCart:hover{
+    font-size: 1.4rem;
+    color: red;
 }

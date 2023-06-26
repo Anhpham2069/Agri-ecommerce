@@ -33,7 +33,7 @@ const CartModal = () => {
       setQty(qty - 1);
     }
   };
-  const q = quantity(products)  
+  // const q = quantity(products)  
 console.log(qty)
 
   const cartModalOpen = () =>
