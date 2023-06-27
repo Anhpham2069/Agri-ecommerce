@@ -1,11 +1,11 @@
-import React, { Fragment, useEffect, useContext, useState } from "react";
+import React, { Fragment, useEffect, useContext, useState,useRef} from "react";
 import { useHistory } from "react-router-dom";
 import { LayoutContext } from "../layout";
 import { subTotal, quantity,totalCost,clearCart } from "../partials/Mixins";
 import axios from "axios"
 import { cartListProduct } from "../partials/FetchApi";
 import { fetchData } from "./Action";
-import { vnpayOrder,editCategory } from "./FetchApi"; 
+import { vnpayOrder,editCategory,getProvince,getProvinceDistrict,getProvinceWard } from "./FetchApi"; 
 import { Alert, Space } from 'antd';
 import { message } from 'antd';
 import { Skeleton } from 'antd';
@@ -13,24 +13,51 @@ import "./style.css"
 
 const apiURL = process.env.REACT_APP_API_URL;
 
-export const CheckoutComponent = (props) => {
+export const CheckoutComponent = ({options}) => {
+  const inputRef = useRef();
   const history = useHistory();
   const { data, dispatch } = useContext(LayoutContext);
+
+
   const [address, setAddress] = useState('');
+  const [addressDetail, setAddressDetail] = useState('');
   const [phone, setPhone] = useState('');
   const [paymentUrl, setPaymentUrl] = useState(null);
   const [status,setStatus] = "Đã thanh toán"
+
+
+const [provinces, setProvinces] = useState([]);
+const [province, setProvince] = useState();
+const [districts, setDistricts] = useState();
+const [district, setDistrict] = useState();
+const [wards, setWards] = useState();
+const [ward, setWard] = useState();
+const [submittedValues, setSubmittedValues] = useState(null);
+
+const handleSubmitAdress = (event) => {
+  event.preventDefault();
+  if(!province){
+    message.warning("vui lòng điền tỉnh/thảnh thố của bạn")
+  }else if(!district){
+    message.warning("vui lòng điền huyện của bạn")
+  }else if(!addressDetail){
+    message.warning("vui lòng điền địa chỉ chi tiết")
+  }
+  else{
+    setAddress(
+     addressDetail +","+
+      districts?.find(i=>i.district_id===district)?.district_name+","+ 
+      provinces?.find(i=>i.province_id===province)?.province_name,
+    );
+  }
+};
   // const [isLoading,setIsLoading]  = useState(false)
-
-
+  console.log(address)
   const [state, setState] = useState({
     address: "",
     phone: "",
     error: false,
   });
-
-
-
   useEffect(() => {
     fetchData(cartListProduct, dispatch);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -46,38 +73,79 @@ export const CheckoutComponent = (props) => {
     });
     return product;
   };
-  console.log(qtyyy())
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const order = {
-      allProduct: data.cartProduct.map(item => ({ id: item._id, quantitiy: item.pQuantity })),
-      user: JSON.parse(localStorage.getItem("jwt")).user._id,
-      total:  costValue,
-      transactionId : Math.floor(Math.random() * 1000),
-      address,
-      phone,
-      amount: qtyyy(),
-      status: "Chưa được xử lý"
-    };
-    const qty = {
-      productId: data.cartProduct.map(item => item._id ),
-      quantity:  data.cartProduct.map(item => (item.pQuantity-qtyyy() )),
-    }
-    console.log(qty)
-    try {
-      const response = await axios.post('http://localhost:8000/api/order/create-order', order);
-      // Handle success
-      const responseQty = await axios.post('http://localhost:8000/api/product/update-qty-product',qty )
-      console.log('Order created', response.data);
-      console.log(responseQty);
-      message.success('Đặt hàng thành công!');
-      // clearCart()
-      setTimeout(() => {
-        history.push('/'); // Thay thế '/success-page' bằng URL của trang thành công thực tế
-      }, 1000);
 
-    } catch (error) {
-      console.error('An error occurred while creating the order:', error);
+  useEffect(()=>{
+
+    const fetchDataProvince = async ()=>{
+      let response = await getProvince()
+      if(response.status===200){
+        setProvinces(response?.data.results)
+      }
+    }
+    fetchDataProvince()
+  },[])
+  useEffect(()=>{
+
+    const fetchProvinceDistrict = async ()=>{
+      let response = await getProvinceDistrict(province)
+      if(response.status===200){
+        setDistricts(response?.data.results)
+      }
+    }
+     province && fetchProvinceDistrict(province)
+  },[province])
+
+  useEffect(()=>{
+    const fetchProvinceWard = async ()=>{
+      let response = await getProvinceWard(district)
+      console.log(response)
+      if(response.status===200){
+        setWards(response?.data.results)
+      }
+    }
+     district && fetchProvinceWard(district)
+  },[district])
+
+console.log(wards)
+
+  const handleSubmit = async (event) => {
+    if(!address){
+      message.warning("vui lòng điền địa chỉ của bạn")
+    }else if(!phone){
+      message.warning("vui lòng điền số điện thoại của bạn")
+    }else{
+
+      event.preventDefault();
+      const order = {
+        allProduct: data.cartProduct.map(item => ({ id: item._id, quantitiy: item.pQuantity })),
+        user: JSON.parse(localStorage.getItem("jwt")).user._id,
+        total:  costValue,
+        transactionId : Math.floor(Math.random() * 1000),
+        address,
+        phone,
+        amount: qtyyy(),
+        status: "Chưa được xử lý"
+      };
+      const qty = {
+        productId: data.cartProduct.map(item => item._id ),
+        quantity:  data.cartProduct.map(item => (item.pQuantity-qtyyy() )),
+      }
+      console.log(qty)
+      try {
+        const response = await axios.post('http://localhost:8000/api/order/create-order', order);
+        // Handle success
+        const responseQty = await axios.post('http://localhost:8000/api/product/update-qty-product',qty )
+        console.log('Order created', response.data);
+        console.log(responseQty);
+        message.success('Đặt hàng thành công!');
+        // clearCart()
+        setTimeout(() => {
+          history.push('/'); // Thay thế '/success-page' bằng URL của trang thành công thực tế
+        }, 1000);
+  
+      } catch (error) {
+        console.error('An error occurred while creating the order:', error);
+      }
     }
   };
   const createPaymentUrl = async () => {
@@ -114,59 +182,64 @@ export const CheckoutComponent = (props) => {
 
   const handleSubmitVNPay = async (event) => {
     event.preventDefault();
+    if(!address){
+      message.warning("vui lòng điền địa chỉ của bạn")
+    }else if(!phone){
+      message.warning("vui lòng điền số điện thoại của bạn")
+    }else{
+        const order = {
+          allProduct: data.cartProduct.map(item => ({ id: item._id, quantitiy: item.pQuantity })),
+          user: JSON.parse(localStorage.getItem("jwt")).user._id,
+          total:  costValue,
+          transactionId : Math.floor(Math.random() * 1000),
+          address,
+          phone,
+          amount: qtyyy(),
+          status: "Đã thanh toán"
+        };
+        const qty = {
+          productId: data.cartProduct.map(item => item._id ),
+          quantity:  data.cartProduct.map(item => (item.pQuantity-qtyyy() )),
     
-    const order = {
-      allProduct: data.cartProduct.map(item => ({ id: item._id, quantitiy: item.pQuantity })),
-      user: JSON.parse(localStorage.getItem("jwt")).user._id,
-      total:  costValue,
-      transactionId : Math.floor(Math.random() * 1000),
-      address,
-      phone,
-      amount: qtyyy(),
-      status: "Đã thanh toán"
-    };
-    const qty = {
-      productId: data.cartProduct.map(item => item._id ),
-      quantity:  data.cartProduct.map(item => (item.pQuantity-qtyyy() )),
-
+        }
+        
+      
+        // const paymentUrlResponse = await axios.post(`${apiURL}/api/vnpay/create_payment_url`, dataOder);
+        // try {
+        //   // const response = await axios.post(`${apiURL}/api/order/create-order`, order);
+        //   // Handle success
+        //   // Create payment URL with orderId
+        
+        //   // let response = await axios.get("http://localhost:8000/api/vnpayment/create_payment_url");
+        //   // if(response){
+        //   //   const url = response.data;
+        //   //   window.open(url, '_blank');
+        //   // }
+        //   console.log(paymentUrlResponse)
+        //   const paymentUrl = paymentUrlResponse.data;
+        //   console.log(paymentUrl.data)
+        //   window.location.href = paymentUrl.data;
+        //   // const responseQty = await axios.post('http://localhost:8000/api/product/update-qty-product',qty )
+        //   // Redirect user to payment page
+        // } catch (error) {
+        //   console.error('An error occurred while creating the order:', error);
+        // }
+        const response = await axios.post(`${apiURL}/api/order/create-order`,order);
+        if(response){
+          await createPaymentUrl()
+          const responseQty = await axios.post('http://localhost:8000/api/product/update-qty-product',qty )
+        }
+        else{
+          console.log("thanh toan thất bại")
+        }
+    
+        
+    
+      
+    
+    
+        await vnpayReturn()
     }
-    
-  
-    // const paymentUrlResponse = await axios.post(`${apiURL}/api/vnpay/create_payment_url`, dataOder);
-    // try {
-    //   // const response = await axios.post(`${apiURL}/api/order/create-order`, order);
-    //   // Handle success
-    //   // Create payment URL with orderId
-    
-    //   // let response = await axios.get("http://localhost:8000/api/vnpayment/create_payment_url");
-    //   // if(response){
-    //   //   const url = response.data;
-    //   //   window.open(url, '_blank');
-    //   // }
-    //   console.log(paymentUrlResponse)
-    //   const paymentUrl = paymentUrlResponse.data;
-    //   console.log(paymentUrl.data)
-    //   window.location.href = paymentUrl.data;
-    //   // const responseQty = await axios.post('http://localhost:8000/api/product/update-qty-product',qty )
-    //   // Redirect user to payment page
-    // } catch (error) {
-    //   console.error('An error occurred while creating the order:', error);
-    // }
-    const response = await axios.post(`${apiURL}/api/order/create-order`,order);
-    if(response){
-      await createPaymentUrl()
-      const responseQty = await axios.post('http://localhost:8000/api/product/update-qty-product',qty )
-    }
-    else{
-      console.log("thanh toan thất bại")
-    }
-
-    
- 
-   
- 
- 
-    await vnpayReturn()
   };
 
 
@@ -213,21 +286,53 @@ export const CheckoutComponent = (props) => {
                     <label htmlFor="address" className="pb-2">
                       Địa chi
                     </label>
-                    <input
-                      value={address}
-                      onChange={(e) =>
-                        setAddress(e.target.value)
-                        // setState({
-                        //   ...state,
-                        //   address: e.target.value,
-                        //   error: false,
-                        // })
-                      }
-                      type="text"
-                      id="address"
-                      className="border px-4 py-2"
-                      placeholder="Address..."
-                    />
+                    <form onSubmit={handleSubmitAdress} className="form-address">
+                        <select 
+                          className="province"
+                          value={province}
+                          onChange={(e)=>setProvince(e.target.value)}
+                        >
+                          {provinces?.map((item)=>(
+                            <option 
+                              value={item.province_id}
+                              key={item.province_id}>{item.province_name}</option>
+                          ))}
+                        </select>
+                        <select 
+                          className="district"
+                          value={district}
+                          onChange={(e)=>setDistrict(e.target.value)}
+                        >
+                          {districts?.map((item)=>(
+                            <option 
+                              value={item.district_id}
+                              key={item.district_id}>{item.district_name}</option>
+                          ))}
+                        </select>
+                        <input
+                          className="address-detail"
+                          value={
+                          addressDetail
+                          }
+                          onChange={(e) =>
+                            setAddressDetail(e.target.value)
+                            // setState({
+                            //   ...state,
+                            //   address: e.target.value,
+                            //   error: false,
+                            // })
+                          }
+                          type="text"
+                          id="address"
+                          placeholder="Địa chỉ chi tiết..."
+                        />
+                      <button className="submit-address" type="submit" >
+                        Xác nhận địa chỉ
+                      </button>
+
+                    </form>
+                    <input value={address} type="text"className="addrres-confirm" />
+                 
                   </div>
                   <div className="flex flex-col py-2 mb-2">
                     <label htmlFor="phone" className="pb-2">

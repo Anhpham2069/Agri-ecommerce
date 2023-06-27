@@ -32,3 +32,39 @@ export const editCategory = async (oId, status) => {
 };
 
 
+
+export const getProvince = () => new Promise(async (resolve,reject)=>{
+  try {
+    const response = await axios({
+      method: "get",
+      url: "https://vapi.vnappmob.com/api/province/",
+    })
+    resolve(response)
+  } catch (error) {
+    reject(error);
+  }
+})
+
+export const getProvinceDistrict = (provinceId) => new Promise(async (resolve,reject)=>{
+  try {
+    const response = await axios({
+      method: "get",
+      url: `https://vapi.vnappmob.com/api/province/district/${provinceId}`,
+    })
+    resolve(response)
+  } catch (error) {
+    reject(error);
+  }
+})
+export const getProvinceWard = (districtId) => new Promise(async (resolve,reject)=>{
+  try {
+    const response = await axios({
+      method: "get",
+      url: `https://vapi.vnappmob.com/api/province/ward/${districtId}`,
+    })
+    resolve(response)
+  } catch (error) {
+    reject(error);
+  }
+})
+

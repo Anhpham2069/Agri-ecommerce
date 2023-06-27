@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getSinglePost } from './fecthApi';
 import { Skeleton } from 'antd';
 import Productoutstanding from './productoutstanding';
+import Banner from "../../../images/product-page/banner_cleanup.jpg"
 
 const apiURL = process.env.REACT_APP_API_URL;
 
@@ -44,7 +45,7 @@ const PostDetails = () => {
 
         <div className='article-wraper'>
                 <div className='advertisement-container'>
-
+                    <img src={Banner} alt=''/>
                 </div>
                 <div className='article-conatiner'>
                     <div className="article">

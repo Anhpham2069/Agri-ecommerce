@@ -10,6 +10,7 @@ import { logout } from "./Action";
 import { LayoutContext } from "../index";
 import { getAllCategory } from "../../admin/categories/FetchApi";
 import { getAllProduct } from "../../admin/products/FetchApi";
+import { getAllUser } from "./FetchApi";
 import { isAdmin } from "../auth/fetchApi";
 import DropdownMenu from "./dropdownMenu";
 import Search from "./search";
@@ -25,10 +26,20 @@ const Navber = (props) => {
   const [categories, setCategories] = useState(null);
   const [isHidden, setIsHidden] = useState(false);
   const [ products,setProducts] = useState(false);
+  const [ user,setUser] = useState([]);
   const [dataFetched,] = useState(false);
 
 
+  let userId;
+  const jwt = localStorage.getItem("jwt");
 
+  if (jwt) {
+    const parsedJwt = JSON.parse(jwt);
+    if (parsedJwt && parsedJwt.user) {
+      userId = parsedJwt.user._id;
+    }
+  }
+  console.log(userId)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,6 +63,17 @@ const Navber = (props) => {
     }
     fetchDataProduct()
   }, [dataFetched]);
+
+  useEffect(()=>{
+    const fetchDataUser = async()=>{
+      let response = await getAllUser()
+      if(response){
+        setUser(response)
+      }
+    }
+    fetchDataUser()
+  },[])
+  console.log(user.Users)
 
   const fetchData = async () => {
     try {
@@ -198,8 +220,7 @@ const Navber = (props) => {
                   <div className="user-navber">
                   <UserOutlined />
                   <span className="user-nb-name text-lg">
-                      Anh
-                    {/* {dataUser.userDetails ? dataUser.userDetails.name : ""} */}
+                    {user.Users && user.Users.map(item=>item._id===userId ? item.name: "")}
                   </span>
                   </div>
                   

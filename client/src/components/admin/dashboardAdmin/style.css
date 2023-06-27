@@ -1,0 +1,30 @@
+.chart-container{
+    padding: 20px;
+    background-color: white;
+    margin-top: 20px;
+    width: 97%;
+    margin: auto ;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    margin-bottom: 10px;
+}
+.title-chart-oder{
+    padding: 20px;
+}
+.name-chart-oder{
+    text-align: center;
+    margin-bottom: 10px;
+}
+.chart-oder-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+.province-chart{
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

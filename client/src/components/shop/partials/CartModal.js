@@ -4,7 +4,7 @@ import { LayoutContext } from "../index";
 import { cartListProduct } from "./FetchApi";
 import { isAuthenticate } from "../auth/fetchApi";
 import { cartList } from "../productDetails/Mixins";
-import { subTotal, quantity, totalCost,minusQty,plusQty } from "./Mixins";
+import { subTotal, totalCost,minusQty,plusQty } from "./Mixins";
 import {updateQuantity} from "../productDetails/Mixins"
 import {faPlus,faMinus} from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,21 +18,66 @@ const CartModal = () => {
 
   const { data, dispatch } = useContext(LayoutContext);
   const products = data.cartProduct;
-  const [qty,setQty] = useState(1)
   const [, setAlertq] = useState(false)
-
-
-  // Hàm tăng số lượng
-  const increaseQuantity = () => {
-    setQty(qty + 1);
+  
+  const [qty,setQty] = useState()
+  const quantity = (id) => {
+    let product = 0;
+    let carts = JSON.parse(localStorage.getItem("cart"));
+    carts.forEach((item) => {
+      if (item.id === id) {
+        product = item.quantitiy;
+      }
+    });
+    return product    
   };
 
-  // Hàm giảm số lượng
-  const decreaseQuantity = () => {
-    if (qty > 0) {
-      setQty(qty - 1);
+
+
+const minusQuantityCart =(id)=>{
+  let carts = JSON.parse(localStorage.getItem("cart"));
+  let newQuantity = 0;
+  console.log(carts)
+
+  carts = carts.map((item) => {
+    if (item.id === id) {
+      newQuantity = item.quantitiy - 1;
+      newQuantity = Math.max(newQuantity, 0);
+      return { ...item, quantitiy: newQuantity };
     }
-  };
+    return item;
+  });
+
+  localStorage.setItem("cart", JSON.stringify(carts));
+  setQty(quantity(id));
+}
+const plusQuantityCart =(id)=>{
+  let carts = JSON.parse(localStorage.getItem("cart"));
+  let newQuantity = 0;
+  console.log(carts)
+
+  carts = carts.map((item) => {
+    if (item.id === id) {
+      newQuantity = item.quantitiy + 1;
+      return { ...item, quantitiy: newQuantity };
+    }
+    return item;
+  });
+
+  localStorage.setItem("cart", JSON.stringify(carts));
+  setQty(quantity(id));
+}
+  // Hàm tăng số lượng
+  // const increaseQuantity = () => {
+  //   setQty(qty + 1);
+  // };
+
+  // // Hàm giảm số lượng
+  // const decreaseQuantity = () => {
+  //   if (qty > 0) {
+  //     setQty(qty - 1);
+  //   }
+  // };
   // const q = quantity(products)  
 console.log(qty)
 
@@ -135,17 +180,18 @@ console.log(qty)
                               </div>
                                 <div className="flex items-end">
                                   <span className="plus-qty"
-                                      onClick={decreaseQuantity}
+                                      onClick={()=>minusQuantityCart(item._id)}
                                   > 
                                     <FontAwesomeIcon icon={faMinus} size="xs"/>
                                   </span>
                                   <span className="number-qty text-sm text-gray-700">
-                                  &#160;{quantity(item._id)}&#160;
-                                  {qty}
+                                  &#160;
+                                  {quantity(item._id)}
+                                  &#160;
                                   </span>
                                   <span className="plus-qty"
-                                  
-                                  onClick={increaseQuantity}> 
+                                  onClick={()=>plusQuantityCart(item._id)}
+                                  > 
                                       <FontAwesomeIcon icon={faPlus} size="xs"/>
                                   </span>
                                 </div>

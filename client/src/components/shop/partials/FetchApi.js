@@ -36,3 +36,12 @@ export const getUserById = async (uId) => {
     console.log(error);
   }
 };
+export const getAllUser = async () => {
+  try {
+    let res = await axios.get(`${apiURL}/api/user/all-user`);
+    return res.data ;
+  } catch (error) {
+    console.log(error);
+  }
+};
+

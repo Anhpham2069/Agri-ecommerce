@@ -7,8 +7,11 @@
     font-family: 'Times New Roman', Times, serif;
 }
 .advertisement-container{
-  width: 30%;
+  width: 25%;
   background-color: aqua;
+}
+.advertisement-container img{
+  width: 100%;
 }
 
 .article-conatiner{

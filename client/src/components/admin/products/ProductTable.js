@@ -281,7 +281,11 @@ const ProductTable = ({ product, deleteProduct, editProduct,index,category }) =>
             </span>
           )}
         </td>
+        {product.pQuantity>0 ? 
         <td className="p-2 text-center">{product.pQuantity}</td>
+        :
+        <td className="p-2 text-center text-red-500">Hết hàng</td>
+        }
        
          <td className="p-2 text-center">{product.pCategory.cName}</td>
         <td className="p-2 text-center">{product.pOffer}</td>
