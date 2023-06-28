@@ -50,7 +50,7 @@ export const totalCost = () => {
   carts.forEach((item) => {
     totalCost += item.quantitiy * item.price;
   });
-  return totalCost;
+  return totalCost+25000;
 };
 export const clearCart = () => {
   localStorage.removeItem("cart");

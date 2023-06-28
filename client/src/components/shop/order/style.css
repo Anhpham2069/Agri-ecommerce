@@ -55,6 +55,10 @@
     text-transform: uppercase;
     font-weight: 600;
 }
+.cost-shipping{
+    text-align: right;
+    font-size: 1.2rem;
+}
 .oder-btn-online{
     margin-top: 5px;
     text-transform: uppercase;

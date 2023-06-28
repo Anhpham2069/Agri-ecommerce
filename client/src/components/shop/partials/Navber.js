@@ -469,7 +469,6 @@ const Navber = (props) => {
             </li>
           </NavLink>
           <NavLink to="/products/category/647795a8a6be5512bc83e9a3">
-
           <li className="menu p-4 px-4 hover:bg-green-700 dropdown">
             <span className="dropdown-btn">
               {/* <FontAwesomeIcon icon={faSeedling} size="xs" /> */}

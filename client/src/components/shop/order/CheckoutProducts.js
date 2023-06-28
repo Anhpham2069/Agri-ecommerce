@@ -41,6 +41,8 @@ const [ward, setWard] = useState();
 const [submittedValues, setSubmittedValues] = useState(null);
 const [phoneError, setPhoneError] = useState('');
 
+
+
 const handlePhoneChange = (e) => {
   const value = e.target.value;
   setPhone(value);
@@ -280,7 +282,7 @@ console.log(wards)
   return (
     <Fragment>
       <section className="oder-wraper">
-        <div className="text-2xl mx-2">Order</div>
+        <div className="text-2xl mx-2">Thanh toán</div>
         {/* Product List */}
         <div className="checkout-container">
           <div className="checkoutproducts-wraper">
@@ -424,7 +426,7 @@ console.log(wards)
 
 const CheckoutProducts = ({ products }) => {
   const history = useHistory();
-
+  const Shipping = 25000
   return (
     <Fragment>
       <div className="oder-product-container ">
@@ -462,7 +464,12 @@ const CheckoutProducts = ({ products }) => {
           <div>No product found for checkout</div>
         )}
       </div>
-      <div className="total-cost">Thành tiền: {totalCost().toLocaleString()} <sup> &#8363;</sup></div>
+      
+      <div className="cost-shipping">Phí vẫn chuyển: 
+      {Shipping.toLocaleString()}
+      <sup> &#8363;</sup></div>
+      <div className="total-cost">Thành tiền: {(totalCost()).toLocaleString()} <sup> &#8363;</sup></div>
+      
     </Fragment>
   );
 };

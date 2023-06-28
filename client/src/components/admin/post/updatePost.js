@@ -130,7 +130,7 @@ console.log(image)
           <br /><br />
           {image && (
             <div>
-              <img src={URL.createObjectURL(image)} alt="Selected Image" />
+              {/* <img src={URL.createObjectURL(image)} alt="Selected Image" /> */}
             </div>
           )}
             <br /><br />

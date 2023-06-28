@@ -3,6 +3,7 @@
     color: rgb(82, 79, 79);
     background-color: white;
     font-family:'Courier New', Courier, monospace;
+    font-weight: 600;
 }
 .sidebar-container div{
     width: 90%;
@@ -12,4 +13,8 @@
 }
 .sidebar-container div span{
     margin-right: 20px;
+}
+.admin-navber{
+    background-color: rgb(75, 180, 6);
+    color: white;
 }

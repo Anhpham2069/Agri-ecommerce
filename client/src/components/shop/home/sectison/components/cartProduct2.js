@@ -158,7 +158,7 @@ const CartProducts2 = ({data}) => {
                                     )
                                 }
                             >
-                                <ShoppingCartOutlined />
+                                <ShoppingCartOutlined style={{fontSize:"1.3rem"}}/>
                     </span>
             }
  

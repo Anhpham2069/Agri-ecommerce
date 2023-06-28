@@ -7,7 +7,7 @@ const apiURL = process.env.REACT_APP_API_URL;
 const CheckoutSuccess = () => {
     const history = useHistory()
 
-
+    
     const vnpayReturn = async () => {
         try {
           const response = await axios.get(`${apiURL}/api/vnpay/vnpay_return`);
@@ -27,7 +27,7 @@ const CheckoutSuccess = () => {
       const handleContiniueShopping  = async () =>{
         await vnpayReturn()
 
-        // history.push('/')
+        history.push('/')
       }
 
 

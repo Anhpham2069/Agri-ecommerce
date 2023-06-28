@@ -278,6 +278,7 @@ console.log(data)
               <div className="w-1/2 flex flex-col space-y-1">
                 <label htmlFor="status">Phân loại sản phẩm *</label>
                 <select
+               
                   onChange={(e) =>
                     setEditformdata({
                       ...editformData,
@@ -439,7 +440,7 @@ console.log(data)
                 type="submit"
                 className="rounded-full bg-gray-800 text-gray-100 text-lg font-medium py-2"
               >
-                Update product
+                Cập nhật sản phẩm
               </button>
             </div>
           </form>

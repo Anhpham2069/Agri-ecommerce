@@ -44,7 +44,11 @@
     font-size: 16px;
     line-height: 1.5;
   }
-
+  .article__author{
+    font-style: italic;
+    text-align: end;
+    margin-top: 10px;
+  }
 
   .Featured-container{
     display: flex;

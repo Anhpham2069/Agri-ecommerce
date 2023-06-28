@@ -52,6 +52,7 @@ const PostDetails = () => {
                         {/* <img src={image} alt={title} className="article__image" /> */}
                         <h2 className="article__title">{post.title}</h2>
                         <p className="article__content">{post.content}</p>
+                        <p className="article__author">theo {post.author}</p>
                     </div>
                 </div>
                 <div className='Featured-container'>

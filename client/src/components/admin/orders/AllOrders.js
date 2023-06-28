@@ -149,7 +149,7 @@ const AllCategory = (props) => {
           </tbody>
         </table>
         <div className="text-sm text-gray-600 mt-2">
-          Total {orders && orders.length} order found
+          Tất {orders && orders.length} đơn hàng được tìm thấy
         </div>
       </div>
     </Fragment>

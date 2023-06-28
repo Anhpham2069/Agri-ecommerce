@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { useHistory } from "react-router-dom";
+import "./style.css"
 
 const AdminNavber = (props) => {
   const history = useHistory();
@@ -13,12 +14,12 @@ const AdminNavber = (props) => {
 
   return (
     <Fragment>
-      <nav className="sticky z-10 flex items-center shadow-md justify-between px-4 py-4 md:px-8 top-0 w-full  bg-white">
+      <nav className="admin-navber sticky z-10 flex items-center shadow-md justify-between px-4 py-4 md:px-8 top-0 w-full ">
         {/*  Large Screen Show  */}
         <div className="hidden lg:block lg:flex lg:items-center lg:space-x-4 mr-32">
           <span>
             <svg
-              className="w-8 h-8 cursor-pointer text-black"
+              className="w-8 h-8 cursor-pointer "
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -38,7 +39,7 @@ const AdminNavber = (props) => {
           <span
             onClick={(e) => history.push("/admin/dashboard")}
             style={{ letterSpacing: "0.70rem" }}
-            className="flex items-left text-center font-bold uppercase text-black text-2xl cursor-pointer px-2 text-center"
+            className="flex items-left text-center font-bold uppercase  text-2xl cursor-pointer px-2 text-center"
           >
             Nông sản Xanh
           </span>
@@ -47,7 +48,7 @@ const AdminNavber = (props) => {
         <div className="lg:hidden flex items-center">
           <svg
             id="hamburgerBtn"
-            className="lg:hidden w-8 h-8 cursor-pointer text-black"
+            className="lg:hidden w-8 h-8 cursor-pointer "
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -82,7 +83,7 @@ const AdminNavber = (props) => {
             title="Logout"
           >
             <svg
-              className="cursor-pointer w-8 h-8 text-black hover:text-gray-800"
+              className="cursor-pointer w-8 h-8  hover:text-gray-800"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
