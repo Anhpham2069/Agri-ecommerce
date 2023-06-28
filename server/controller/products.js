@@ -114,21 +114,21 @@ class Product {
         });
         let save = await newProduct.save();
         if (save) {
-          if (pExpirationDate) {
-            const expirationDate = new Date(pExpirationDate);
-            const currentDate = new Date();
+          // if (pExpirationDate) {
+          //   const expirationDate = new Date(pExpirationDate);
+          //   const currentDate = new Date();
     
-            if (expirationDate > currentDate) {
-              const timeUntilExpiration = expirationDate.getTime() - currentDate.getTime();
-              setTimeout(() => {
-                productModel.findByIdAndUpdate(save._id, { pStatus: 'disabled' }, (err) => {
-                  if (err) {
-                    console.log('Error disabling product:', err);
-                  }
-                });
-              }, timeUntilExpiration);
-            }
-          }
+          //   if (expirationDate > currentDate) {
+          //     const timeUntilExpiration = expirationDate.getTime() - currentDate.getTime();
+          //     setTimeout(() => {
+          //       productModel.findByIdAndUpdate(save._id, { pStatus: 'disabled' }, (err) => {
+          //         if (err) {
+          //           console.log('Error disabling product:', err);
+          //         }
+          //       });
+          //     }, timeUntilExpiration);
+          //   }
+          // }
           return res.json({ success: "Product created successfully" });
         }
       } catch (err) {
@@ -235,6 +235,23 @@ class Product {
         pStatus,
         pHashtag,
       };
+      if (pExpirationDate) {
+        const expirationDate = new Date(pExpirationDate);
+        const currentDate = new Date();
+        console.log(currentDate)
+        
+        // if (expirationDate > currentDate) {
+        //   const timeUntilExpiration = expirationDate.getTime() - currentDate.getTime();
+        //   console.log(timeUntilExpiration)
+        //   setTimeout(() => {
+        //     productModel.findByIdAndUpdate(pId, { pStatus: 'Hết Hạn' }, (err) => {
+        //       if (err) {
+        //         console.log('Error disabling product:', err);
+        //       }
+        //     });
+        //   }, timeUntilExpiration);
+        // }
+      }
       if (editImages.length == 2) {
         let allEditImages = [];
         for (const img of editImages) {

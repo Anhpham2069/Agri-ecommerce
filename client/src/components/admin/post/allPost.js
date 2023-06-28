@@ -108,6 +108,7 @@ const AllPost = () => {
             <Column title="Tiêu đề" dataIndex="title" key="title" ellipsis= "true"/>
             <Column title="Nội dung" dataIndex="content" key="content"  ellipsis= "true" />
             <Column title="Tác giả" dataIndex="author" key="author" />
+            <Column title="Chuyên mục" dataIndex="category" key="category" />
             <Column title="Ngày thêm" key="createdAt" 
                 render={(post)=>(
                     moment(post.createdAt).format("lll")
@@ -121,12 +122,13 @@ const AllPost = () => {
                     <Button type="primary" onClick={()=>showModal(item._id,item) }>
                         sửa
                     </Button>
-                    <Modal title="Bài viêt mới" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                    <Modal title="Sửa bài viết" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                         {selectedPost &&
                             <UpdatePostModal postId={isId} 
                                 postTitle={selectedPost.title}
                                 postContent={selectedPost.content}
                                 postAuthor={selectedPost.author}
+                                postCategory={selectedPost.category}
                                 postImg={selectedPost.image}
                             />
                         }

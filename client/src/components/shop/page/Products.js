@@ -115,17 +115,17 @@ const categories = ["Chợ online", "Hoa Quả Nhập Khẩu 1", "ĐặC Sản"]
             onClick={() => handlePriceRangeClick(100000, 1000000)}
             > &#62; 100.0000 đ</div>
 
-            <div className='filter-title'
+            {/* <div className='filter-title'
           
-            >Lọc theo loại</div>
+            >Lọc theo loại</div> */}
             {/* <div className='filter-item'
               onClick={() => handleCategoryClick("Chợ Online")}
             >Chợ online</div> */}
-            {categories.map((category) => (
+            {/* {categories.map((category) => (
                <div className='filter-item' key={category} onClick={() => handleCategoryClick(category)}>
                 {category}
               </div>
-            ))}
+            ))} */}
             {/* <div className='filter-item'>Hoa quả</div>
             <div className='filter-item'>đặc sản</div> */}
           </div>

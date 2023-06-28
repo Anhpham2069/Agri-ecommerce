@@ -9,7 +9,7 @@ const apiURL = process.env.REACT_APP_API_URL;
 
 const EditProductModal = (props) => {
   const { data, dispatch } = useContext(ProductContext);
-
+console.log(data)
   const [categories, setCategories] = useState(null);
 
   const alert = (msg, type) => (
@@ -30,7 +30,7 @@ const EditProductModal = (props) => {
     pCompany: "",
     pDetails: "",
     pHashtag: "",
-    pExpirationDate: null,
+    pExpirationDate: Date,
     error: false,
     success: false,
   });
@@ -398,7 +398,8 @@ const EditProductModal = (props) => {
             </div>
             <div className="flex space-x-1 py-4">
               <div className="w-1/2 flex flex-col space-y-1">
-                  <label htmlFor="status">Hạn sử dụng *</label>
+                  <label htmlFor="date">Hạn sử dụng * 
+                  <p>{editformData.pExpirationDate}</p></label>
                     <input type="date" id="start" name="trip-start"
                         value={editformData.pExpirationDate}
                         onChange={(e) =>
@@ -406,7 +407,7 @@ const EditProductModal = (props) => {
                             ...editformData,
                             error: false,
                             success: false,
-                            pExpirationDate: e.target.value,
+                            pExpirationDate: e.target.value + 'T00:00:00.000Z',
                           })}
                         >
                   </input>

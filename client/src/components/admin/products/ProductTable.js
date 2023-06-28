@@ -120,7 +120,7 @@ const AllProduct = (props) => {
       </div>
     );
   }
-
+  
   return (
     <Fragment>
       <div className="title-table-container col-span-1 overflow-auto bg-white shadow-lg p-4 text-sm">
@@ -142,6 +142,7 @@ const AllProduct = (props) => {
               <th className="title-table-detail">Chi tiết</th>
               <th className="title-table-detail">Hình ảnh</th>
               <th className="title-table-detail">Trạng thái</th>
+              <th className="title-table-detail">Hạn sử dụng</th>
               <th className="title-table-detail">Số lượng</th>
               <th className="title-table-detail">Loại</th>
               <th className="title-table-detail">Khuyến mại (%)</th>
@@ -204,6 +205,9 @@ const AllProduct = (props) => {
 
 /* Single Product Component */
 const ProductTable = ({ product, deleteProduct, editProduct,index,category }) => {
+  const currentDate = new Date()
+
+  console.log(currentDate)
 
   const showDeleteConfirm = () => {
     confirm({
@@ -281,6 +285,14 @@ const ProductTable = ({ product, deleteProduct, editProduct,index,category }) =>
             </span>
           )}
         </td>
+          <Tooltip title={product.pExpirationDate} color="green" placement="right">
+            { new Date(product.pExpirationDate) > currentDate ? 
+              // console.log(product.pExpirationDate)
+            <td className="p-2 text-center text-green-500">Còn hạn</td>
+            :
+            <td className="p-2 text-center text-red-500">Hết Hạn</td>
+            }
+          </Tooltip>
         {product.pQuantity>0 ? 
         <td className="p-2 text-center">{product.pQuantity}</td>
         :

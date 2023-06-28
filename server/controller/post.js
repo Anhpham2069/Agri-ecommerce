@@ -18,7 +18,7 @@ class Post{
   async createPost(req, res) {
     try {
       // Lấy thông tin từ body request
-      const { title, content,author } = req.body;
+      const { title, content,author,category } = req.body;
   
       // Kiểm tra xem có tệp ảnh được gửi lên không
       if (!req.file) {
@@ -26,11 +26,11 @@ class Post{
       }
   
       // Lấy đường dẫn tới tệp ảnh đã tải lên
-      const imagePath = req.file.path;
+      // const imagePath = req.file.path;
       const imageName = req.file.originalname;
       // const createdAt = new Date();
       // Tạo bài viết mới với thông tin và đường dẫn ảnh
-      const newPost = await postModel.create({ title, content,author, image: imageName, });
+      const newPost = await postModel.create({ title, content,author,category, image: imageName, });
   
       res.status(201).json(newPost);
     } catch (error) {
@@ -41,25 +41,24 @@ class Post{
   async updatePost(req, res){
     try {
       const postId = req.params.id;
-      const { title, content,author } = req.body;
+      const { title, content,author,category } = req.body;
   
       // Xử lý tải lên hình ảnh
-      upload.single('image')(req, res, async (err) => {
-        if (err) {
-          return res.status(400).json({ error: err.message });
-        }
   
-        const image = req.file ? req.file.filename : undefined;
+  
+      // Lấy đường dẫn tới tệp ảnh đã tải lên
+      // const imagePath = req.file.path;
+      const imageName = req.file.originalname;
   
         // Cập nhật bài viết với các trường title, content, và image (nếu có)
         const updatedPost = await postModel.findByIdAndUpdate(
           postId,
-          { title, content,author, image },
+          { title, content,author,category, image: imageName },
           { new: true }
         );
   
         res.json(updatedPost);
-      });
+      
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

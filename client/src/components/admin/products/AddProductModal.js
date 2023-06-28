@@ -39,7 +39,7 @@ const AddProductDetail = ({ categories }) => {
     pDetails:"",
     pQuantity: "",
     pHashtag: "",
-    pExpirationDate:null,
+    pExpirationDate: Date,
     success: false,
     error: false,
   });
@@ -86,7 +86,7 @@ const AddProductDetail = ({ categories }) => {
           pCompany:"",
           pDetails:"",
           pHashtag:"",
-          pExpirationDate:null,
+          pExpirationDate: Date,
           success: responseData.success,
           error: false,
         });
@@ -104,7 +104,7 @@ const AddProductDetail = ({ categories }) => {
             pCompany:"",
             pDetails:"",
             pHashtag:"",
-            pExpirationDate:  null,
+            pExpirationDate:  Date,
             success: false,
             error: false,
           });

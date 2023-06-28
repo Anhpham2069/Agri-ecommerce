@@ -18,6 +18,7 @@ import {
   rescueProduct,
   RescuePage,
   CheckoutSuccessPage,
+  AllPostPage
 } from "./shop";
 import { DashboardAdmin, Categories, Products, Orders, Users, Post } from "./admin";
 import { UserProfile, UserOrders, SettingUser } from "./shop/dashboardUser";
@@ -39,6 +40,7 @@ const Routes = (props) => {
         <Route exact path="/wish-list" component={WishList} />
         <Route exact path="/rescuePage" component={RescuePage} />
         <Route exact path="/checkoutSuccessPage" component={CheckoutSuccessPage} />
+        <Route exact path="/all-post" component={AllPostPage} />
         <Route exact path="/products/:id" component={ProductDetails} />
         <Route exact path="/post/:id" component={PostPage} />
         <Route

@@ -1,13 +1,8 @@
 import React,{useState,useEffect} from 'react'
 import { useHistory } from "react-router-dom"
 import { getAllPost } from './fetchApi'
+import { NavLink } from 'react-router-dom'
 import "./style.css"
-
-import ANH from "../../../../images/productsData/news/Nguon-qua-cam-sanh-chat-luong-tai-Foodmap-1200x675.jpg"
-import ANH2 from "../../../../images/productsData/news/xhoi.jpg"
-import ANH3 from "../../../../images/productsData/news/ESG-definition-and-meaning.jpeg"
-import ANH4 from "../../../../images/productsData/news/chatluong.jpg"
-import ANH5 from "../../../../images/productsData/news/thachthuc.jpg"
 
 
 const apiURL = process.env.REACT_APP_API_URL;
@@ -36,11 +31,29 @@ return (
     <>
     <div className="news-container">
         <div className='news-title'>
-            <p>Tin tức và kiến thức</p>
+            <p>
+            <NavLink   to="/all-post">
+                Tin tức và kiến thức
+
+            </NavLink>
+                </p>
             <div className='list-menu'>
-                <li>Chuyện nhà Nông</li>
-                <li>Bí kíp nấu ăn</li>
-                <li>Không gian xanh</li>
+                    <li>
+                <NavLink to="/all-post">
+                        Chuyện nhà Nông
+                </NavLink>
+                </li>
+                <li>
+                <NavLink to="/all-post">
+                    Bí kíp nấu ăn
+
+                </NavLink>
+                    </li>
+                <li>
+                    <NavLink to="/all-post">
+                    Không gian xanh
+                    </NavLink >
+                </li>
             </div>
         </div>
         <div className='list-post-container'>

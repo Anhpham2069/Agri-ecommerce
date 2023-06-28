@@ -6,6 +6,7 @@ import { isAuthenticate } from "../auth/fetchApi";
 import { cartList } from "../productDetails/Mixins";
 import { subTotal, totalCost,minusQty,plusQty } from "./Mixins";
 import {updateQuantity} from "../productDetails/Mixins"
+import { getAllProduct } from "./FetchApi";
 import {faPlus,faMinus} from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./style.css"
@@ -67,6 +68,15 @@ const plusQuantityCart =(id)=>{
   localStorage.setItem("cart", JSON.stringify(carts));
   setQty(quantity(id));
 }
+
+const totalCost = () => {
+  let totalCost = 0;
+  let carts = JSON.parse(localStorage.getItem("cart"));
+  carts.forEach((item) => {
+    totalCost += item.quantitiy * item.price;
+  });
+  return totalCost;
+};
   // Hàm tăng số lượng
   // const increaseQuantity = () => {
   //   setQty(qty + 1);
@@ -89,6 +99,8 @@ console.log(qty)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+
 
   const fetchData = async () => {
     try {

@@ -1,13 +1,14 @@
 import axios from 'axios';
 const apiURL = process.env.REACT_APP_API_URL;
 
-export const createPost = async (title, content,author, imageFile)=> {
+export const createPost = async (title, content,author,category, imageFile)=> {
   try {
     // Tạo FormData để định dạng dữ liệu gửi đi
     const formData = new FormData();
     formData.append('title', title);
     formData.append('content', content);
     formData.append('author', author);
+    formData.append('category', category);
     formData.append('image', imageFile);
 
     // Gửi yêu cầu POST đến server

@@ -40,7 +40,7 @@ const TableBody = ({ order }) => {
   console.log(oId)
   console.log(order)
 
-  const showDeleteOderConfirm  =  () => {
+  const showDeleteOderConfirm  =  (oId) => {
     confirm({
       title: 'Bạn chắc chắn muốn hủy đơn hàng này chứ ',
       icon: <ExclamationCircleFilled />,
@@ -56,7 +56,7 @@ const TableBody = ({ order }) => {
           else if(response.success){
             message.success('hủy đơn thành công!')
           }
-          message.success('hủy đơn thành công!');
+          
       },
       onCancel() {
         console.log('Cancel');
@@ -84,6 +84,11 @@ const TableBody = ({ order }) => {
         <td className="hover:bg-gray-200 p-2 text-center cursor-default">
           {order.status === "Chưa được xử lý" && (
             <span className="block text-red-600 rounded-full text-center text-xs px-2 font-semibold">
+              {order.status}
+            </span>
+          )}
+          {order.status === "Đã thanh toán" && (
+            <span className="block text-green-600 rounded-full text-center text-xs px-2 font-semibold">
               {order.status}
             </span>
           )}
@@ -125,7 +130,7 @@ const TableBody = ({ order }) => {
             <Button type="primary" primary ghost onClick={()=>message.warning("đơn đã hủy")}>
               Đơn đã hủy
             </Button>:
-          <Button type="primary" danger ghost onClick={()=>showDeleteOderConfirm() && setStatus("Hủy đơn hàng")}>
+          <Button type="primary" danger ghost onClick={()=>showDeleteOderConfirm(order._id) && setStatus("Hủy đơn hàng")}>
               Hủy đơn
           </Button>
           }

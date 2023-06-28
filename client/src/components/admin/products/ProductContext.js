@@ -14,7 +14,7 @@ export const productState = {
     pOffer: "",
     pCompany: "",
     pDetails: "",
-    pExpirationDate: null,
+    pExpirationDate: Date,
     pHashtag: "",
   },
 };
@@ -76,7 +76,7 @@ export const productReducer = (state, action) => {
           pOffer: "",
           pCompany: "",
           pDetails: "",
-          pExpirationDate: null,
+          pExpirationDate: Date,
           pHashtag: "",
         },
       };

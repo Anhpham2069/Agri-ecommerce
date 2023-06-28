@@ -26,14 +26,20 @@ const apiURL = process.env.REACT_APP_API_URL;
 
 
 
-function UpdatePostModal({ postId,postTitle,postContent,postAuthor,postImg }) {
+function UpdatePostModal({ postId,postTitle,postContent,postAuthor,postImg,postCategory }) {
   const [title, setTitle] = useState(postTitle);
   const [content, setContent] = useState(postContent);
   const [author, setAuthor] = useState(postAuthor);
+  const [category, setCategory] = useState(postCategory);
   const [image, setImage] = useState(postImg);
 
-  console.log(image)
-
+console.log(image)
+  const handleImageChange = (e) => {
+    if (e.target.files.length > 0) {
+      const selectedImage = e.target.files[0];
+      setImage(selectedImage);
+    }
+  };
     // console.log(posts)
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,6 +47,7 @@ function UpdatePostModal({ postId,postTitle,postContent,postAuthor,postImg }) {
       formData.append('title', title);
       formData.append('content', content);
       formData.append('author', author);
+      formData.append('category', category);
       formData.append('image', image);
     try {
         let response = await updatePost(postId,formData)
@@ -48,14 +55,15 @@ function UpdatePostModal({ postId,postTitle,postContent,postAuthor,postImg }) {
           message.success("Sửa bài viết thành công")
         }
     } catch (error) {
-      console.error('Lỗi khi thêm bài viết:', error);
-      alert('Đã xảy ra lỗi khi thêm bài viết');
+      console.error('Lỗi khi sửa bài viết:', error);
+      message.error('Đã xảy ra lỗi khi sửa bài viết');
     }
 
     // Reset form fields
     setTitle('');
     setContent('');
     setAuthor('');
+    setCategory('');
   };
 
   return (
@@ -95,13 +103,37 @@ function UpdatePostModal({ postId,postTitle,postContent,postAuthor,postImg }) {
           onChange={(e) => setAuthor(e.target.value)}
         />
       </div>
+      <div className="form-group">
+        <label htmlFor="title" className="form-label">
+          Chuyên mục
+        </label>
+        <select
+          type="text"
+          className="form-control"
+          id="title"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        >
+            <option>Chọn chuyên mục</option>
+            <option>Chuyện nhà Nông</option>
+            <option>Bí kíp nấu ăn</option>
+            <option>Không gian xanh</option>
+          </select>
+      </div>
       <label htmlFor="image">Hình ảnh:</label>
-        <input
-          type="file"
-          id="image"
-          accept="image/*"
-          onChange={(e) => setImage(e.target.files[0])}
-        /><br /><br />
+          <input
+            type="file"
+            id="image"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
+          <br /><br />
+          {image && (
+            <div>
+              <img src={URL.createObjectURL(image)} alt="Selected Image" />
+            </div>
+          )}
+            <br /><br />
       
       <button type="submit" className="btn btn-primary">
         Sửa bài viết

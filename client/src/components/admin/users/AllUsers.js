@@ -1,5 +1,5 @@
-import React,{Fragment,useContext,useEffect,useCallback} from 'react';
-import { deleteUser, getAllUser } from './fetchApi';
+import React,{Fragment,useContext,useEffect,useCallback, useState} from 'react';
+import { deleteUser, getAllUser,getOrderByUser } from './fetchApi';
 import moment from 'moment';
 import 'moment/locale/vi';
 import { UserContext } from './index';
@@ -11,9 +11,15 @@ const apiURL = process.env.REACT_APP_API_URL
 const AllUser = (props) => {
     const { data,dispatch } = useContext(UserContext)
     const { users,loading } = data
-  
+    const [oders,setOders] = useState([])  
 
-   
+   useEffect(()=>{
+    let fetchData = async()=>{
+      let response = await getOrderByUser()
+        console.log(response)
+    }
+    fetchData()
+   },[])
 
     const fetchData = useCallback(async () => {
       dispatch({ type: "loading", payload: true });
@@ -59,7 +65,7 @@ const AllUser = (props) => {
       
               <th className="px-4 py-2 border">Email</th>
               <th className="px-4 py-2 border">Số Điện thoại</th>
-              <th className="px-4 py-2 border">Đơn Hàng</th>
+              {/* <th className="px-4 py-2 border">Đơn Hàng</th> */}
               <th className="px-4 py-2 border">Ngày tạo</th>
               <th className="px-4 py-2 border">Khác</th>
             </tr>
@@ -112,14 +118,10 @@ const UserTable = ({ user, deleteUser}) => {
         <td className="p-2 text-left">
           {user.phoneNumber}
         </td>
-        <td className="p-2 text-center">
-          {/* <img
-            className="w-12 h-12 object-cover object-center"
-            src={`${apiURL}/uploads/users/${user.cImage}`}
-            alt=""
-          /> */}
+        {/* <td className="p-2 text-center">
+      
           <p>0</p>
-        </td>
+        </td> */}
         {/* <td className="p-2 text-center">
           {user.cStatus === "Active" ? (
             <span className="bg-green-200 rounded-full text-center text-xs px-2 font-semibold">

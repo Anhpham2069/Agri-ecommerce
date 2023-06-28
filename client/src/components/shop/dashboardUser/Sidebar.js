@@ -12,7 +12,7 @@ const Sidebar = (props) => {
 
   return (
     <Fragment>
-      <div className="flex flex-col w-full space-y-4 md:w-3/12 font-medium">
+      <div className="flex flex-col w-full space-y-4 md:w-2/12 font-medium">
         <div
           style={{ background: "#303031" }}
           className="flex items-center space-x-2 rounded shadow p-2 text-gray-100"

@@ -100,3 +100,45 @@
   /* .featured-item-article img:hover{
     
   } */
+
+
+  .post-container{
+    margin: auto;
+    margin-top: 160px;
+    width: 95%;
+    background-color: white;
+    display:  flex;
+  }
+  .post-item-container{
+    width: 70%;
+  }
+  .post-item{
+    margin: auto;
+    margin-top: 50px;
+    width: 80%;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  }
+
+  .post-item:hover{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  }
+
+  .post-item img{
+      width: 20%;
+      height: 40%;
+      padding: 20px;
+  }
+.all-post-title{
+  cursor: pointer;
+    font-weight: 600;
+    color: green;
+    padding: 10px;
+    
+  }
+  .all-post-content{
+    padding: 10px;
+  }
+
+  .all-post-title:hover{
+    color: brown;
+  }

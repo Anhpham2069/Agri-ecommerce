@@ -20,7 +20,7 @@ import Newpage from "./page/newpage"
 import rescueProduct from "./page/rescueProduct";
 import RescuePage from "./page";
 import CheckoutSuccessPage from "./order/checkoutSuccessPage";
-
+import AllPostPage from "./post/allPost"
 export {
   Home,
   WishList,
@@ -46,4 +46,5 @@ export {
   rescueProduct,
   RescuePage,
   CheckoutSuccessPage,
+  AllPostPage,
 };

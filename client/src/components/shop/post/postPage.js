@@ -8,7 +8,7 @@ import { PostDetails } from '..';
 const PostPge = () => {
   return (
     <Fragment>
-       <Layout children={<PostDetails />} />
+       <Layout children={<><PostDetails /> </>} />
     </Fragment>
   );
 };

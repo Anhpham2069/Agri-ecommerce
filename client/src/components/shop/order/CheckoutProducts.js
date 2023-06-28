@@ -13,6 +13,12 @@ import "./style.css"
 
 const apiURL = process.env.REACT_APP_API_URL;
 
+
+const isValidPhoneNumber = (phoneNumber) => {
+  const phonePattern = /^0[0-9]{9}$/;
+  return phonePattern.test(phoneNumber);
+};
+
 export const CheckoutComponent = ({options}) => {
   const inputRef = useRef();
   const history = useHistory();
@@ -33,7 +39,19 @@ const [district, setDistrict] = useState();
 const [wards, setWards] = useState();
 const [ward, setWard] = useState();
 const [submittedValues, setSubmittedValues] = useState(null);
+const [phoneError, setPhoneError] = useState('');
 
+const handlePhoneChange = (e) => {
+  const value = e.target.value;
+  setPhone(value);
+
+  // Kiểm tra định dạng số điện thoại
+  if (!isValidPhoneNumber(value)) {
+    setPhoneError('Số điện thoại không hợp lệ');
+  } else {
+    setPhoneError('');
+  }
+};
 const handleSubmitAdress = (event) => {
   event.preventDefault();
   if(!province){
@@ -225,20 +243,20 @@ console.log(wards)
         //   console.error('An error occurred while creating the order:', error);
         // }
         const response = await axios.post(`${apiURL}/api/order/create-order`,order);
-        if(response){
+        
           await createPaymentUrl()
           const responseQty = await axios.post('http://localhost:8000/api/product/update-qty-product',qty )
-        }
-        else{
-          console.log("thanh toan thất bại")
-        }
+        // }
+        // else{
+        //   console.log("thanh toan thất bại")
+        // }
     
         
     
       
     
     
-        await vnpayReturn()
+     
     }
   };
 
@@ -284,18 +302,26 @@ console.log(wards)
                   )}
                   <div className="flex flex-col py-2">
                     <label htmlFor="address" className="pb-2">
-                      Địa chi
+                      Địa chỉ
                     </label>
                     <form onSubmit={handleSubmitAdress} className="form-address">
+                   
                         <select 
+                          
+                          id="province"
                           className="province"
                           value={province}
                           onChange={(e)=>setProvince(e.target.value)}
                         >
+                          <option label="--Chọn Tỉnh/Thành phố--"></option>
                           {provinces?.map((item)=>(
                             <option 
                               value={item.province_id}
-                              key={item.province_id}>{item.province_name}</option>
+                              key={item.province_id}>
+                                
+                              {item.province_name}
+                              
+                              </option>
                           ))}
                         </select>
                         <select 
@@ -303,8 +329,10 @@ console.log(wards)
                           value={district}
                           onChange={(e)=>setDistrict(e.target.value)}
                         >
+                           <option label="--Chọn Quận/Huyện--"></option>
                           {districts?.map((item)=>(
                             <option 
+                       
                               value={item.district_id}
                               key={item.district_id}>{item.district_name}</option>
                           ))}
@@ -340,15 +368,13 @@ console.log(wards)
                     </label>
                     <input
                       value={phone}
-                      onChange={(e) =>
-                        setPhone(e.target.value)
-                  
-                      }
+                      onChange={handlePhoneChange}
                       type="number"
                       id="phone"
                       className="border px-4 py-2"
                       placeholder="+84 "
                     />
+                    {phoneError && <p className="text-red-500">{phoneError}</p>}
                   </div>
              
                   <div

@@ -27,13 +27,15 @@ function AddArticleForm({ onSubmit }) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [author, setAuthor] = useState('');
+  const [category, setCategory] = useState('');
   const [image, setImage] = useState(null);
 
+  console.log(category)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-        let response = await createPost(title,content,author,image)
+        let response = await createPost(title,content,author,category,image)
         if(response){
           message.success("them bai viet thanh cong")
         }
@@ -46,6 +48,7 @@ function AddArticleForm({ onSubmit }) {
     setTitle('');
     setContent('');
     setAuthor('');
+    setCategory('');
     setImage(null);
   };
 
@@ -85,6 +88,22 @@ function AddArticleForm({ onSubmit }) {
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
         />
+      </div>
+      <div className="form-group">
+        <label htmlFor="title" className="form-label">
+          Chuyên mục
+        </label>
+        <select
+          type="text"
+          className="form-control"
+          id="title"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        >
+          <option>Chuyện nhà Nông</option>
+          <option>Bí kíp nấu ăn</option>
+          <option>Bí kíp nấu ăn</option>
+          </select>
       </div>
       <label htmlFor="image">Hình ảnh:</label>
         <input

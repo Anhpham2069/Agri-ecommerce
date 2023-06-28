@@ -94,7 +94,7 @@ const CartProducts2 = ({data}) => {
                 <div className='item-product-detail'>
                     <h3 className="market-product-title">{data.pName}</h3>
                     <h3 className="market-product-company">{data.pCompany}</h3>
-                    <p className="market-product-description">Số Lượng : {data.pQuantity}</p>
+                    <p className="market-product-description">Số Lượng : {data.pQuantity<=0? <span className='text-red-500 font-bold'>Hết hàng</span>:data.pQuantity}</p>
                     <div className="market-product-star"> 
                 
                             {[...Array(Number(data.pRatingsReviews.map((item)=>(item.rating))))].map((_,key) => {
@@ -133,6 +133,17 @@ const CartProducts2 = ({data}) => {
                 </span>
                 </div>     
             </div>
+            {data.pQuantity <= 0 ? 
+
+            <span className='btn-addCart'
+                                onClick={(e) =>
+                                   message.error("sản phẩm hết hàng")
+                                }
+                            >
+                                <ShoppingCartOutlined />
+                    </span>
+            :
+            
             <span className='btn-addCart'
                                 onClick={(e) =>
                                     addToCart(
@@ -149,6 +160,7 @@ const CartProducts2 = ({data}) => {
                             >
                                 <ShoppingCartOutlined />
                     </span>
+            }
  
     </Card>
   )
